@@ -1,5 +1,6 @@
 package mathjaxTest
 
+import org.jetbrains.dokka.javadoc.JavadocPlugin
 import org.jetbrains.dokka.mathjax.LIB_PATH
 import org.jetbrains.dokka.mathjax.MathjaxPlugin
 import org.jetbrains.dokka.testApi.testRunner.AbstractCoreTest
@@ -58,22 +59,22 @@ class MathjaxPluginTest : AbstractCoreTest() {
             |/src/main/kotlin/test/Test.kt
             |package example
             | /**
-            | * @usesMathJax
-            | *
-            | * \(\alpha_{out} = \alpha_{dst}\)
-            | * \(C_{out} = C_{dst}\)
-            | */
+            |  * Some text here
+            |  * \(\alpha_{out} = \alpha_{dst}\)
+            |  * \(C_{out} = C_{dst}\)
+            |  * @usesMathJax
+            |  */
             | fun test(): String = ""
             """.trimIndent()
         val writerPlugin = TestOutputWriterPlugin()
         testInline(
             source,
             configuration,
-            pluginOverrides = listOf(writerPlugin, MathjaxPlugin())
+            pluginOverrides = listOf(writerPlugin, MathjaxPlugin(), JavadocPlugin())
         ) {
             renderingStage = {
                     _, _ -> Jsoup
-                .parse(writerPlugin.writer.contents["root/example/test.html"])
+                .parse(writerPlugin.writer.contents["example/TestKt.html"])
                 .head()
                 .select("link, script")
                 .let {
