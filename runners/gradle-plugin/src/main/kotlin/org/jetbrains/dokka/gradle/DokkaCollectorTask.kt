@@ -22,6 +22,7 @@ abstract class DokkaCollectorTask : AbstractDokkaParentTask() {
             pluginsConfiguration = buildPluginsConfiguration(),
             suppressObviousFunctions = suppressObviousFunctions.getSafe(),
             suppressInheritedMembers = suppressInheritedMembers.getSafe(),
+            finalizeCoroutines = finalizeCoroutines.get(),
         )
 
         val subprojectDokkaConfigurations = childDokkaTasks.map { dokkaTask -> dokkaTask.buildDokkaConfiguration() }

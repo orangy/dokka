@@ -148,6 +148,9 @@ abstract class AbstractDokkaTask : DefaultTask() {
     val failOnWarning: Property<Boolean> = project.objects.safeProperty<Boolean>()
         .safeConvention(DokkaDefaults.failOnWarning)
 
+    @get:Input
+    abstract val finalizeCoroutines: Property<Boolean>
+
     @Optional
     @InputDirectory
     @PathSensitive(PathSensitivity.RELATIVE)

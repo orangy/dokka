@@ -18,7 +18,7 @@ allprojects {
 
 
     val language_version: String by project
-    tasks.withType(KotlinCompile::class).all {
+    tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             freeCompilerArgs = freeCompilerArgs + listOf(
                 "-opt-in=kotlin.RequiresOptIn",
@@ -49,7 +49,6 @@ subprojects {
 
     // Gradle metadata
     java {
-        @Suppress("UnstableApiUsage")
         withSourcesJar()
         targetCompatibility = JavaVersion.VERSION_1_8
     }

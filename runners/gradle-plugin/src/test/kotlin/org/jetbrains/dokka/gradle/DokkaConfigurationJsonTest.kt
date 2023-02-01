@@ -18,9 +18,7 @@ class DokkaConfigurationJsonTest {
         val project = ProjectBuilder.builder().build()
         project.plugins.apply("org.jetbrains.dokka")
         val dokkaTask = project.tasks.withType<DokkaTask>().first()
-        dokkaTask.plugins.withDependencies { dependencies ->
-            dependencies.clear()
-        }
+        dokkaTask.plugins.withDependencies { clear() }
         dokkaTask.apply {
             this.failOnWarning.set(true)
             this.offlineMode.set(true)
@@ -32,19 +30,19 @@ class DokkaConfigurationJsonTest {
             this.pluginsConfiguration.add(
                 PluginConfigurationImpl("B", DokkaConfiguration.SerializationFormat.JSON, """ { "key" : "value2" } """)
             )
-            this.dokkaSourceSets.create("main") { sourceSet ->
-                sourceSet.displayName.set("customSourceSetDisplayName")
-                sourceSet.reportUndocumented.set(true)
+            this.dokkaSourceSets.create("main") {
+                displayName.set("customSourceSetDisplayName")
+                reportUndocumented.set(true)
 
-                sourceSet.externalDocumentationLink { link ->
-                    link.packageListUrl.set(URL("http://some.url"))
-                    link.url.set(URL("http://some.other.url"))
+                externalDocumentationLink {
+                    packageListUrl.set(URL("http://some.url"))
+                    url.set(URL("http://some.other.url"))
                 }
-                sourceSet.perPackageOption { packageOption ->
-                    packageOption.includeNonPublic.set(true)
-                    packageOption.reportUndocumented.set(true)
-                    packageOption.skipDeprecated.set(true)
-                    packageOption.documentedVisibilities.set(setOf(DokkaConfiguration.Visibility.PRIVATE))
+                perPackageOption {
+                    includeNonPublic.set(true)
+                    reportUndocumented.set(true)
+                    skipDeprecated.set(true)
+                    documentedVisibilities.set(setOf(DokkaConfiguration.Visibility.PRIVATE))
                 }
             }
         }

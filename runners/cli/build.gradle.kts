@@ -23,8 +23,7 @@ tasks {
     }
 }
 
-registerDokkaArtifactPublication("dokkaCli"){
+registerDokkaArtifactPublication("dokkaCli") {
     artifactId = "dokka-cli"
     component = Shadow
 }
-

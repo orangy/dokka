@@ -26,9 +26,12 @@ class DokkaMultiModuleTaskTest {
     }
 
     init {
-        rootProject.allprojects { project ->
-            project.tasks.withType<AbstractDokkaTask>().configureEach { task ->
-                task.plugins.withDependencies { dependencies -> dependencies.clear() }
+        rootProject.plugins.apply("org.jetbrains.dokka")
+        childProject.plugins.apply("org.jetbrains.dokka")
+
+        rootProject.allprojects {
+            tasks.withType<AbstractDokkaTask>().configureEach {
+                plugins.withDependencies { clear() }
             }
         }
     }
@@ -56,7 +59,7 @@ class DokkaMultiModuleTaskTest {
             dokkaSourceSets.create("main")
             dokkaSourceSets.create("test")
             dokkaSourceSets.configureEach {
-                it.includes.from(include1, include2)
+                includes.from(include1, include2)
             }
         }
 
@@ -75,6 +78,7 @@ class DokkaMultiModuleTaskTest {
             failOnWarning.set(true)
             offlineMode.set(true)
             includes.from(listOf(topLevelInclude))
+            finalizeCoroutines.set(true)
         }
 
         val dokkaConfiguration = multiModuleTask.buildDokkaConfiguration()
@@ -102,7 +106,8 @@ class DokkaMultiModuleTaskTest {
                         includes = setOf(include1, include2),
                         sourceOutputDirectory = childDokkaTask.outputDirectory.getSafe()
                     )
-                )
+                ),
+                finalizeCoroutines = true,
             ),
             dokkaConfiguration
         )
@@ -150,7 +155,7 @@ class DokkaMultiModuleTaskTest {
     fun `multimodule task with no child tasks throws DokkaException`() {
         val project = ProjectBuilder.builder().build()
         val multimodule = project.tasks.create<DokkaMultiModuleTask>("multimodule")
-        project.configurations.configureEach { it.withDependencies { it.clear() } }
+        project.configurations.configureEach { withDependencies { clear() } }
         assertFailsWith<DokkaException> { multimodule.generateDocumentation() }
     }
 
@@ -162,17 +167,17 @@ class DokkaMultiModuleTaskTest {
 
         childDokkaTask.apply {
             dokkaSourceSets.create("main") {
-                it.includes.from(childDokkaTaskInclude1, childDokkaTaskInclude2)
+                includes.from(childDokkaTaskInclude1, childDokkaTaskInclude2)
             }
             dokkaSourceSets.create("main2") {
-                it.includes.from(childDokkaTaskInclude3)
+                includes.from(childDokkaTaskInclude3)
             }
         }
 
         val secondChildDokkaTaskInclude = childProject.file("include4")
         val secondChildDokkaTask = childProject.tasks.create<DokkaTaskPartial>("secondChildDokkaTask") {
             dokkaSourceSets.create("main") {
-                it.includes.from(secondChildDokkaTaskInclude)
+                includes.from(secondChildDokkaTaskInclude)
             }
         }
         multiModuleTask.addChildTask(secondChildDokkaTask)

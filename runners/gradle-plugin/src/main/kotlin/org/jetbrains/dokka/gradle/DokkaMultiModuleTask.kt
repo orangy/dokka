@@ -95,6 +95,6 @@ abstract class DokkaMultiModuleTask : AbstractDokkaParentTask() {
             )
         },
         includes = includes.toSet(),
+        finalizeCoroutines = finalizeCoroutines.get(),
     )
 }
-

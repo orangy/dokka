@@ -4,7 +4,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
-import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.*
 import org.gradle.util.GradleVersion
 
 open class DokkaPlugin : Plugin<Project> {
@@ -86,6 +86,10 @@ open class DokkaPlugin : Plugin<Project> {
                 description =
                     "Generates documentation merging all subprojects '$name' tasks into one virtual module"
             }
+        }
+
+        tasks.withType<AbstractDokkaTask>().configureEach {
+            finalizeCoroutines.convention(true)
         }
     }
 }

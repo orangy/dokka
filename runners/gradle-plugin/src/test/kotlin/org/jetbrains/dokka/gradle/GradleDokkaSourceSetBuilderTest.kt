@@ -225,9 +225,9 @@ class GradleDokkaSourceSetBuilderTest {
             })
 
         sourceSet.sourceLink {
-            it.remoteLineSuffix.set("ls2")
-            it.localDirectory.set(project.file("p2"))
-            it.remoteUrl.set(URL("https://u2"))
+            remoteLineSuffix.set("ls2")
+            localDirectory.set(project.file("p2"))
+            remoteUrl.set(URL("https://u2"))
         }
 
         sourceSet.sourceLink(project.closureOf<GradleSourceLinkBuilder> {
@@ -269,7 +269,7 @@ class GradleDokkaSourceSetBuilderTest {
         })
 
         sourceSet.perPackageOption {
-            it.matchingRegex.set("p2.*")
+            matchingRegex.set("p2.*")
         }
 
         sourceSet.perPackageOption(project.closureOf<GradlePackageOptionsBuilder> {
@@ -311,7 +311,7 @@ class GradleDokkaSourceSetBuilderTest {
         )
 
         sourceSet.externalDocumentationLink {
-            it.url.set(URL("https://u2"))
+            url.set(URL("https://u2"))
         }
 
         sourceSet.externalDocumentationLink(project.closureOf<GradleExternalDocumentationLinkBuilder> {

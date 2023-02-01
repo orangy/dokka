@@ -19,5 +19,6 @@ abstract class DokkaTask : AbstractDokkaLeafTask() {
             pluginsClasspath = plugins.resolve().toList(),
             suppressObviousFunctions = suppressObviousFunctions.getSafe(),
             suppressInheritedMembers = suppressInheritedMembers.getSafe(),
+            finalizeCoroutines = finalizeCoroutines.get(),
         )
 }

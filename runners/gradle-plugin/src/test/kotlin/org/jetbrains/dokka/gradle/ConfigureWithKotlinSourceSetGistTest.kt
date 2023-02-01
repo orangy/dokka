@@ -95,9 +95,9 @@ class ConfigureWithKotlinSourceSetGistTest {
         mainSourceSet.kotlin.sourceDirectories.elements.get().map { it.asFile }.forEach { it.mkdirs() }
 
         /* Make sure to remove dependencies that cannot be resolved during test */
-        project.configurations.configureEach { configuration ->
-            configuration.withDependencies { dependencies ->
-                dependencies.removeIf { dependency -> dependency !is FileCollectionDependency }
+        project.configurations.configureEach {
+            withDependencies {
+                removeIf { dependency -> dependency !is FileCollectionDependency }
             }
         }
 

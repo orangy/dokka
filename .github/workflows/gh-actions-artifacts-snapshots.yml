@@ -20,10 +20,18 @@ jobs:
           distribution: 'zulu'
           java-version: 12
           cache: 'maven'
+      - name: Publish Dokka Gradle Plugin For IntegrationTests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: publishToMavenLocal publishDokkaGradlePluginForIntegrationTestsPublicationToMavenLocal
       - name: Document coroutines
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :integration-tests:gradle:integrationTest --tests org.jetbrains.dokka.it.gradle.kotlin.CoroutinesGradleIntegrationTest --stacktrace
+          arguments: |
+            :integration-tests:gradle:integrationTest 
+            --tests org.jetbrains.dokka.it.gradle.kotlin.CoroutinesGradleIntegrationTest
+            --stacktrace
+            --init-script ./integration-tests/gradle/projects/coroutines/init.gradle.kts
         env:
           DOKKA_TEST_OUTPUT_PATH: /home/runner/work/dokka/coroutines      
       - name: Copy files to GitHub Actions Artifacts
@@ -46,10 +54,18 @@ jobs:
           distribution: 'zulu'
           java-version: 12
           cache: 'maven'
+      - name: Publish Dokka Gradle Plugin For IntegrationTests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: publishToMavenLocal publishDokkaGradlePluginForIntegrationTestsPublicationToMavenLocal
       - name: Document serialization
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :integration-tests:gradle:integrationTest --tests org.jetbrains.dokka.it.gradle.kotlin.SerializationGradleIntegrationTest --stacktrace
+          arguments: |
+            :integration-tests:gradle:integrationTest 
+            --tests org.jetbrains.dokka.it.gradle.kotlin.SerializationGradleIntegrationTest 
+            --stacktrace 
+            --init-script ./integration-tests/gradle/projects/serialization/init.gradle.kts
         env:
           DOKKA_TEST_OUTPUT_PATH: /home/runner/work/dokka/serialization
       - name: Copy files to GitHub Actions Artifacts
