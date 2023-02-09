@@ -540,7 +540,7 @@ class AnalysisEnvironment(val messageCollector: MessageCollector, val analysisPl
 
     /**
      * Adds list of paths to classpath.
-     * $paths: collection of files to add
+     * @param[paths]: collection of files to add
      */
     fun addClasspath(paths: List<File>) {
         if (analysisPlatform == Platform.js || analysisPlatform == Platform.wasm) {
@@ -554,7 +554,7 @@ class AnalysisEnvironment(val messageCollector: MessageCollector, val analysisPl
     fun configureJdkClasspathRoots() = configuration.configureJdkClasspathRoots()
     /**
      * Adds path to classpath.
-     * $path: path to add
+     * @param[path] path to add
      */
     fun addClasspath(path: File) {
         if (analysisPlatform == Platform.js || analysisPlatform == Platform.wasm) {
@@ -574,7 +574,7 @@ class AnalysisEnvironment(val messageCollector: MessageCollector, val analysisPl
 
     /**
      * Adds list of paths to source roots.
-     * $list: collection of files to add
+     * @param[sourceDirectories] collection of files to add
      */
     fun addSources(sourceDirectories: Iterable<File>) {
         sourceDirectories.forEach { directory ->
@@ -614,5 +614,3 @@ class AnalysisEnvironment(val messageCollector: MessageCollector, val analysisPl
         }
     }
 }
-
-

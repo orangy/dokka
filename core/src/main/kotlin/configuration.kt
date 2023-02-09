@@ -11,7 +11,7 @@ import java.io.Serializable
 import java.net.URL
 
 object DokkaDefaults {
-    val moduleName: String = "root"
+    const val moduleName: String = "root"
     val moduleVersion: String? = null
     val outputDir = File("./dokka")
     const val failOnWarning: Boolean = false
@@ -44,8 +44,12 @@ object DokkaDefaults {
     const val delayTemplateSubstitution: Boolean = false
 
     val cacheRoot: File? = null
+
+    @Deprecated("updated to be a const", ReplaceWith("moduleName", "org.jetbrains.dokka.DokkaDefaults.moduleName"))
+    fun getModuleName(): String = moduleName
 }
 
+@Suppress("EnumEntryName")
 enum class Platform(val key: String) {
     jvm("jvm"),
     js("js"),
@@ -115,11 +119,13 @@ fun GlobalDokkaConfiguration(json: String): GlobalDokkaConfiguration = parseJson
 
 fun DokkaConfiguration.apply(globals: GlobalDokkaConfiguration): DokkaConfiguration = this.apply {
     sourceSets.forEach {
-        it.perPackageOptions.cast<MutableList<DokkaConfiguration.PackageOptions>>().addAll(globals.perPackageOptions ?: emptyList())
+        it.perPackageOptions.cast<MutableList<DokkaConfiguration.PackageOptions>>()
+            .addAll(globals.perPackageOptions ?: emptyList())
     }
 
     sourceSets.forEach {
-        it.externalDocumentationLinks.cast<MutableSet<DokkaConfiguration.ExternalDocumentationLink>>().addAll(globals.externalDocumentationLinks ?: emptyList())
+        it.externalDocumentationLinks.cast<MutableSet<DokkaConfiguration.ExternalDocumentationLink>>()
+            .addAll(globals.externalDocumentationLinks ?: emptyList())
     }
 
     sourceSets.forEach {
@@ -152,9 +158,9 @@ interface DokkaConfiguration : Serializable {
      *
      * It effectively stops all background threads associated with
      * coroutines in order to make classes unloadable by the JVM,
-     * and rejects all new tasks with [RejectedExecutionException]
+     * and rejects all new tasks with [java.util.concurrent.RejectedExecutionException]
      *
-     * This is primarily useful for multi-module builds where coroutines
+     * This is primarily useful for multimodule builds where coroutines
      * can be shut down after each module's partial task to avoid
      * possible memory leaks.
      *
@@ -163,6 +169,7 @@ interface DokkaConfiguration : Serializable {
      * and closing it down will leave the build in an inoperable state.
      * One such example is unit tests, for which finalization should be disabled.
      */
+    @Suppress("EnumEntryName")
     val finalizeCoroutines: Boolean
 
     enum class SerializationFormat : Serializable {
@@ -183,6 +190,7 @@ interface DokkaConfiguration : Serializable {
         val dependentSourceSets: Set<DokkaSourceSetID>
         val samples: Set<File>
         val includes: Set<File>
+
         @Deprecated(message = "Use [documentedVisibilities] property for a more flexible control over documented visibilities")
         val includeNonPublic: Boolean
         val reportUndocumented: Boolean
@@ -247,6 +255,7 @@ interface DokkaConfiguration : Serializable {
 
     interface PackageOptions : Serializable {
         val matchingRegex: String
+
         @Deprecated("Use [documentedVisibilities] property for a more flexible control over documented visibilities")
         val includeNonPublic: Boolean
         val reportUndocumented: Boolean?
@@ -280,5 +289,3 @@ fun ExternalDocumentationLink(
     url: String, packageListUrl: String? = null
 ): ExternalDocumentationLinkImpl =
     ExternalDocumentationLink(url.let(::URL), packageListUrl?.let(::URL))
-
-

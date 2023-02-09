@@ -7,7 +7,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Internal
-import org.gradle.kotlin.dsl.setProperty
+import org.gradle.kotlin.dsl.*
 import org.jetbrains.dokka.DokkaConfiguration
 import org.jetbrains.dokka.DokkaConfigurationBuilder
 import org.jetbrains.dokka.DokkaDefaults
@@ -40,8 +40,8 @@ class GradlePackageOptionsBuilder(
      * Default is any string: `.*`.
      */
     @Input
-    val matchingRegex: Property<String> = project.objects.safeProperty<String>()
-        .safeConvention(".*")
+    val matchingRegex: Property<String> = project.objects.property<String>()
+        .convention(".*")
 
     /**
      * Whether this package should be skipped when generating documentation.
@@ -49,8 +49,8 @@ class GradlePackageOptionsBuilder(
      * Default is `false`.
      */
     @Input
-    val suppress: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.suppress)
+    val suppress: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.suppress)
 
     /**
      * Set of visibility modifiers that should be documented.
@@ -74,8 +74,8 @@ class GradlePackageOptionsBuilder(
      * Default is `false`.
      */
     @Input
-    val skipDeprecated: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.skipDeprecated)
+    val skipDeprecated: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.skipDeprecated)
 
     /**
      * Whether to emit warnings about visible undocumented declarations, that is declarations from
@@ -88,23 +88,23 @@ class GradlePackageOptionsBuilder(
      * Default is `false`.
      */
     @Input
-    val reportUndocumented: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.reportUndocumented)
+    val reportUndocumented: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.reportUndocumented)
 
     /**
      * Deprecated. Use [documentedVisibilities] instead.
      */
     @Input
-    val includeNonPublic: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.includeNonPublic)
+    val includeNonPublic: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.includeNonPublic)
 
 
     override fun build(): PackageOptionsImpl = PackageOptionsImpl(
-        matchingRegex = checkNotNull(matchingRegex.getSafe()) { "prefix not specified" },
-        includeNonPublic = includeNonPublic.getSafe(),
-        documentedVisibilities = documentedVisibilities.getSafe(),
-        reportUndocumented = reportUndocumented.getSafe(),
-        skipDeprecated = skipDeprecated.getSafe(),
-        suppress = suppress.getSafe()
+        matchingRegex = checkNotNull(matchingRegex.get()) { "prefix not specified" },
+        includeNonPublic = includeNonPublic.get(),
+        documentedVisibilities = documentedVisibilities.get(),
+        reportUndocumented = reportUndocumented.get(),
+        skipDeprecated = skipDeprecated.get(),
+        suppress = suppress.get()
     )
 }

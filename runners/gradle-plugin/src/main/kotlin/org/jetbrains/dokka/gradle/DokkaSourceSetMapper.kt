@@ -9,47 +9,48 @@ internal fun GradleDokkaSourceSetBuilder.toDokkaSourceSetImpl(): DokkaSourceSetI
     displayName = displayNameOrDefault(),
     sourceSetID = sourceSetID,
     sourceRoots = sourceRoots.toSet(),
-    dependentSourceSets = dependentSourceSets.getSafe().toSet(),
+    dependentSourceSets = dependentSourceSets.get(),
     samples = samples.toSet(),
     includes = includes.toSet(),
-    includeNonPublic = includeNonPublic.getSafe(),
-    documentedVisibilities = documentedVisibilities.getSafe(),
-    reportUndocumented = reportUndocumented.getSafe(),
-    skipEmptyPackages = skipEmptyPackages.getSafe(),
-    skipDeprecated = skipDeprecated.getSafe(),
-    jdkVersion = jdkVersion.getSafe(),
-    sourceLinks = sourceLinks.getSafe().build().toSet(),
-    perPackageOptions = perPackageOptions.getSafe().build(),
+    includeNonPublic = includeNonPublic.get(),
+    documentedVisibilities = documentedVisibilities.get(),
+    reportUndocumented = reportUndocumented.get(),
+    skipEmptyPackages = skipEmptyPackages.get(),
+    skipDeprecated = skipDeprecated.get(),
+    jdkVersion = jdkVersion.get(),
+    sourceLinks = sourceLinks.get().build().toSet(),
+    perPackageOptions = perPackageOptions.get().build(),
     externalDocumentationLinks = externalDocumentationLinksWithDefaults(),
-    languageVersion = languageVersion.getSafe(),
-    apiVersion = apiVersion.getSafe(),
-    noStdlibLink = noStdlibLink.getSafe(),
-    noJdkLink = noJdkLink.getSafe(),
+    languageVersion = languageVersion.orNull,
+    apiVersion = apiVersion.orNull,
+    noStdlibLink = noStdlibLink.get(),
+    noJdkLink = noJdkLink.get(),
     suppressedFiles = suppressedFilesWithDefaults(),
-    analysisPlatform = platform.getSafe()
+    analysisPlatform = platform.get()
 )
 
 private fun GradleDokkaSourceSetBuilder.displayNameOrDefault(): String {
-    displayName.getSafe()?.let { return it }
-    if (name.endsWith("Main") && name != "Main") {
-        return name.removeSuffix("Main")
-    }
-
-    return name
+    return displayName.getOrElse(
+        if (name.endsWith("Main") && name != "Main") {
+            name.removeSuffix("Main")
+        } else {
+            name
+        }
+    )
 }
 
 private fun GradleDokkaSourceSetBuilder.externalDocumentationLinksWithDefaults(): Set<ExternalDocumentationLinkImpl> {
-    return externalDocumentationLinks.getSafe().build()
+    return externalDocumentationLinks.get().build()
         .run {
-            if (noJdkLink.getSafe()) this
-            else this + ExternalDocumentationLink.jdk(jdkVersion.getSafe())
+            if (noJdkLink.get()) this
+            else this + ExternalDocumentationLink.jdk(jdkVersion.get())
         }
         .run {
-            if (noStdlibLink.getSafe()) this
+            if (noStdlibLink.get()) this
             else this + ExternalDocumentationLink.kotlinStdlib()
         }
         .run {
-            if (noAndroidSdkLink.getSafe() || !project.isAndroidProject()) this
+            if (noAndroidSdkLink.get() || !project.isAndroidProject()) this
             else this +
                     ExternalDocumentationLink.androidSdk() +
                     ExternalDocumentationLink.androidX()
@@ -58,7 +59,7 @@ private fun GradleDokkaSourceSetBuilder.externalDocumentationLinksWithDefaults()
 }
 
 private fun GradleDokkaSourceSetBuilder.suppressedFilesWithDefaults(): Set<File> {
-    val suppressedGeneratedFiles = if (suppressGeneratedFiles.getSafe()) {
+    val suppressedGeneratedFiles = if (suppressGeneratedFiles.get()) {
         val generatedRoot = project.buildDir.resolve("generated").absoluteFile
         sourceRoots
             .filter { it.startsWith(generatedRoot) }

@@ -1,7 +1,8 @@
 import org.jetbrains.registerDokkaArtifactPublication
 
 plugins {
-    `maven-publish`
+    org.jetbrains.conventions.`kotlin-jvm`
+    org.jetbrains.conventions.`maven-publish`
 }
 
 dependencies {

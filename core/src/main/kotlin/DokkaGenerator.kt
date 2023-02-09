@@ -80,4 +80,3 @@ private fun timed(logger: DokkaLogger? = null, block: Timer.() -> Unit): Timer =
             report("")
         }
     }
-

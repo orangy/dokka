@@ -1,0 +1,43 @@
+import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id("org.jetbrains.dokka")
+}
+
+apply from: '../template.root.gradle.kts'
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    dokkaPlugin "org.jetbrains.dokka:versioning-plugin:${System.getenv("DOKKA_VERSION")}"
+}
+
+
+subprojects {
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'org.jetbrains.dokka'
+}
+
+dokkaHtmlMultiModule {
+    pluginsMapConfiguration.set(["org.jetbrains.dokka.versioning.VersioningPlugin": """{ "version": "1.2", "olderVersionsDir": "$projectDir/dokkas" }"""])
+}
+
+tasks.register('dokkaHtmlMultiModuleBaseVersion', DokkaMultiModuleTask){
+    dependencies {
+        dokkaPlugin("org.jetbrains.dokka:all-modules-page-plugin:${System.getenv("DOKKA_VERSION")}")
+        dokkaPlugin("org.jetbrains.dokka:versioning-plugin:${System.getenv("DOKKA_VERSION")}")
+    }
+    outputDirectory.set(file(projectDir.toPath().resolve("dokkas").resolve("1.0")))
+    pluginsMapConfiguration.set(["org.jetbrains.dokka.versioning.VersioningPlugin": """{ "version": "1.0" }"""])
+    addChildTasks([project(":first"), project(":second")], "dokkaHtmlPartial")
+}
+
+tasks.register('dokkaHtmlMultiModuleNextVersion', DokkaMultiModuleTask){
+    dependencies {
+        dokkaPlugin("org.jetbrains.dokka:all-modules-page-plugin:${System.getenv("DOKKA_VERSION")}")
+        dokkaPlugin("org.jetbrains.dokka:versioning-plugin:${System.getenv("DOKKA_VERSION")}")
+    }
+    outputDirectory.set(file(projectDir.toPath().resolve("dokkas").resolve("1.1")))
+    pluginsMapConfiguration.set(["org.jetbrains.dokka.versioning.VersioningPlugin": """{ "version": "1.1", "olderVersionsDir": "$projectDir/dokkas" }"""])
+    addChildTasks([project(":first"), project(":second")], "dokkaHtmlPartial")
+}

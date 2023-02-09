@@ -2,18 +2,9 @@ import org.jetbrains.DokkaPublicationBuilder.Component.Shadow
 import org.jetbrains.registerDokkaArtifactPublication
 
 plugins {
+    org.jetbrains.conventions.`kotlin-jvm`
+    org.jetbrains.conventions.`maven-publish`
     id("com.github.johnrengelman.shadow")
-    `maven-publish`
-}
-
-repositories {
-    mavenCentral()
-    maven(url = "https://www.jetbrains.com/intellij-repository/snapshots")
-    maven(url = "https://www.jetbrains.com/intellij-repository/releases")
-    maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide")
-    maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide-plugin-dependencies")
-    maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
-    maven("https://www.myget.org/F/rd-snapshots/maven/")
 }
 
 val intellijCore: Configuration by configurations.creating

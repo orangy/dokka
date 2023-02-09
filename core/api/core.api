@@ -36,27 +36,6 @@ public abstract interface class org/jetbrains/dokka/DokkaBootstrap {
 	public abstract fun generate ()V
 }
 
-public final class org/jetbrains/dokka/DokkaBootstrapImpl : org/jetbrains/dokka/DokkaBootstrap {
-	public fun <init> ()V
-	public fun configure (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
-	public final fun configure (Lorg/jetbrains/dokka/utilities/DokkaLogger;Lorg/jetbrains/dokka/DokkaConfigurationImpl;)V
-	public fun generate ()V
-}
-
-public final class org/jetbrains/dokka/DokkaBootstrapImpl$DokkaProxyLogger : org/jetbrains/dokka/utilities/DokkaLogger {
-	public fun <init> (Ljava/util/function/BiConsumer;)V
-	public fun debug (Ljava/lang/String;)V
-	public fun error (Ljava/lang/String;)V
-	public final fun getConsumer ()Ljava/util/function/BiConsumer;
-	public fun getErrorsCount ()I
-	public fun getWarningsCount ()I
-	public fun info (Ljava/lang/String;)V
-	public fun progress (Ljava/lang/String;)V
-	public fun setErrorsCount (I)V
-	public fun setWarningsCount (I)V
-	public fun warn (Ljava/lang/String;)V
-}
-
 public abstract interface class org/jetbrains/dokka/DokkaConfiguration : java/io/Serializable {
 	public abstract fun getCacheRoot ()Ljava/io/File;
 	public abstract fun getDelayTemplateSubstitution ()Z
@@ -210,6 +189,7 @@ public final class org/jetbrains/dokka/DokkaDefaults {
 	public static final field failOnWarning Z
 	public static final field includeNonPublic Z
 	public static final field jdkVersion I
+	public static final field moduleName Ljava/lang/String;
 	public static final field noAndroidSdkLink Z
 	public static final field noJdkLink Z
 	public static final field noStdlibLink Z

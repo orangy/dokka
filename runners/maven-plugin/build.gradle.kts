@@ -2,6 +2,11 @@ import org.jetbrains.CrossPlatformExec
 import org.jetbrains.SetupMaven
 import org.jetbrains.registerDokkaArtifactPublication
 
+plugins {
+    org.jetbrains.conventions.`kotlin-jvm`
+    org.jetbrains.conventions.`maven-publish`
+}
+
 val setupMaven by tasks.register<SetupMaven>("setupMaven")
 
 dependencies {
@@ -16,15 +21,14 @@ dependencies {
 val mavenBuildDir = setupMaven.mavenBuildDir
 val mavenBinDir = setupMaven.mavenBinDir
 
-tasks.named<Delete>("clean") {
+tasks.clean {
     delete(mavenBuildDir)
     delete(mavenBinDir)
 }
 
-/**
- * Generate pom.xml for Maven Plugin Plugin
- */
 val generatePom by tasks.registering(Copy::class) {
+    description = "Generate pom.xml for Maven Plugin Plugin"
+
     val dokka_version: String by project
     inputs.property("dokka_version", dokka_version)
 
@@ -49,10 +53,9 @@ val generatePom by tasks.registering(Copy::class) {
     }
 }
 
-/**
- * Copy compiled classes to [mavenBuildDir] for Maven Plugin Plugin
- */
 val syncClasses by tasks.registering(Sync::class) {
+    description = "Copy compiled classes to the Maven build dir, for Maven Plugin task execution"
+
     dependsOn(tasks.compileKotlin, tasks.compileJava)
     from("$buildDir/classes/kotlin", "$buildDir/classes/java")
     into("${setupMaven.mavenBuildDir}/classes/java")
@@ -66,20 +69,24 @@ val helpMojo by tasks.registering(CrossPlatformExec::class) {
     dependsOn(setupMaven, generatePom, syncClasses)
     workingDir(setupMaven.mavenBuildDir)
     commandLine(setupMaven.mvn, "-e", "-B", "org.apache.maven.plugins:maven-plugin-plugin:helpmojo")
+
+    outputs.dir(layout.buildDirectory.dir("maven"))
 }
 
 val pluginDescriptor by tasks.registering(CrossPlatformExec::class) {
     dependsOn(setupMaven, generatePom, syncClasses)
     workingDir(setupMaven.mavenBuildDir)
     commandLine(setupMaven.mvn, "-e", "-B", "org.apache.maven.plugins:maven-plugin-plugin:descriptor")
+
+    outputs.dir(layout.buildDirectory.dir("maven/classes/java/main/META-INF/maven"))
 }
 
 val sourceJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource)
+    from(java.sourceSets["main"].allSource)
 }
 
-tasks.named<Jar>("jar") {
+tasks.jar {
     dependsOn(pluginDescriptor, helpMojo)
     metaInf {
         from("${setupMaven.mavenBuildDir}/classes/java/main/META-INF")

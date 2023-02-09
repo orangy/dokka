@@ -8,6 +8,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.*
 import org.gradle.kotlin.dsl.listProperty
+import org.gradle.kotlin.dsl.property
 import org.gradle.kotlin.dsl.setProperty
 import org.jetbrains.dokka.*
 import java.io.File
@@ -51,8 +52,8 @@ open class GradleDokkaSourceSetBuilder(
      * Default is `false`.
      */
     @Input
-    val suppress: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(false)
+    val suppress: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(false)
 
     /**
      * Display name used to refer to the source set.
@@ -63,8 +64,7 @@ open class GradleDokkaSourceSetBuilder(
      * By default, the value is deduced from information provided by the Kotlin Gradle plugin.
      */
     @Input
-    @Optional
-    val displayName: Property<String?> = project.objects.safeProperty()
+    val displayName: Property<String> = project.objects.property()
 
     /**
      * List of Markdown files that contain
@@ -108,8 +108,7 @@ open class GradleDokkaSourceSetBuilder(
      * Default is [DokkaConfiguration.Visibility.PUBLIC].
      */
     @Input
-    val documentedVisibilities: SetProperty<DokkaConfiguration.Visibility> = project.objects.setProperty<DokkaConfiguration.Visibility>()
-        .convention(DokkaDefaults.documentedVisibilities)
+    val documentedVisibilities: SetProperty<DokkaConfiguration.Visibility> = project.objects.setProperty<DokkaConfiguration.Visibility>().convention(DokkaDefaults.documentedVisibilities)
 
     /**
      * Specifies source sets that current source set depends on.
@@ -122,8 +121,7 @@ open class GradleDokkaSourceSetBuilder(
      * By default, the values are deduced from information provided by the Kotlin Gradle plugin.
      */
     @Input
-    val dependentSourceSets: SetProperty<DokkaSourceSetID> = project.objects.setProperty<DokkaSourceSetID>()
-        .convention(emptySet())
+    val dependentSourceSets: SetProperty<DokkaSourceSetID> = project.objects.setProperty<DokkaSourceSetID>().convention(emptySet())
 
     /**
      * Classpath for analysis and interactive samples.
@@ -169,8 +167,8 @@ open class GradleDokkaSourceSetBuilder(
      * Default is `false`.
      */
     @Input
-    val reportUndocumented: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.reportUndocumented)
+    val reportUndocumented: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.reportUndocumented)
 
     /**
      * Specifies the location of the project source code on the Web. If provided, Dokka generates
@@ -179,8 +177,7 @@ open class GradleDokkaSourceSetBuilder(
      * Prefer using [sourceLink] action/closure for adding source links.
      */
     @Nested
-    val sourceLinks: SetProperty<GradleSourceLinkBuilder> = project.objects.setProperty<GradleSourceLinkBuilder>()
-        .convention(emptySet())
+    val sourceLinks: SetProperty<GradleSourceLinkBuilder> = project.objects.setProperty<GradleSourceLinkBuilder>().convention(emptySet())
 
     /**
      * Allows to customize documentation generation options on a per-package basis.
@@ -209,8 +206,8 @@ open class GradleDokkaSourceSetBuilder(
      */
     @Input
     @Optional
-    val platform: Property<Platform> = project.objects.safeProperty<Platform>()
-        .safeConvention(Platform.DEFAULT)
+    val platform: Property<Platform> = project.objects.property<Platform>()
+        .convention(Platform.DEFAULT)
 
     /**
      * Whether to skip packages that contain no visible declarations after
@@ -222,8 +219,8 @@ open class GradleDokkaSourceSetBuilder(
      * Default is `true`.
      */
     @Input
-    val skipEmptyPackages: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.skipEmptyPackages)
+    val skipEmptyPackages: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.skipEmptyPackages)
 
     /**
      * Whether to document declarations annotated with [Deprecated].
@@ -233,8 +230,8 @@ open class GradleDokkaSourceSetBuilder(
      * Default is `false`.
      */
     @Input
-    val skipDeprecated: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.skipDeprecated)
+    val skipDeprecated: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.skipDeprecated)
 
     /**
      * Directories or individual files that should be suppressed, meaning declarations from them
@@ -256,8 +253,8 @@ open class GradleDokkaSourceSetBuilder(
      * Default is `true`.
      */
     @Input
-    val suppressGeneratedFiles: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.suppressGeneratedFiles)
+    val suppressGeneratedFiles: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.suppressGeneratedFiles)
 
     /**
      * Whether to generate external documentation links that lead to API reference
@@ -266,8 +263,8 @@ open class GradleDokkaSourceSetBuilder(
      * Default is `false`, meaning links will be generated.
      */
     @Input
-    val noStdlibLink: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.noStdlibLink)
+    val noStdlibLink: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.noStdlibLink)
 
     /**
      * Whether to generate external documentation links to JDK's Javadocs
@@ -278,8 +275,8 @@ open class GradleDokkaSourceSetBuilder(
      * Default is `false`, meaning links will be generated.
      */
     @Input
-    val noJdkLink: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.noJdkLink)
+    val noJdkLink: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.noJdkLink)
 
     /**
      * Whether to generate external documentation links for Android SDK API reference
@@ -290,8 +287,8 @@ open class GradleDokkaSourceSetBuilder(
      * Default is `false`, meaning links will be generated.
      */
     @Input
-    val noAndroidSdkLink: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.noAndroidSdkLink)
+    val noAndroidSdkLink: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.noAndroidSdkLink)
 
     /**
      * [Kotlin language version](https://kotlinlang.org/docs/compatibility-modes.html)
@@ -302,7 +299,7 @@ open class GradleDokkaSourceSetBuilder(
      */
     @Input
     @Optional
-    val languageVersion: Property<String?> = project.objects.safeProperty()
+    val languageVersion: Property<String?> = project.objects.property()
 
     /**
      * [Kotlin API version](https://kotlinlang.org/docs/compatibility-modes.html)
@@ -313,7 +310,7 @@ open class GradleDokkaSourceSetBuilder(
      */
     @Input
     @Optional
-    val apiVersion: Property<String?> = project.objects.safeProperty()
+    val apiVersion: Property<String?> = project.objects.property()
 
     /**
      * JDK version to use when generating external documentation links for Java types.
@@ -325,15 +322,15 @@ open class GradleDokkaSourceSetBuilder(
      * Default is JDK 8.
      */
     @Input
-    val jdkVersion: Property<Int> = project.objects.safeProperty<Int>()
-        .safeConvention(DokkaDefaults.jdkVersion)
+    val jdkVersion: Property<Int> = project.objects.property<Int>()
+        .convention(DokkaDefaults.jdkVersion)
 
     /**
      * Deprecated. Use [documentedVisibilities] instead.
      */
     @Input
-    val includeNonPublic: Property<Boolean> = project.objects.safeProperty<Boolean>()
-        .safeConvention(DokkaDefaults.includeNonPublic)
+    val includeNonPublic: Property<Boolean> = project.objects.property<Boolean>()
+        .convention(DokkaDefaults.includeNonPublic)
 
     fun DokkaSourceSetID(sourceSetName: String): DokkaSourceSetID = sourceSetIdFactory.create(sourceSetName)
 

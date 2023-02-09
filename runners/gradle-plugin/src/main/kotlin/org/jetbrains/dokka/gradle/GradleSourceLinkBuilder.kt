@@ -4,6 +4,7 @@ import org.gradle.api.Project
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.*
+import org.gradle.kotlin.dsl.*
 import org.jetbrains.dokka.DokkaConfigurationBuilder
 import org.jetbrains.dokka.SourceLinkDefinitionImpl
 import java.io.File
@@ -42,7 +43,7 @@ class GradleSourceLinkBuilder(
      * ```
      */
     @Internal // changing contents of the directory should not invalidate the task
-    val localDirectory: Property<File?> = project.objects.safeProperty()
+    val localDirectory: Property<File?> = project.objects.property()
     
     /**
      * The relative path to [localDirectory] from the project directory. Declared as an input to invalidate the task if that path changes.
@@ -65,7 +66,7 @@ class GradleSourceLinkBuilder(
      * ```
      */
     @Input
-    val remoteUrl: Property<URL?> = project.objects.safeProperty()
+    val remoteUrl: Property<URL?> = project.objects.property()
 
     /**
      * Suffix used to append source code line number to the URL. This will help readers navigate
@@ -84,14 +85,14 @@ class GradleSourceLinkBuilder(
      */
     @Optional
     @Input
-    val remoteLineSuffix: Property<String> = project.objects.safeProperty<String>()
-        .safeConvention("#L")
+    val remoteLineSuffix: Property<String> = project.objects.property<String>()
+        .convention("#L")
 
     override fun build(): SourceLinkDefinitionImpl {
         return SourceLinkDefinitionImpl(
-            localDirectory = localDirectory.getSafe()?.canonicalPath ?: project.projectDir.canonicalPath,
-            remoteUrl = checkNotNull(remoteUrl.getSafe()) { "missing remoteUrl on source link" },
-            remoteLineSuffix = remoteLineSuffix.getSafe()
+            localDirectory = localDirectory.orNull?.canonicalPath ?: project.projectDir.canonicalPath,
+            remoteUrl = checkNotNull(remoteUrl.get()) { "missing remoteUrl on source link" },
+            remoteLineSuffix = remoteLineSuffix.get()
         )
     }
 }

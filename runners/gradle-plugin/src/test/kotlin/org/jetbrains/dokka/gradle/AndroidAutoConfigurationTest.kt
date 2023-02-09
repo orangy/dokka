@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testfixtures.ProjectBuilder
 import kotlin.test.*
+import org.jetbrains.dokka.gradle.tasks.DokkaTask
 
 class AndroidAutoConfigurationTest {
 
@@ -49,12 +50,12 @@ class AndroidAutoConfigurationTest {
         dokkaTasks.flatMap { it.dokkaSourceSets }.forEach { sourceSet ->
             if ("test" in sourceSet.name.toLowerCase()) {
                 assertTrue(
-                    sourceSet.suppress.getSafe(),
+                    sourceSet.suppress.get(),
                     "Expected source set `${sourceSet.name}` to be suppressed by default"
                 )
             } else {
                 assertFalse(
-                    sourceSet.suppress.getSafe(),
+                    sourceSet.suppress.get(),
                     "Expected source set `${sourceSet.name}`to not be suppressed by default"
                 )
             }

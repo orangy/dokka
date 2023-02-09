@@ -2,12 +2,9 @@ import org.gradle.configurationcache.extensions.serviceOf
 import org.jetbrains.*
 
 plugins {
-    `java-gradle-plugin`
-    id("com.gradle.plugin-publish") version "0.20.0"
-}
-
-repositories {
-    google()
+    `kotlin-dsl`
+    org.jetbrains.conventions.`maven-publish`
+    id("com.gradle.plugin-publish")
 }
 
 dependencies {
@@ -22,15 +19,25 @@ dependencies {
     testImplementation("com.android.tools.build:gradle:4.0.1")
 
     // Fix https://github.com/gradle/gradle/issues/16774
-    testImplementation (
+    testImplementation(
         files(
             serviceOf<org.gradle.api.internal.classpath.ModuleRegistry>().getModule("gradle-tooling-api-builders")
                 .classpath.asFiles.first()
         )
     )
+
+    val jackson_version: String by project
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jackson_version")
+    val jackson_databind_version: String by project
+    constraints {
+        implementation("com.fasterxml.jackson.core:jackson-databind:$jackson_databind_version") {
+            because("CVE-2022-42003")
+        }
+    }
 }
 
-// Gradle will put its own version of the stdlib in the classpath, do not pull our own we will end up with
+// Gradle will put its own version of the stdlib in the classpath, so not pull our own we will end up with
 // warnings like 'Runtime JAR files in the classpath should have the same version'
 configurations.api.configure {
     excludeGradleCommonDependencies()
@@ -83,6 +90,13 @@ pluginBundle {
     }
 }
 
+val javadocJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles java doc to jar"
+    archiveClassifier.set("javadoc")
+    from(tasks.javadoc)
+}
+
 publishing {
     publications {
         register<MavenPublication>("dokkaGradlePluginForIntegrationTests") {
@@ -94,7 +108,7 @@ publishing {
         register<MavenPublication>("pluginMaven") {
             configurePom("Dokka ${project.name}")
             artifactId = "dokka-gradle-plugin"
-            artifact(tasks["javadocJar"])
+            artifact(javadocJar)
         }
 
         afterEvaluate {
@@ -117,4 +131,8 @@ afterEvaluate { // Workaround for an interesting design choice https://github.co
     configureSpacePublicationIfNecessary("pluginMaven", "dokkaGradlePluginPluginMarkerMaven")
     configureSonatypePublicationIfNecessary("pluginMaven", "dokkaGradlePluginPluginMarkerMaven")
     createDokkaPublishTaskIfNecessary()
+}
+
+tasks.processResources {
+    duplicatesStrategy = DuplicatesStrategy.WARN
 }

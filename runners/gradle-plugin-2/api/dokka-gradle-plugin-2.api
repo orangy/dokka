@@ -1,0 +1,538 @@
+public abstract class org/jetbrains/dokka/gradle/DokkaPlugin : org/gradle/api/Plugin {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/DokkaPlugin$Companion;
+	public static final field EXTENSION_NAME Ljava/lang/String;
+	public static final field TASK_GROUP Ljava/lang/String;
+	public fun <init> (Lorg/gradle/api/provider/ProviderFactory;Lorg/gradle/api/file/ProjectLayout;)V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class org/jetbrains/dokka/gradle/DokkaPlugin$Companion {
+}
+
+public final class org/jetbrains/dokka/gradle/DokkaPlugin$Companion$ConfigurationName {
+	public static final field DOKKA Ljava/lang/String;
+	public static final field DOKKA_CONFIGURATIONS Ljava/lang/String;
+	public static final field DOKKA_CONFIGURATION_ELEMENTS Ljava/lang/String;
+	public static final field DOKKA_MODULE_DESCRIPTORS Ljava/lang/String;
+	public static final field DOKKA_MODULE_DESCRIPTOR_ELEMENTS Ljava/lang/String;
+	public static final field DOKKA_PLUGINS_CLASSPATH Ljava/lang/String;
+	public static final field DOKKA_RUNTIME_CLASSPATH Ljava/lang/String;
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/DokkaPlugin$Companion$ConfigurationName;
+}
+
+public final class org/jetbrains/dokka/gradle/DokkaPlugin$Companion$TaskName {
+	public static final field CREATE_DOKKA_CONFIGURATION Ljava/lang/String;
+	public static final field CREATE_DOKKA_MODULE_CONFIGURATION Ljava/lang/String;
+	public static final field DOKKA_GENERATE Ljava/lang/String;
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/DokkaPlugin$Companion$TaskName;
+}
+
+public abstract class org/jetbrains/dokka/gradle/DokkaPluginSettings {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;)V
+	public final fun getAttributeValues ()Lorg/jetbrains/dokka/gradle/DokkaPluginSettings$DokkaAttributeValues;
+	public final fun getDokkaModules ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public final fun getDokkaSourceSets ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public abstract fun getDokkaVersion ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDokkaWorkDir ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getModuleName ()Lorg/gradle/api/provider/Property;
+}
+
+public final class org/jetbrains/dokka/gradle/DokkaPluginSettings$DokkaAttributeValues {
+	public fun <init> (Lorg/jetbrains/dokka/gradle/DokkaPluginSettings;)V
+	public final fun getDokkaConfigurationCategory ()Lorg/gradle/api/attributes/Category;
+	public final fun getDokkaModuleDescriptionCategory ()Lorg/gradle/api/attributes/Category;
+	public final fun getDokkaUsage ()Lorg/gradle/api/attributes/Usage;
+}
+
+public abstract class org/jetbrains/dokka/gradle/adapters/DokkaKotlinAdapter : org/gradle/api/Plugin {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/adapters/DokkaKotlinAdapter$Companion;
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class org/jetbrains/dokka/gradle/adapters/DokkaKotlinAdapter$Companion {
+}
+
+public abstract class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationGradleBuilder : org/gradle/api/Named, org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/provider/ProviderFactory;)V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs;
+	public final fun getCacheRoot ()Lorg/gradle/api/file/DirectoryProperty;
+	protected final fun getCacheRootPath ()Lorg/gradle/api/provider/Provider;
+	public abstract fun getDelayTemplateSubstitution ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDokkaModuleDescriptorFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getDokkaSubprojectConfigurations ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getFailOnWarning ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFinalizeCoroutines ()Lorg/gradle/api/provider/Property;
+	public abstract fun getIncludes ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun getModuleName ()Lorg/gradle/api/provider/Provider;
+	public abstract fun getModuleVersion ()Lorg/gradle/api/provider/Property;
+	public abstract fun getOfflineMode ()Lorg/gradle/api/provider/Property;
+	public final fun getOutputDir ()Lorg/gradle/api/file/DirectoryProperty;
+	protected final fun getOutputDirPath ()Lorg/gradle/api/provider/Provider;
+	public abstract fun getPluginsClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getPluginsConfiguration ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public abstract fun getSourceSets ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public abstract fun getSuppressInheritedMembers ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSuppressObviousFunctions ()Lorg/gradle/api/provider/Property;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs : org/gradle/api/Named, org/jetbrains/dokka/DokkaConfiguration {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/io/File;Ljava/io/File;ZZLjava/util/List;Ljava/util/List;Ljava/util/List;ZZLjava/util/Set;ZZLjava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/io/File;Ljava/io/File;ZZLjava/util/List;Ljava/util/List;Ljava/util/List;ZZLjava/util/Set;ZZLjava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Z
+	public final fun component11 ()Z
+	public final fun component12 ()Ljava/util/Set;
+	public final fun component13 ()Z
+	public final fun component14 ()Z
+	public final fun component15 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/io/File;
+	public final fun component4 ()Ljava/io/File;
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()Ljava/util/List;
+	public final fun component8 ()Ljava/util/List;
+	public final fun component9 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/io/File;Ljava/io/File;ZZLjava/util/List;Ljava/util/List;Ljava/util/List;ZZLjava/util/Set;ZZLjava/util/List;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs;
+	public static synthetic fun copy$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs;Ljava/lang/String;Ljava/lang/String;Ljava/io/File;Ljava/io/File;ZZLjava/util/List;Ljava/util/List;Ljava/util/List;ZZLjava/util/Set;ZZLjava/util/List;ILjava/lang/Object;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getCacheRoot ()Ljava/io/File;
+	public fun getDelayTemplateSubstitution ()Z
+	public fun getFailOnWarning ()Z
+	public fun getFinalizeCoroutines ()Z
+	public fun getIncludes ()Ljava/util/Set;
+	public fun getModuleName ()Ljava/lang/String;
+	public fun getModuleVersion ()Ljava/lang/String;
+	public fun getModules ()Ljava/util/List;
+	public final fun getModulesKxs ()Ljava/util/List;
+	public fun getName ()Ljava/lang/String;
+	public fun getOfflineMode ()Z
+	public fun getOutputDir ()Ljava/io/File;
+	public fun getPluginsClasspath ()Ljava/util/List;
+	public fun getPluginsConfiguration ()Ljava/util/List;
+	public fun getSourceSets ()Ljava/util/List;
+	public fun getSuppressInheritedMembers ()Z
+	public fun getSuppressObviousFunctions ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs : java/io/Serializable, org/gradle/api/Named {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/io/File;Ljava/util/Set;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/io/File;Ljava/util/Set;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/io/File;
+	public final fun component3 ()Ljava/util/Set;
+	public final fun copy (Ljava/lang/String;Ljava/io/File;Ljava/util/Set;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs;
+	public static synthetic fun copy$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs;Ljava/lang/String;Ljava/io/File;Ljava/util/Set;ILjava/lang/Object;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIncludes ()Ljava/util/Set;
+	public final fun getModuleName ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public final fun getSourceOutputDirectory ()Ljava/io/File;
+	public fun hashCode ()I
+	public final fun toCoreModel (Ljava/io/File;)Lorg/jetbrains/dokka/DokkaConfiguration$DokkaModuleDescription;
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs : org/gradle/api/Named, org/jetbrains/dokka/DokkaConfiguration$DokkaSourceSet {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs$Companion;
+	public synthetic fun <init> (ILorg/jetbrains/dokka/DokkaSourceSetID;Ljava/lang/String;Ljava/util/List;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;ZZZILjava/util/Set;Ljava/util/List;Ljava/util/Set;Ljava/lang/String;Ljava/lang/String;ZZLjava/util/Set;Lorg/jetbrains/dokka/Platform;Ljava/util/Set;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lorg/jetbrains/dokka/DokkaSourceSetID;Ljava/lang/String;Ljava/util/List;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;ZZZILjava/util/Set;Ljava/util/List;Ljava/util/Set;Ljava/lang/String;Ljava/lang/String;ZZLjava/util/Set;Lorg/jetbrains/dokka/Platform;Ljava/util/Set;)V
+	public final fun component1 ()Lorg/jetbrains/dokka/DokkaSourceSetID;
+	public final fun component10 ()Z
+	public final fun component11 ()I
+	public final fun component12 ()Ljava/util/Set;
+	public final fun component13 ()Ljava/util/List;
+	public final fun component14 ()Ljava/util/Set;
+	public final fun component15 ()Ljava/lang/String;
+	public final fun component16 ()Ljava/lang/String;
+	public final fun component17 ()Z
+	public final fun component18 ()Z
+	public final fun component19 ()Ljava/util/Set;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component20 ()Lorg/jetbrains/dokka/Platform;
+	public final fun component21 ()Ljava/util/Set;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/util/Set;
+	public final fun component5 ()Ljava/util/Set;
+	public final fun component6 ()Ljava/util/Set;
+	public final fun component7 ()Ljava/util/Set;
+	public final fun component8 ()Z
+	public final fun component9 ()Z
+	public final fun copy (Lorg/jetbrains/dokka/DokkaSourceSetID;Ljava/lang/String;Ljava/util/List;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;ZZZILjava/util/Set;Ljava/util/List;Ljava/util/Set;Ljava/lang/String;Ljava/lang/String;ZZLjava/util/Set;Lorg/jetbrains/dokka/Platform;Ljava/util/Set;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs;
+	public static synthetic fun copy$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs;Lorg/jetbrains/dokka/DokkaSourceSetID;Ljava/lang/String;Ljava/util/List;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;ZZZILjava/util/Set;Ljava/util/List;Ljava/util/Set;Ljava/lang/String;Ljava/lang/String;ZZLjava/util/Set;Lorg/jetbrains/dokka/Platform;Ljava/util/Set;ILjava/lang/Object;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAnalysisPlatform ()Lorg/jetbrains/dokka/Platform;
+	public fun getApiVersion ()Ljava/lang/String;
+	public fun getClasspath ()Ljava/util/List;
+	public fun getDependentSourceSets ()Ljava/util/Set;
+	public fun getDisplayName ()Ljava/lang/String;
+	public fun getDocumentedVisibilities ()Ljava/util/Set;
+	public fun getExternalDocumentationLinks ()Ljava/util/Set;
+	public fun getIncludeNonPublic ()Z
+	public fun getIncludes ()Ljava/util/Set;
+	public fun getJdkVersion ()I
+	public fun getLanguageVersion ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getNoJdkLink ()Z
+	public fun getNoStdlibLink ()Z
+	public fun getPerPackageOptions ()Ljava/util/List;
+	public fun getReportUndocumented ()Z
+	public fun getSamples ()Ljava/util/Set;
+	public fun getSkipDeprecated ()Z
+	public fun getSkipEmptyPackages ()Z
+	public fun getSourceLinks ()Ljava/util/Set;
+	public fun getSourceRoots ()Ljava/util/Set;
+	public fun getSourceSetID ()Lorg/jetbrains/dokka/DokkaSourceSetID;
+	public fun getSuppressedFiles ()Ljava/util/Set;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs : org/jetbrains/dokka/DokkaConfiguration$ExternalDocumentationLink {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs$Companion;
+	public synthetic fun <init> (ILjava/net/URL;Ljava/net/URL;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/net/URL;Ljava/net/URL;)V
+	public final fun component1 ()Ljava/net/URL;
+	public final fun component2 ()Ljava/net/URL;
+	public final fun copy (Ljava/net/URL;Ljava/net/URL;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs;
+	public static synthetic fun copy$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs;Ljava/net/URL;Ljava/net/URL;ILjava/lang/Object;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getPackageListUrl ()Ljava/net/URL;
+	public fun getUrl ()Ljava/net/URL;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs : org/jetbrains/dokka/DokkaConfiguration$PackageOptions {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/Boolean;ZZLjava/util/Set;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Boolean;ZZLjava/util/Set;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/Boolean;
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Ljava/util/Set;
+	public final fun copy (Ljava/lang/String;Ljava/lang/Boolean;ZZLjava/util/Set;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs;
+	public static synthetic fun copy$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs;Ljava/lang/String;Ljava/lang/Boolean;ZZLjava/util/Set;ILjava/lang/Object;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getDocumentedVisibilities ()Ljava/util/Set;
+	public fun getIncludeNonPublic ()Z
+	public fun getMatchingRegex ()Ljava/lang/String;
+	public fun getReportUndocumented ()Ljava/lang/Boolean;
+	public fun getSkipDeprecated ()Z
+	public fun getSuppress ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs : org/gradle/api/Named, org/jetbrains/dokka/DokkaConfiguration$PluginConfiguration {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lorg/jetbrains/dokka/DokkaConfiguration$SerializationFormat;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Lorg/jetbrains/dokka/DokkaConfiguration$SerializationFormat;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lorg/jetbrains/dokka/DokkaConfiguration$SerializationFormat;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Lorg/jetbrains/dokka/DokkaConfiguration$SerializationFormat;Ljava/lang/String;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs;
+	public static synthetic fun copy$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs;Ljava/lang/String;Lorg/jetbrains/dokka/DokkaConfiguration$SerializationFormat;Ljava/lang/String;ILjava/lang/Object;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getFqPluginName ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getSerializationFormat ()Lorg/jetbrains/dokka/DokkaConfiguration$SerializationFormat;
+	public fun getValues ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs : org/jetbrains/dokka/DokkaConfiguration$SourceLinkDefinition {
+	public static final field Companion Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/net/URL;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/net/URL;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/net/URL;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/net/URL;Ljava/lang/String;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs;
+	public static synthetic fun copy$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs;Ljava/lang/String;Ljava/net/URL;Ljava/lang/String;ILjava/lang/Object;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getLocalDirectory ()Ljava/lang/String;
+	public fun getRemoteLineSuffix ()Ljava/lang/String;
+	public fun getRemoteUrl ()Ljava/net/URL;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class org/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$SourceLinkDefinitionKxs$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class org/jetbrains/dokka/gradle/dokka_configuration/DokkaExternalDocumentationLinkGradleBuilder : org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> ()V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$ExternalDocumentationLinkKxs;
+	public abstract fun getPackageListUrl ()Lorg/gradle/api/provider/Property;
+	public abstract fun getUrl ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class org/jetbrains/dokka/gradle/dokka_configuration/DokkaModuleDescriptionGradleBuilder : org/gradle/api/Named, org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> (Lorg/gradle/api/provider/ProviderFactory;)V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaModuleDescriptionKxs;
+	public abstract fun getIncludes ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun getModuleName ()Lorg/gradle/api/provider/Provider;
+	public abstract fun getSourceOutputDirectory ()Lorg/gradle/api/file/RegularFileProperty;
+}
+
+public abstract class org/jetbrains/dokka/gradle/dokka_configuration/DokkaPackageOptionsGradleBuilder : org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> ()V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PackageOptionsKxs;
+	public abstract fun getDocumentedVisibilities ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getIncludeNonPublic ()Lorg/gradle/api/provider/Property;
+	public abstract fun getMatchingRegex ()Lorg/gradle/api/provider/Property;
+	public abstract fun getReportUndocumented ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSkipDeprecated ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSuppress ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class org/jetbrains/dokka/gradle/dokka_configuration/DokkaPluginConfigurationGradleBuilder : org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> ()V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$PluginConfigurationKxs;
+	public abstract fun getFqPluginName ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSerializationFormat ()Lorg/gradle/api/provider/Property;
+	public abstract fun getValues ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class org/jetbrains/dokka/gradle/dokka_configuration/DokkaSourceLinkGradleBuilder : org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> ()V
+	public abstract fun getLocalDirectory ()Lorg/gradle/api/provider/Property;
+	protected abstract fun getLocalDirectoryPath ()Lorg/gradle/api/provider/Provider;
+	public abstract fun getRemoteLineSuffix ()Lorg/gradle/api/provider/Property;
+	public abstract fun getRemoteUrl ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class org/jetbrains/dokka/gradle/dokka_configuration/DokkaSourceSetGradleBuilder : org/gradle/api/Named, org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> (Lorg/gradle/api/provider/ProviderFactory;Lorg/gradle/api/model/ObjectFactory;)V
+	public final fun DokkaSourceSetID (Ljava/lang/String;)Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaSourceSetIDGradleBuilder;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaConfigurationKxs$DokkaSourceSetKxs;
+	public final fun dependsOn (Ljava/lang/String;)V
+	public final fun dependsOn (Lorg/gradle/api/tasks/SourceSet;)V
+	public final fun dependsOn (Lorg/jetbrains/dokka/DokkaConfiguration$DokkaSourceSet;)V
+	public final fun dependsOn (Lorg/jetbrains/dokka/DokkaSourceSetID;)V
+	public final fun externalDocumentationLink (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun externalDocumentationLink (Ljava/net/URL;Ljava/net/URL;)V
+	public final fun externalDocumentationLink (Lorg/gradle/api/Action;)V
+	public static synthetic fun externalDocumentationLink$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaSourceSetGradleBuilder;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun externalDocumentationLink$default (Lorg/jetbrains/dokka/gradle/dokka_configuration/DokkaSourceSetGradleBuilder;Ljava/net/URL;Ljava/net/URL;ILjava/lang/Object;)V
+	public abstract fun getAnalysisPlatform ()Lorg/gradle/api/provider/Property;
+	public abstract fun getApiVersion ()Lorg/gradle/api/provider/Property;
+	public abstract fun getClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getDependentSourceSets ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public abstract fun getDisplayName ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDocumentedVisibilities ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getExternalDocumentationLinks ()Lorg/gradle/api/provider/SetProperty;
+	public abstract fun getIncludes ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getJdkVersion ()Lorg/gradle/api/provider/Property;
+	public abstract fun getLanguageVersion ()Lorg/gradle/api/provider/Property;
+	protected abstract fun getLayout ()Lorg/gradle/api/file/ProjectLayout;
+	public abstract fun getNoAndroidSdkLink ()Lorg/gradle/api/provider/Property;
+	public abstract fun getNoJdkLink ()Lorg/gradle/api/provider/Property;
+	public abstract fun getNoStdlibLink ()Lorg/gradle/api/provider/Property;
+	public abstract fun getPerPackageOptions ()Lorg/gradle/api/provider/ListProperty;
+	public abstract fun getReportUndocumented ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSamples ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getSkipDeprecated ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSkipEmptyPackages ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSourceLinks ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public abstract fun getSourceRoots ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getSourceSetID ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSuppress ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSuppressGeneratedFiles ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSuppressedFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun perPackageOption (Lorg/gradle/api/Action;)V
+	public final fun sourceLink (Lorg/gradle/api/Action;)V
+	public final fun sourceRoot (Ljava/io/File;)V
+	public final fun sourceRoot (Ljava/lang/String;)V
+}
+
+public abstract class org/jetbrains/dokka/gradle/dokka_configuration/DokkaSourceSetIDGradleBuilder : org/gradle/api/Named, org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> ()V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/DokkaSourceSetID;
+	public final fun getScopeId ()Ljava/lang/String;
+	public abstract fun getSourceSetName ()Ljava/lang/String;
+	public abstract fun setSourceSetName (Ljava/lang/String;)V
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/DokkaConfigurationTask : org/jetbrains/dokka/gradle/tasks/DokkaTask {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;)V
+	public final fun generateConfiguration ()V
+	public final fun getCacheRoot ()Lorg/gradle/api/file/DirectoryProperty;
+	protected final fun getCacheRootPath ()Lorg/gradle/api/provider/Provider;
+	public abstract fun getDelayTemplateSubstitution ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDokkaConfigurationJson ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getDokkaModuleDescriptorFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getDokkaSourceSets ()Lorg/gradle/api/NamedDomainObjectContainer;
+	public abstract fun getDokkaSubprojectConfigurations ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getFailOnWarning ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFinalizeCoroutines ()Lorg/gradle/api/provider/Property;
+	public abstract fun getIncludes ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getModuleName ()Lorg/gradle/api/provider/Property;
+	public abstract fun getModuleVersion ()Lorg/gradle/api/provider/Property;
+	public abstract fun getOfflineMode ()Lorg/gradle/api/provider/Property;
+	public final fun getOutputDir ()Lorg/gradle/api/file/DirectoryProperty;
+	protected final fun getOutputDirPath ()Lorg/gradle/api/provider/Provider;
+	public abstract fun getPluginsClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getPluginsConfiguration ()Lorg/gradle/api/DomainObjectSet;
+	public abstract fun getSuppressInheritedMembers ()Lorg/gradle/api/provider/Property;
+	public abstract fun getSuppressObviousFunctions ()Lorg/gradle/api/provider/Property;
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/DokkaGenerateTask : org/jetbrains/dokka/gradle/tasks/DokkaTask {
+	public fun <init> (Lorg/gradle/api/provider/ProviderFactory;Lorg/gradle/workers/WorkerExecutor;)V
+	public final fun generateDocumentation ()V
+	public abstract fun getCacheDirectory ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getDokkaConfigurationJson ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getOutputDirectory ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getPluginClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getRuntimeClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/DokkaModuleConfigurationTask : org/jetbrains/dokka/gradle/tasks/DokkaTask {
+	public fun <init> (Lorg/gradle/api/file/ProjectLayout;)V
+	public final fun generateModuleConfiguration ()V
+	public abstract fun getDokkaModuleConfigurationJson ()Lorg/gradle/api/file/RegularFileProperty;
+	public abstract fun getIncludes ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getModuleName ()Lorg/gradle/api/provider/Property;
+	protected abstract fun getSourceOutputDirectory ()Lorg/gradle/api/provider/Property;
+	public final fun sourceOutputDirectory (Ljava/lang/Object;)V
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/DokkaTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+}
+
+public abstract class org/jetbrains/dokka/gradle/workers/DokkaGeneratorWorker : org/gradle/workers/WorkAction {
+	public fun <init> ()V
+	public fun execute ()V
+}
+
+public abstract interface class org/jetbrains/dokka/gradle/workers/DokkaGeneratorWorker$Parameters : org/gradle/workers/WorkParameters {
+	public abstract fun getDokkaConfiguration ()Lorg/gradle/api/provider/Property;
+}

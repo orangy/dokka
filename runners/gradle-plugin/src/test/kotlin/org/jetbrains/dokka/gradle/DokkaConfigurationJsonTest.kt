@@ -2,10 +2,12 @@ package org.jetbrains.dokka.gradle
 
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testfixtures.ProjectBuilder
-import org.jetbrains.dokka.DokkaConfiguration
-import org.jetbrains.dokka.DokkaConfigurationImpl
-import org.jetbrains.dokka.PluginConfigurationImpl
-import org.jetbrains.dokka.toJsonString
+import org.jetbrains.dokka.*
+import org.jetbrains.dokka.DokkaDefaults.documentedVisibilities
+import org.jetbrains.dokka.DokkaDefaults.includeNonPublic
+import org.jetbrains.dokka.DokkaDefaults.reportUndocumented
+import org.jetbrains.dokka.DokkaDefaults.skipDeprecated
+import org.jetbrains.dokka.gradle.tasks.DokkaTask
 import java.io.File
 import java.net.URL
 import kotlin.test.Test
@@ -18,9 +20,7 @@ class DokkaConfigurationJsonTest {
         val project = ProjectBuilder.builder().build()
         project.plugins.apply("org.jetbrains.dokka")
         val dokkaTask = project.tasks.withType<DokkaTask>().first()
-        dokkaTask.plugins.withDependencies { dependencies ->
-            dependencies.clear()
-        }
+        dokkaTask.plugins.withDependencies { clear() }
         dokkaTask.apply {
             this.failOnWarning.set(true)
             this.offlineMode.set(true)
@@ -32,19 +32,19 @@ class DokkaConfigurationJsonTest {
             this.pluginsConfiguration.add(
                 PluginConfigurationImpl("B", DokkaConfiguration.SerializationFormat.JSON, """ { "key" : "value2" } """)
             )
-            this.dokkaSourceSets.create("main") { sourceSet ->
-                sourceSet.displayName.set("customSourceSetDisplayName")
-                sourceSet.reportUndocumented.set(true)
+            this.dokkaSourceSets.create("main") {
+                displayName.set("customSourceSetDisplayName")
+                reportUndocumented.set(true)
 
-                sourceSet.externalDocumentationLink { link ->
-                    link.packageListUrl.set(URL("http://some.url"))
-                    link.url.set(URL("http://some.other.url"))
+                externalDocumentationLink {
+                    packageListUrl.set(URL("http://some.url"))
+                    url.set(URL("http://some.other.url"))
                 }
-                sourceSet.perPackageOption { packageOption ->
-                    packageOption.includeNonPublic.set(true)
-                    packageOption.reportUndocumented.set(true)
-                    packageOption.skipDeprecated.set(true)
-                    packageOption.documentedVisibilities.set(setOf(DokkaConfiguration.Visibility.PRIVATE))
+                perPackageOption {
+                    includeNonPublic.set(true)
+                    reportUndocumented.set(true)
+                    skipDeprecated.set(true)
+                    documentedVisibilities.set(setOf(DokkaConfiguration.Visibility.PRIVATE))
                 }
             }
         }

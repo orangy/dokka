@@ -25,4 +25,3 @@ fun initializeConfiguration(globalArguments: GlobalArguments): DokkaConfiguratio
         globalArguments
     }
 }
-

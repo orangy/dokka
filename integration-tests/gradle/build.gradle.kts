@@ -1,6 +1,11 @@
 import org.jetbrains.dependsOnMavenLocalPublication
 
+plugins {
+    org.jetbrains.conventions.`dokka-integration-test`
+}
+
 dependencies {
+    implementation(project(":integration-tests"))
     implementation(kotlin("stdlib"))
     implementation(kotlin("test-junit"))
     implementation(gradleTestKit())

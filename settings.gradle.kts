@@ -1,51 +1,46 @@
 rootProject.name = "dokka"
 
-include("core")
-include("core:test-api")
-include("core:content-matcher-test-utils")
+include(
+    ":core",
+    ":core:test-api",
+    ":core:content-matcher-test-utils",
 
-include("kotlin-analysis")
-include("kotlin-analysis:intellij-dependency")
-include("kotlin-analysis:compiler-dependency")
+    ":kotlin-analysis",
+    ":kotlin-analysis:intellij-dependency",
+    ":kotlin-analysis:compiler-dependency",
 
-include("runners:gradle-plugin")
-include("runners:cli")
-include("runners:maven-plugin")
+    ":runners:gradle-plugin",
+    ":runners:cli",
+    ":runners:maven-plugin",
 
-include("plugins:base")
-include("plugins:base:frontend")
-include("plugins:base:search-component")
-include("plugins:base:base-test-utils")
-include("plugins:all-modules-page")
-include("plugins:templating")
-include("plugins:versioning")
-include("plugins:android-documentation")
+    ":plugins:base",
+    ":plugins:base:frontend",
+    ":plugins:base:search-component",
+    ":plugins:base:base-test-utils",
+    ":plugins:all-modules-page",
+    ":plugins:templating",
+    ":plugins:versioning",
+    ":plugins:android-documentation",
 
-include("plugins:mathjax")
-include("plugins:gfm")
-include("plugins:gfm:gfm-template-processing")
-include("plugins:jekyll")
-include("plugins:jekyll:jekyll-template-processing")
-include("plugins:kotlin-as-java")
-include("plugins:javadoc")
+    ":plugins:mathjax",
+    ":plugins:gfm",
+    ":plugins:gfm:gfm-template-processing",
+    ":plugins:jekyll",
+    ":plugins:jekyll:jekyll-template-processing",
+    ":plugins:kotlin-as-java",
+    ":plugins:javadoc",
 
-include("integration-tests")
-include("integration-tests:gradle")
-include("integration-tests:cli")
-include("integration-tests:maven")
+    ":integration-tests",
+    ":integration-tests:gradle",
+    ":integration-tests:cli",
+    ":integration-tests:maven",
 
-include("test-utils")
+    ":test-utils",
 
-include("mkdocs")
+    ":mkdocs",
+)
 
-pluginManagement {
-    val kotlin_version: String by settings
-    plugins {
-        id("org.jetbrains.kotlin.jvm") version kotlin_version
-        id("com.github.johnrengelman.shadow") version "7.1.2"
-        id("com.gradle.plugin-publish") version "0.20.0"
-    }
-}
+includeBuild("runners/gradle-plugin-2")
 
 val isCiBuild = System.getenv("GITHUB_ACTIONS") != null || System.getenv("TEAMCITY_VERSION") != null
 
@@ -58,5 +53,44 @@ gradleEnterprise {
         termsOfServiceUrl = "https://gradle.com/terms-of-service"
         termsOfServiceAgree = "yes"
         publishAlwaysIf(isCiBuild)
+    }
+}
+
+@Suppress("UnstableApiUsage") // Central declaration of repositories is an incubating feature
+dependencyResolutionManagement {
+
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+
+    repositories {
+        mavenCentral()
+        google()
+
+        // Declare the Node.js & Yarn download repositories
+        ivy("https://nodejs.org/dist/") {
+            name = "Node Distributions at $url"
+            patternLayout { artifact("v[revision]/[artifact](-v[revision]-[classifier]).[ext]") }
+            metadataSources { artifact() }
+            content { includeModule("org.nodejs", "node") }
+        }
+        ivy("https://github.com/yarnpkg/yarn/releases/download") {
+            name = "Yarn Distributions at $url"
+            patternLayout { artifact("v[revision]/[artifact](-v[revision]).[ext]") }
+            metadataSources { artifact() }
+            content { includeModule("com.yarnpkg", "yarn") }
+        }
+
+        maven("https://www.jetbrains.com/intellij-repository/snapshots")
+        maven("https://www.jetbrains.com/intellij-repository/releases")
+        maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide")
+        maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide-plugin-dependencies")
+        maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
+        maven("https://www.myget.org/F/rd-snapshots/maven/")
+    }
+
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+            mavenCentral()
+        }
     }
 }

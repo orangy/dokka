@@ -1,0 +1,14 @@
+dependencies {
+    implementation project(":first")
+}
+dokkaHtml {
+    dependsOn(":first:dokkaHtml")
+    dokkaSourceSets {
+        "main" {
+            externalDocumentationLink {
+                url.set(new URL("file://" + rootProject.rootDir.toPath().toAbsolutePath().resolve("first/build/dokka/html/")))
+                packageListUrl.set(new URL("file://" + rootProject.rootDir.toPath().toAbsolutePath().resolve("first/build/dokka/html/first/package-list")))
+            }
+        }
+    }
+}

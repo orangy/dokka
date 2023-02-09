@@ -1,0 +1,54 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id("org.jetbrains.dokka")
+}
+
+apply from: '../template.root.gradle.kts'
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+}
+
+dokkaHtml {
+    outputDirectory = new File(buildDir, "/dokka/customHtml")
+    failOnWarning = false
+    dokkaSourceSets {
+        customSourceSet {
+            sourceRoot(file("src/main/java"))
+            sourceRoot(file("src/main/kotlin"))
+            displayName.set("custom")
+            reportUndocumented.set(true)
+        }
+
+        configureEach {
+            perPackageOption { // testing closures
+                matchingRegex.set(".*internal.*")
+                suppress.set(true)
+            }
+
+            sourceLink { // testing closures
+                localDirectory.set(file("src/main"))
+                remoteUrl.set(
+                        new URL(
+                                "https://github.com/Kotlin/dokka/tree/master/" +
+                                        "integration-tests/gradle/projects/it-basic-groovy/src/main"
+                        )
+                )
+            }
+        }
+    }
+
+}
+
+dokkaJavadoc {
+    outputDirectory = new File(buildDir, "dokka/customJavadoc")
+}
+
+dokkaGfm {
+    outputDirectory = new File(buildDir, "dokka/customGfm")
+}
+
+dokkaJekyll {
+    outputDirectory = new File(buildDir, "dokka/customJekyll")
+}
+

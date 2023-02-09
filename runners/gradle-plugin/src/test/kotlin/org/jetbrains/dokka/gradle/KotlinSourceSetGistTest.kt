@@ -30,12 +30,12 @@ class KotlinSourceSetGistTest {
         )
 
         assertEquals(
-            KotlinPlatformType.jvm, mainSourceSetGist.platform.getSafe(),
+            KotlinPlatformType.jvm, mainSourceSetGist.platform.get(),
             "Expected correct platform"
         )
 
         assertTrue(
-            mainSourceSetGist.isMain.getSafe(),
+            mainSourceSetGist.isMain.get(),
             "Expected main sources to be marked as 'isMain'"
         )
 
@@ -55,7 +55,7 @@ class KotlinSourceSetGistTest {
         val testSourceSetGist = project.gistOf(testSourceSet)
 
         assertFalse(
-            testSourceSetGist.isMain.getSafe(),
+            testSourceSetGist.isMain.get(),
             "Expected test source set not being marked as 'isMain'"
         )
 
@@ -117,8 +117,8 @@ class KotlinSourceSetGistTest {
 
         /* Only work with file dependencies */
         project.configurations.forEach { configuration ->
-            configuration.withDependencies { dependencies ->
-                dependencies.removeIf { dependency ->
+            configuration.withDependencies {
+                removeIf { dependency ->
                     dependency !is FileCollectionDependency
                 }
             }
@@ -138,7 +138,7 @@ class KotlinSourceSetGistTest {
         }
 
         assertEquals(
-            emptySet(), mainSourceSetGist.classpath.getSafe().files,
+            emptySet(), mainSourceSetGist.classpath.get().files,
             "Expected no files on the classpath, since no file exists"
         )
 
@@ -149,7 +149,7 @@ class KotlinSourceSetGistTest {
         check(runtimeOnlyJar.createNewFile())
 
         assertEquals(
-            setOf(implementationJar, compileOnlyJar, apiJar), mainSourceSetGist.classpath.getSafe().files,
+            setOf(implementationJar, compileOnlyJar, apiJar), mainSourceSetGist.classpath.get().files,
             "Expected implementation, compileOnly and api dependencies on classpath"
         )
     }
@@ -187,47 +187,47 @@ class KotlinSourceSetGistTest {
         )
 
         assertEquals(
-            KotlinPlatformType.common, commonMainSourceSetGist.platform.getSafe(),
+            KotlinPlatformType.common, commonMainSourceSetGist.platform.get(),
             "Expected common platform for commonMain source set"
         )
 
         assertEquals(
-            KotlinPlatformType.jvm, jvmMainSourceSetGist.platform.getSafe(),
+            KotlinPlatformType.jvm, jvmMainSourceSetGist.platform.get(),
             "Expected jvm platform for jvmMain source set"
         )
 
         assertEquals(
-            KotlinPlatformType.native, macosMainSourceSetGist.platform.getSafe(),
+            KotlinPlatformType.native, macosMainSourceSetGist.platform.get(),
             "Expected native platform for macosMain source set"
         )
 
         assertTrue(
-            commonMainSourceSetGist.isMain.getSafe(),
+            commonMainSourceSetGist.isMain.get(),
             "Expected commonMain to be marked with 'isMain'"
         )
 
         assertTrue(
-            jvmMainSourceSetGist.isMain.getSafe(),
+            jvmMainSourceSetGist.isMain.get(),
             "Expected jvmMain to be marked with 'isMain'"
         )
 
         assertTrue(
-            macosMainSourceSetGist.isMain.getSafe(),
+            macosMainSourceSetGist.isMain.get(),
             "Expected macosMain to be marked with 'isMain'"
         )
 
         assertFalse(
-            project.gistOf(kotlin.sourceSets["commonTest"]).isMain.getSafe(),
+            project.gistOf(kotlin.sourceSets["commonTest"]).isMain.get(),
             "Expected commonTest not being marked with 'isMain'"
         )
 
         assertFalse(
-            project.gistOf(kotlin.sourceSets["jvmTest"]).isMain.getSafe(),
+            project.gistOf(kotlin.sourceSets["jvmTest"]).isMain.get(),
             "Expected jvmTest not being marked with 'isMain'"
         )
 
         assertFalse(
-            project.gistOf(kotlin.sourceSets["macosTest"]).isMain.getSafe(),
+            project.gistOf(kotlin.sourceSets["macosTest"]).isMain.get(),
             "Expected macosTest not being marked with 'isMain'"
         )
 

@@ -66,7 +66,7 @@ class SingleModuleGeneration(private val context: DokkaContext) : Generation {
         context.plugin<DokkaBase>().query { preMergeDocumentableTransformer }
             .fold(modulesFromPlatforms) { acc, t -> t(acc) }
 
-    fun mergeDocumentationModels(modulesFromPlatforms: List<DModule>) =
+    fun mergeDocumentationModels(modulesFromPlatforms: List<DModule>): DModule? =
         context.single(CoreExtensions.documentableMerger).invoke(modulesFromPlatforms)
 
     fun transformDocumentationModelAfterMerge(documentationModel: DModule) =

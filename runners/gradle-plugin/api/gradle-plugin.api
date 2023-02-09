@@ -1,0 +1,186 @@
+public abstract interface class org/jetbrains/dokka/gradle/DokkaMultiModuleFileLayout {
+	public abstract fun targetChildOutputDirectory (Lorg/jetbrains/dokka/gradle/tasks/DokkaMultiModuleTask;Lorg/jetbrains/dokka/gradle/tasks/AbstractDokkaTask;)Lorg/gradle/api/provider/Provider;
+}
+
+public final class org/jetbrains/dokka/gradle/DokkaMultiModuleFileLayout$CompactInParent : org/jetbrains/dokka/gradle/DokkaMultiModuleFileLayout {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/DokkaMultiModuleFileLayout$CompactInParent;
+	public fun targetChildOutputDirectory (Lorg/jetbrains/dokka/gradle/tasks/DokkaMultiModuleTask;Lorg/jetbrains/dokka/gradle/tasks/AbstractDokkaTask;)Lorg/gradle/api/provider/Provider;
+}
+
+public final class org/jetbrains/dokka/gradle/DokkaMultiModuleFileLayout$NoCopy : org/jetbrains/dokka/gradle/DokkaMultiModuleFileLayout {
+	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/DokkaMultiModuleFileLayout$NoCopy;
+	public fun targetChildOutputDirectory (Lorg/jetbrains/dokka/gradle/tasks/DokkaMultiModuleTask;Lorg/jetbrains/dokka/gradle/tasks/AbstractDokkaTask;)Lorg/gradle/api/provider/Provider;
+}
+
+public class org/jetbrains/dokka/gradle/DokkaPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public class org/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilder : org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> (Ljava/lang/String;Lorg/gradle/api/Project;Lorg/gradle/api/NamedDomainObjectFactory;)V
+	public final fun DokkaSourceSetID (Ljava/lang/String;)Lorg/jetbrains/dokka/DokkaSourceSetID;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/DokkaSourceSetImpl;
+	public final fun dependsOn (Ljava/lang/String;)V
+	public final fun dependsOn (Lorg/gradle/api/tasks/SourceSet;)V
+	public final fun dependsOn (Lorg/jetbrains/dokka/DokkaConfiguration$DokkaSourceSet;)V
+	public final fun dependsOn (Lorg/jetbrains/dokka/DokkaSourceSetID;)V
+	public final fun dependsOn (Lorg/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilder;)V
+	public final fun externalDocumentationLink (Lgroovy/lang/Closure;)V
+	public final fun externalDocumentationLink (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun externalDocumentationLink (Ljava/net/URL;Ljava/net/URL;)V
+	public final fun externalDocumentationLink (Lorg/gradle/api/Action;)V
+	public static synthetic fun externalDocumentationLink$default (Lorg/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilder;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static synthetic fun externalDocumentationLink$default (Lorg/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilder;Ljava/net/URL;Ljava/net/URL;ILjava/lang/Object;)V
+	public final fun getApiVersion ()Lorg/gradle/api/provider/Property;
+	public final fun getClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun getDependentSourceSets ()Lorg/gradle/api/provider/SetProperty;
+	public final fun getDisplayName ()Lorg/gradle/api/provider/Property;
+	public final fun getDocumentedVisibilities ()Lorg/gradle/api/provider/SetProperty;
+	public final fun getExternalDocumentationLinks ()Lorg/gradle/api/provider/SetProperty;
+	public final fun getIncludeNonPublic ()Lorg/gradle/api/provider/Property;
+	public final fun getIncludes ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun getJdkVersion ()Lorg/gradle/api/provider/Property;
+	public final fun getLanguageVersion ()Lorg/gradle/api/provider/Property;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getNoAndroidSdkLink ()Lorg/gradle/api/provider/Property;
+	public final fun getNoJdkLink ()Lorg/gradle/api/provider/Property;
+	public final fun getNoStdlibLink ()Lorg/gradle/api/provider/Property;
+	public final fun getPerPackageOptions ()Lorg/gradle/api/provider/ListProperty;
+	public final fun getPlatform ()Lorg/gradle/api/provider/Property;
+	public final fun getReportUndocumented ()Lorg/gradle/api/provider/Property;
+	public final fun getSamples ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun getSkipDeprecated ()Lorg/gradle/api/provider/Property;
+	public final fun getSkipEmptyPackages ()Lorg/gradle/api/provider/Property;
+	public final fun getSourceLinks ()Lorg/gradle/api/provider/SetProperty;
+	public final fun getSourceRoots ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun getSourceSetID ()Lorg/jetbrains/dokka/DokkaSourceSetID;
+	public final fun getSuppress ()Lorg/gradle/api/provider/Property;
+	public final fun getSuppressGeneratedFiles ()Lorg/gradle/api/provider/Property;
+	public final fun getSuppressedFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun perPackageOption (Lgroovy/lang/Closure;)V
+	public final fun perPackageOption (Lorg/gradle/api/Action;)V
+	public final fun sourceLink (Lgroovy/lang/Closure;)V
+	public final fun sourceLink (Lorg/gradle/api/Action;)V
+	public final fun sourceRoot (Ljava/io/File;)V
+	public final fun sourceRoot (Ljava/lang/String;)V
+}
+
+public final class org/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilderExtensionsKt {
+	public static final fun dependsOn (Lorg/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilder;Lcom/android/build/gradle/api/AndroidSourceSet;)V
+	public static final fun dependsOn (Lorg/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilder;Lorg/jetbrains/kotlin/gradle/plugin/KotlinSourceSet;)V
+	public static final fun kotlinSourceSet (Lorg/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilder;Lorg/jetbrains/kotlin/gradle/plugin/KotlinSourceSet;)V
+}
+
+public final class org/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilderFactoryKt {
+	public static final fun gradleDokkaSourceSetBuilderFactory (Lorg/jetbrains/dokka/gradle/tasks/AbstractDokkaTask;)Lorg/gradle/api/NamedDomainObjectFactory;
+}
+
+public final class org/jetbrains/dokka/gradle/GradleExternalDocumentationLinkBuilder : org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> (Lorg/gradle/api/Project;)V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/ExternalDocumentationLinkImpl;
+	public final fun getPackageListUrl ()Lorg/gradle/api/provider/Property;
+	public final fun getUrl ()Lorg/gradle/api/provider/Property;
+}
+
+public final class org/jetbrains/dokka/gradle/GradlePackageOptionsBuilder : org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> (Lorg/gradle/api/Project;)V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/PackageOptionsImpl;
+	public final fun getDocumentedVisibilities ()Lorg/gradle/api/provider/SetProperty;
+	public final fun getIncludeNonPublic ()Lorg/gradle/api/provider/Property;
+	public final fun getMatchingRegex ()Lorg/gradle/api/provider/Property;
+	public final fun getReportUndocumented ()Lorg/gradle/api/provider/Property;
+	public final fun getSkipDeprecated ()Lorg/gradle/api/provider/Property;
+	public final fun getSuppress ()Lorg/gradle/api/provider/Property;
+}
+
+public final class org/jetbrains/dokka/gradle/GradleSourceLinkBuilder : org/jetbrains/dokka/DokkaConfigurationBuilder {
+	public fun <init> (Lorg/gradle/api/Project;)V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Lorg/jetbrains/dokka/SourceLinkDefinitionImpl;
+	public final fun getLocalDirectory ()Lorg/gradle/api/provider/Property;
+	public final fun getRemoteLineSuffix ()Lorg/gradle/api/provider/Property;
+	public final fun getRemoteUrl ()Lorg/gradle/api/provider/Property;
+}
+
+public final class org/jetbrains/dokka/gradle/SourceSetKotlinGistConfigurationKt {
+	public static final fun configureWithKotlinSourceSet (Lorg/jetbrains/dokka/gradle/GradleDokkaSourceSetBuilder;Lorg/jetbrains/kotlin/gradle/plugin/KotlinSourceSet;)V
+}
+
+public final class org/jetbrains/dokka/gradle/kotlin/KotlinClasspathUtilsKt {
+	public static final fun isHMPPEnabled (Lorg/gradle/api/Project;)Z
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/AbstractDokkaLeafTask : org/jetbrains/dokka/gradle/tasks/AbstractDokkaTask {
+	public fun <init> ()V
+	public final fun getDokkaSourceSets ()Lorg/gradle/api/NamedDomainObjectContainer;
+	protected final fun getUnsuppressedSourceSets ()Ljava/util/List;
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/AbstractDokkaParentTask : org/jetbrains/dokka/gradle/tasks/AbstractDokkaTask {
+	public fun <init> ()V
+	public final fun addChildTask (Ljava/lang/String;)V
+	public final fun addChildTask (Lorg/jetbrains/dokka/gradle/tasks/AbstractDokkaTask;)V
+	public final fun addChildTasks (Ljava/lang/Iterable;Ljava/lang/String;)V
+	public final fun addSubprojectChildTasks (Ljava/lang/String;)V
+	public final fun removeChildTask (Ljava/lang/String;)V
+	public final fun removeChildTask (Lorg/jetbrains/dokka/gradle/tasks/AbstractDokkaTask;)V
+	public final fun removeChildTasks (Ljava/lang/Iterable;)V
+	public final fun removeChildTasks (Ljava/lang/Iterable;Ljava/lang/String;)V
+	public final fun removeChildTasks (Lorg/gradle/api/Project;)V
+	public final fun removeSubprojectChildTasks (Ljava/lang/String;)V
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/AbstractDokkaTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public final fun doFirst (Lgroovy/lang/Closure;)Lorg/gradle/api/Task;
+	public final fun doFirst (Lorg/gradle/api/Action;)Lorg/gradle/api/Task;
+	public abstract fun getCacheRoot ()Lorg/gradle/api/file/DirectoryProperty;
+	public final fun getFailOnWarning ()Lorg/gradle/api/provider/Property;
+	public abstract fun getFinalizeCoroutines ()Lorg/gradle/api/provider/Property;
+	public final fun getModuleName ()Lorg/gradle/api/provider/Property;
+	public final fun getModuleVersion ()Lorg/gradle/api/provider/Property;
+	public final fun getOfflineMode ()Lorg/gradle/api/provider/Property;
+	public abstract fun getOutputDirectory ()Lorg/gradle/api/file/DirectoryProperty;
+	public final fun getPlugins ()Lorg/gradle/api/artifacts/Configuration;
+	public final fun getPluginsConfiguration ()Lorg/gradle/api/provider/ListProperty;
+	public final fun getPluginsMapConfiguration ()Lorg/gradle/api/provider/MapProperty;
+	public final fun getRuntime ()Lorg/gradle/api/artifacts/Configuration;
+	public final fun getSuppressInheritedMembers ()Lorg/gradle/api/provider/Property;
+	public final fun getSuppressObviousFunctions ()Lorg/gradle/api/provider/Property;
+	protected abstract fun getWorkers ()Lorg/gradle/workers/WorkerExecutor;
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/DokkaCollectorTask : org/jetbrains/dokka/gradle/tasks/AbstractDokkaParentTask {
+	public fun <init> ()V
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/DokkaMultiModuleTask : org/jetbrains/dokka/gradle/tasks/AbstractDokkaParentTask {
+	public fun <init> ()V
+	public final fun getFileLayout ()Lorg/gradle/api/provider/Property;
+	public abstract fun getIncludes ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public fun getTaskDependencies ()Lorg/gradle/api/internal/tasks/TaskDependencyInternal;
+	public synthetic fun getTaskDependencies ()Lorg/gradle/api/tasks/TaskDependency;
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/DokkaTask : org/jetbrains/dokka/gradle/tasks/AbstractDokkaLeafTask {
+	public fun <init> ()V
+}
+
+public abstract class org/jetbrains/dokka/gradle/tasks/DokkaTaskPartial : org/jetbrains/dokka/gradle/tasks/AbstractDokkaLeafTask {
+	public fun <init> ()V
+}
+
+public abstract class org/jetbrains/dokka/gradle/workers/DokkaGeneratorWorker : org/gradle/workers/WorkAction {
+	public fun <init> ()V
+	public fun execute ()V
+}
+
+public abstract interface class org/jetbrains/dokka/gradle/workers/DokkaGeneratorWorker$Parameters : org/gradle/workers/WorkParameters {
+	public abstract fun getDokkaConfiguration ()Lorg/gradle/api/provider/Property;
+}
+
