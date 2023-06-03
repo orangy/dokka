@@ -73,3 +73,7 @@ registerDokkaArtifactPublication("kotlinAnalysisIntelliJ") {
     artifactId = "kotlin-analysis-intellij"
     component = Shadow
 }
+
+binaryCompatibilityValidator {
+    enabled.set(false)
+}

@@ -28,7 +28,7 @@ dependencies {
     implementation(libs.jsoup)
     implementation(libs.apacheMaven.artifact)
 
-    testImplementation(projects.core.testApi)
+    testImplementation(testFixtures(projects.core))
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
 }

@@ -10,13 +10,14 @@ dependencies {
     implementation(kotlin("reflect"))
     compileOnly(projects.kotlinAnalysis)
     implementation(projects.plugins.base)
+
+    testImplementation(testFixtures(projects.plugins.base))
+    testImplementation(testFixtures(projects.core))
+
     testImplementation(projects.plugins.base)
-    testImplementation(projects.plugins.base.baseTestUtils)
-    testImplementation(projects.core.contentMatcherTestUtils)
     testImplementation(libs.jsoup)
     testImplementation(projects.kotlinAnalysis)
 
-    testImplementation(projects.core.testApi)
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
 }

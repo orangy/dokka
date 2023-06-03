@@ -12,8 +12,8 @@ dependencies {
     implementation(projects.plugins.base)
 
     testImplementation(projects.plugins.base)
-    testImplementation(projects.plugins.base.baseTestUtils)
-    testImplementation(projects.core.testApi)
+    testImplementation(testFixtures(projects.plugins.base))
+    testImplementation(testFixtures(projects.core))
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
 }

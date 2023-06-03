@@ -11,7 +11,7 @@ dependencies {
     implementation(projects.plugins.base)
     implementation(projects.plugins.gfm)
 
-    testImplementation(projects.core.testApi)
+    testImplementation(testFixtures(projects.core))
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
 }

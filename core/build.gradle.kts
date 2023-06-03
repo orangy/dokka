@@ -4,6 +4,7 @@ import org.jetbrains.registerDokkaArtifactPublication
 plugins {
     id("org.jetbrains.conventions.kotlin-jvm")
     id("org.jetbrains.conventions.maven-publish")
+    `java-test-fixtures`
 }
 
 dependencies {
@@ -22,8 +23,14 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.core)
 
-    testImplementation(projects.core.testApi)
     testImplementation(kotlin("test-junit"))
+
+    testFixturesImplementation(kotlin("reflect"))
+    testFixturesImplementation(libs.assertk)
+
+    testFixturesApi(projects.core)
+    testFixturesImplementation(projects.kotlinAnalysis)
+    testFixturesImplementation("junit:junit:4.13.2") // TODO: remove dependency to junit
 }
 
 tasks {

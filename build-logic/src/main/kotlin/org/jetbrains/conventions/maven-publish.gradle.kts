@@ -1,12 +1,14 @@
 package org.jetbrains.conventions
 
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
+import org.gradle.internal.component.external.model.TestFixturesSupport.TEST_FIXTURE_SOURCESET_NAME
 
 plugins {
     id("org.jetbrains.conventions.base")
     `maven-publish`
     signing
     id("org.jetbrains.conventions.dokka")
+    id("dev.adamko.kotlin.binary-compatibility-validator")
 }
 
 val javadocJar by tasks.registering(Jar::class) {
@@ -65,4 +67,10 @@ plugins.withType<ShadowPlugin>().configureEach {
     // For more details, see https://github.com/Kotlin/dokka/pull/2704#issuecomment-1499517930
     val javaComponent = components["java"] as AdhocComponentWithVariants
     javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElements"]) { skip() }
+}
+
+binaryCompatibilityValidator {
+    targets.matching { it.name == TEST_FIXTURE_SOURCESET_NAME }.configureEach {
+        enabled.set(true)
+    }
 }

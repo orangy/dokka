@@ -15,3 +15,7 @@ dependencies {
 registerDokkaArtifactPublication("dokkaAnalysis") {
     artifactId = "dokka-analysis"
 }
+
+binaryCompatibilityValidator {
+    enabled.set(false)
+}

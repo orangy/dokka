@@ -24,3 +24,7 @@ registerDokkaArtifactPublication("kotlinAnalysisCompiler") {
     artifactId = "kotlin-analysis-compiler"
     component = Shadow
 }
+
+binaryCompatibilityValidator {
+    enabled.set(false)
+}
