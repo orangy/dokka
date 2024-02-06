@@ -48,10 +48,6 @@ abstract class DokkaBuildProperties @Inject constructor(
     val kotlinLanguageLevel: Provider<KotlinVersion> =
         dokkaProperty("kotlinLanguageLevel", KotlinVersion::fromVersion)
 
-    /** Control [org.gradle.api.tasks.testing.Test.maxParallelForks] in integration tests. */
-    val integrationTestParallelism: Provider<Int> =
-        dokkaProperty("integration_test.parallelism", String::toInt)
-
     /** Not currently used - should be dropped. */
     val integrationTestExhaustive: Provider<Boolean> =
         dokkaProperty("integration_test.exhaustive", String::toBoolean)

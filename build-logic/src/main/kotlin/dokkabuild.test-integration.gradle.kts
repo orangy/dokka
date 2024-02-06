@@ -44,7 +44,14 @@ val integrationTestRuntimeOnly: Configuration by configurations.getting {
 abstract class NonCacheableIntegrationTest : Test()
 
 val integrationTest by tasks.registering(NonCacheableIntegrationTest::class) {
-    maxHeapSize = "2G"
+
+    // quite high memory because Dokka is a hungry boy
+    maxHeapSize = "4g"
+    jvmArgs = listOf(
+        "-XX:MetaspaceSize=1g",
+        "-XX:+HeapDumpOnOutOfMemoryError",
+    )
+
     description = "Runs integration tests."
     group = "verification"
     testClassesDirs = integrationTestSourceSet.output.classesDirs
@@ -53,18 +60,40 @@ val integrationTest by tasks.registering(NonCacheableIntegrationTest::class) {
     useJUnitPlatform {
         if (dokkaBuild.integrationTestUseK2.get()) excludeTags("onlyDescriptors", "onlyDescriptorsMPP")
     }
+    // allow inspecting projects in temporary dirs after a test fails
+    systemProperty(
+        // TODO quick hacks - remove this, will be done in a different PR
+        "junit.jupiter.tempdir.cleanup.mode.default",
+        if (System.getenv("CI") != null) "ALWAYS" else "ON_SUCCESS",
+    )
 
     systemProperty("org.jetbrains.dokka.experimental.tryK2", dokkaBuild.integrationTestUseK2.get())
 
-    dokkaBuild.integrationTestParallelism.orNull?.let { parallelism ->
-        maxParallelForks = parallelism
-    }
-
     environment("isExhaustive", dokkaBuild.integrationTestExhaustive.get())
-    
+
+    // TODO quick hacks - remove this, will be done in a different PR
+    environment("ANDROID_SDK_ROOT",
+        providers
+            // first try finding a local.properties file in any parent directory
+            .provider {
+                generateSequence(layout.projectDirectory.asFile, File::getParentFile)
+                    .mapNotNull { dir -> dir.resolve("local.properties").takeIf(File::exists) }
+                    .flatMap { file -> file.readLines().filter { it.startsWith("sdk.dir=") } }
+                    .firstOrNull()
+                    ?.substringAfter("sdk.dir=")
+            }
+            // else try getting pre-installed SDK (e.g. via GitHub step setup-android)
+            .orElse(providers.environmentVariable("ANDROID_SDK_ROOT"))
+            .orElse(providers.environmentVariable("ANDROID_HOME"))
+            .map(::File).get().invariantSeparatorsPath)
+
     testLogging {
         exceptionFormat = TestExceptionFormat.FULL
-        events(TestLogEvent.SKIPPED, TestLogEvent.FAILED)
+        events(
+            TestLogEvent.PASSED,
+            TestLogEvent.SKIPPED,
+            TestLogEvent.FAILED,
+        )
         showExceptions = true
         showCauses = true
         showStackTraces = true

@@ -45,7 +45,7 @@ class BasicGradleIntegrationTest : AbstractGradleIntegrationTest() {
             "dokkaJavadoc",
             "dokkaGfm",
             "dokkaJekyll",
-            "-i",
+//            "-i",
             "-s"
         ).buildRelaxed()
 

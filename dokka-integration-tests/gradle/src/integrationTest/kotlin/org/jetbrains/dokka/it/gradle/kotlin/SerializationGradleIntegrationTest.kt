@@ -48,7 +48,7 @@ class SerializationGradleIntegrationTest : AbstractGradleIntegrationTest(), Test
     @ParameterizedTest(name = "{0}")
     @ArgumentsSource(SerializationBuildVersionsArgumentsProvider::class)
     fun execute(buildVersions: BuildVersions) {
-        val result = createGradleRunner(buildVersions, ":dokkaHtmlMultiModule", "-i", "-s").buildRelaxed()
+        val result = createGradleRunner(buildVersions, ":dokkaHtmlMultiModule", "-s").buildRelaxed()
 
         assertEquals(TaskOutcome.SUCCESS, assertNotNull(result.task(":dokkaHtmlMultiModule")).outcome)
 

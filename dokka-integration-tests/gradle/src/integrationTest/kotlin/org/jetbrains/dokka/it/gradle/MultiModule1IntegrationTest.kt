@@ -34,7 +34,7 @@ class MultiModule1IntegrationTest : AbstractGradleIntegrationTest() {
         val result = createGradleRunner(
             buildVersions,
             ":second:dokkaHtml",
-            "-i", "-s"
+            "-s",
         ).buildRelaxed()
 
         assertEquals(TaskOutcome.SUCCESS, assertNotNull(result.task(":second:dokkaHtml")).outcome)

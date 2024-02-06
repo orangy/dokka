@@ -33,7 +33,7 @@ class Collector0IntegrationTest : AbstractGradleIntegrationTest() {
             ":moduleA:dokkaJavadocCollector",
             ":moduleA:dokkaGfmCollector",
             ":moduleA:dokkaJekyllCollector",
-            "-i", "-s"
+            "-s",
         ).buildRelaxed()
 
         assertEquals(TaskOutcome.SUCCESS, assertNotNull(result.task(":moduleA:dokkaHtmlCollector")).outcome)
@@ -80,4 +80,3 @@ class Collector0IntegrationTest : AbstractGradleIntegrationTest() {
         assertTrue(isDirectory, "Missing dokka gfmCollector output directory")
     }
 }
-

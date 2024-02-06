@@ -36,7 +36,7 @@ class Versioning0IntegrationTest : AbstractGradleIntegrationTest() {
         val result = createGradleRunner(
             buildVersions,
             ":dokkaHtmlMultiModuleBaseVersion",
-            "-i", "-s"
+            "-s",
         ).buildRelaxed()
 
         assertEquals(TaskOutcome.SUCCESS, assertNotNull(result.task(":dokkaHtmlMultiModuleBaseVersion")).outcome)
@@ -47,7 +47,7 @@ class Versioning0IntegrationTest : AbstractGradleIntegrationTest() {
             buildVersions,
             "clean",
             ":dokkaHtmlMultiModuleNextVersion",
-            "-i", "-s"
+            "-s",
         ).buildRelaxed()
 
         assertEquals(TaskOutcome.SUCCESS, assertNotNull(result2.task(":dokkaHtmlMultiModuleNextVersion")).outcome)
@@ -58,7 +58,7 @@ class Versioning0IntegrationTest : AbstractGradleIntegrationTest() {
             buildVersions,
             "clean",
             ":dokkaHtmlMultiModule",
-            "-i", "-s"
+            "-s",
         ).buildRelaxed()
 
         assertEquals(TaskOutcome.SUCCESS, assertNotNull(result3.task(":dokkaHtmlMultiModule")).outcome)

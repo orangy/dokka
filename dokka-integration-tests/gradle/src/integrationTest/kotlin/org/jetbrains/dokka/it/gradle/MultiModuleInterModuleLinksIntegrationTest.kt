@@ -38,7 +38,7 @@ class MultiModuleInterModuleLinksIntegrationTest : AbstractGradleIntegrationTest
         val result = createGradleRunner(
             buildVersions,
             ":moduleA:dokkaHtmlMultiModule",
-            "-i", "-s"
+            "-s",
         ).buildRelaxed()
 
         assertEquals(TaskOutcome.SUCCESS, assertNotNull(result.task(":moduleA:dokkaHtmlMultiModule")).outcome)
