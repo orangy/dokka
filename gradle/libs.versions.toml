@@ -54,7 +54,7 @@ gradlePlugin-gradleNode = "7.0.1"
 
 ## Gradle Develocity
 gradlePlugin-gradle-customUserData = "2.0.2"
-gradlePlugin-gradle-develocity = "3.17.6"
+gradlePlugin-gradle-develocity = "3.18"
 
 ## Test
 junit = "5.9.3"
