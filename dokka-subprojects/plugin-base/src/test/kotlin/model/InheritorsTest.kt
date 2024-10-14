@@ -14,6 +14,7 @@ import org.jetbrains.dokka.model.doc.Description
 import org.jetbrains.dokka.model.doc.P
 import org.jetbrains.dokka.model.doc.Text
 import utils.AbstractModelTest
+import utils.OnlyDescriptors
 import utils.assertNotNull
 import utils.comments
 import kotlin.test.Test
@@ -708,6 +709,31 @@ class InheritorsTest : AbstractModelTest("/src/main/kotlin/inheritors/Test.kt", 
             with((this / "inheritors" / "ChildWithTwoParent" / "toString").cast<DFunction>()) {
                 comments() equals "Some doc\n"
                 dri equals DRI("inheritors", "FirstParent", org.jetbrains.dokka.links.Callable("toString", null, emptyList()) )
+            }
+        }
+    }
+
+    @Test
+    @OnlyDescriptors("#3857")
+    fun `fake intersected and overridden fake fun should have correct DRI`() {
+        inlineModelTest(
+            """
+            |class NamedDomainObjectContainerScope<T : Any> 
+            | : NamedDomainObjectContainerDelegate<T>(), PolymorphicDomainObjectContainer<T> 
+            | 
+            |abstract class NamedDomainObjectContainerDelegate<T : Any> : NamedDomainObjectContainer<T> {
+            |  override fun getNamer(): T? = null
+            |}
+            |
+            |interface PolymorphicDomainObjectContainer<T>: NamedDomainObjectContainer<T>
+            |
+            |interface NamedDomainObjectContainer<T> {
+            |  fun getNamer(): T?  = null
+            |}
+        """
+        ) {
+            with((this / "inheritors" / "NamedDomainObjectContainerScope" / "getNamer").cast<DFunction>()) {
+                dri equals DRI("inheritors", "NamedDomainObjectContainerDelegate", org.jetbrains.dokka.links.Callable("getNamer", null, emptyList()) )
             }
         }
     }
