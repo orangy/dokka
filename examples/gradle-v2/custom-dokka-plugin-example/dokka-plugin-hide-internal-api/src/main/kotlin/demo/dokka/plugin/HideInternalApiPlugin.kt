@@ -1,4 +1,8 @@
-package demo.dokka.plugin.ogp
+/*
+ * Copyright 2014-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ */
+
+package demo.dokka.plugin
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -23,10 +27,13 @@ class HideInternalApiPlugin : DokkaPlugin() {
   override fun pluginApiPreviewAcknowledgement() = PluginApiPreviewAcknowledgement
 
   companion object {
-    const val FQN = "demo.dokka.plugin.ogp.HideInternalApiPlugin"
+    const val FQN = "demo.dokka.plugin.HideInternalApiPlugin"
   }
 }
 
+/**
+ * Configuration for [HideInternalApiPlugin].
+ */
 @Serializable
 data class HideInternalApiConfig(
   val annotatedWith: List<String>
@@ -34,13 +41,16 @@ data class HideInternalApiConfig(
 
 class HideInternalApiTransformer(context: DokkaContext) : SuppressedByConditionDocumentableFilterTransformer(context) {
 
-  private val configuration by lazy {
+  /**
+   * Decode [HideInternalApiPlugin] from the [DokkaContext].
+   */
+  private val configuration: HideInternalApiPlugin by lazy {
     val pluginConfig = context.configuration.pluginsConfiguration
       .firstOrNull { it.fqPluginName == HideInternalApiPlugin.FQN }
 
     if (pluginConfig != null) {
       require(pluginConfig.serializationFormat == DokkaConfiguration.SerializationFormat.JSON) {
-        "HideInternalApiPlugin requires configuration is encoded as JSON"
+        "HideInternalApiPlugin configuration must be encoded as JSON"
       }
 
       Json.decodeFromString(HideInternalApiConfig.serializer(), pluginConfig.values)

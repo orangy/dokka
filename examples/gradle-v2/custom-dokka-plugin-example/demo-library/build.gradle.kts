@@ -33,7 +33,7 @@ dokka {
 @OptIn(DokkaInternalApi::class)
 abstract class HideInternalApiParameters @Inject constructor(
   name: String
-) : DokkaPluginParametersBaseSpec(name, "demo.dokka.plugin.ogp.HideInternalApiPlugin") {
+) : DokkaPluginParametersBaseSpec(name, "demo.dokka.plugin.HideInternalApiPlugin") {
 
   @get:Input
   @get:Optional
