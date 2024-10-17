@@ -1,3 +1,6 @@
+import kotlinx.serialization.json.add
+import kotlinx.serialization.json.buildJsonArray
+import kotlinx.serialization.json.buildJsonObject
 import org.jetbrains.dokka.gradle.engine.plugins.DokkaPluginParametersBaseSpec
 import org.jetbrains.dokka.gradle.internal.DokkaInternalApi
 
@@ -41,11 +44,14 @@ abstract class HideInternalApiParameters @Inject constructor(
 
   override fun jsonEncode(): String {
     // Convert annotatedWith to a JSON list.
-    val annotatedWithJson = annotatedWith.orNull.orEmpty().joinToString(prefix = "[", postfix = "]") { "\"$it\"" }
-    return """
-      {
-        "annotatedWith": $annotatedWithJson
+    val annotatedWithJson = buildJsonArray {
+      annotatedWith.orNull.orEmpty().forEach {
+        add(it)
       }
-      """.trimIndent()
+    }
+
+    return buildJsonObject {
+      put("annotatedWith", annotatedWithJson)
+    }.toString()
   }
 }
