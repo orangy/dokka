@@ -12,6 +12,7 @@ import org.gradle.api.artifacts.component.ProjectComponentIdentifier
 import org.gradle.api.attributes.Attribute
 import org.gradle.api.attributes.AttributeContainer
 import org.gradle.api.file.ConfigurableFileCollection
+import org.gradle.api.invocation.Gradle
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.plugins.ExtensionContainer
@@ -370,20 +371,9 @@ internal const val INTERNAL_CONF_DESCRIPTION_TAG = "[Internal Dokka Configuratio
 
 
 /**
- * Get the root project name.
+ * Get the root-most [Gradle] instance.
  *
- * This function will try to be compatible with
- * [Isolated Projects](https://docs.gradle.org/current/userguide/isolated_projects.html).
+ * This is useful for determining the root directory of Composite Builds.
  */
-internal fun Project.rootProjectName(): String {
-    return when {
-        CurrentGradleVersion >= "8.8" -> {
-            @Suppress("UnstableApiUsage")
-            isolated.rootProject.name
-        }
-
-        else -> {
-            rootProject.name
-        }
-    }
-}
+internal fun Project.rootGradle(): Gradle =
+    generateSequence(gradle) { it.parent }.last()

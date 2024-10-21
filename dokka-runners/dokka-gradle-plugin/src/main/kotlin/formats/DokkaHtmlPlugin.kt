@@ -16,7 +16,7 @@ import org.jetbrains.dokka.gradle.engine.plugins.DokkaHtmlPluginParameters.Compa
 import org.jetbrains.dokka.gradle.engine.plugins.DokkaVersioningPluginParameters
 import org.jetbrains.dokka.gradle.engine.plugins.DokkaVersioningPluginParameters.Companion.DOKKA_VERSIONING_PLUGIN_PARAMETERS_NAME
 import org.jetbrains.dokka.gradle.internal.DokkaInternalApi
-import org.jetbrains.dokka.gradle.internal.rootProjectName
+import org.jetbrains.dokka.gradle.internal.rootGradle
 import org.jetbrains.dokka.gradle.internal.uppercaseFirstChar
 import org.jetbrains.dokka.gradle.tasks.DokkaGeneratePublicationTask
 import org.jetbrains.dokka.gradle.tasks.LogHtmlPublicationLinkTask
@@ -72,8 +72,9 @@ constructor(
             .flatMap { it.outputDirectory.file("index.html") }
 
         val indexHtmlPath = indexHtmlFile.map { indexHtml ->
-            val rootProjectName = project.rootProjectName()
-            val relativePath = indexHtml.asFile.relativeTo(project.rootDir)
+            val rootProjectName = project.rootGradle().rootProject.name
+            val rootProjectDir = project.rootGradle().rootProject.projectDir
+            val relativePath = indexHtml.asFile.relativeTo(rootProjectDir)
             "${rootProjectName}/${relativePath.invariantSeparatorsPath}"
         }
 
