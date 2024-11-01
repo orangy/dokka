@@ -2,8 +2,8 @@
  * Copyright 2014-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
  */
 
+import dokkabuild.utils.configureGradleKotlinCompatibility
 import dokkabuild.utils.excludeGradleEmbeddedDependencies
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     id("org.gradle.kotlin.kotlin-dsl")
@@ -11,13 +11,7 @@ plugins {
     id("dokkabuild.publish-gradle-plugin")
 }
 
-kotlin {
-    compilerOptions {
-        // Must use Kotlin 1.4 to support Gradle 7
-        languageVersion = @Suppress("DEPRECATION") KotlinVersion.KOTLIN_1_4
-        apiVersion = @Suppress("DEPRECATION") KotlinVersion.KOTLIN_1_4
-    }
-}
+configureGradleKotlinCompatibility()
 
 tasks.compileKotlin {
     compilerOptions {
