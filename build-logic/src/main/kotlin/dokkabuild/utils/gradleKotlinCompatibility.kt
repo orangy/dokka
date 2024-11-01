@@ -6,6 +6,7 @@ package dokkabuild.utils
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dokkaBuild
+import org.jetbrains.kotlin.buildtools.api.ExperimentalBuildToolsApi
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
@@ -16,7 +17,7 @@ fun Project.configureGradleKotlinCompatibility() {
     if (!dokkaBuild.enforceGradleKotlinCompatibility.get()) return
 
     extensions.configure<KotlinJvmProjectExtension>("kotlin") {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        @OptIn(ExperimentalKotlinGradlePluginApi::class, ExperimentalBuildToolsApi::class)
         compilerVersion.set("2.0.20")
         coreLibrariesVersion = "2.0.20"
         compilerOptions {
