@@ -12,11 +12,11 @@ import javax.inject.Inject
 /**
  * Base class for defining Dokka Plugin configuration.
  *
- * This class should not be instantiated directly. Instead, use a subclass, or create plugin
- * parameters dynamically using [DokkaPluginParametersBuilder].
+ * This class should not be instantiated directly.
+ * Instead, define a subclass that implements the [jsonEncode] function.
  *
- * [More information about Dokka Plugins is available in the Dokka docs.](https://kotlinlang.org/docs/dokka-plugins.html)
- *
+ * @param[name] A descriptive name of the item in the [org.jetbrains.dokka.gradle.internal.DokkaPluginParametersContainer].
+ * The name is only used for identification in the Gradle buildscripts.
  * @param[pluginFqn] Fully qualified classname of the Dokka Plugin
  */
 abstract class DokkaPluginParametersBaseSpec
@@ -28,6 +28,11 @@ constructor(
     open val pluginFqn: String,
 ) : Serializable, Named {
 
+    /**
+     * Must be implemented by subclasses.
+     *
+     * Returns JSON encoded configuration, to be parsed by the Dokka plugin identified by [pluginFqn].
+     */
     abstract fun jsonEncode(): String // to be implemented by subclasses
 
     @Input

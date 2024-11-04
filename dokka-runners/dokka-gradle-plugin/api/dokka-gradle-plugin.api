@@ -386,39 +386,6 @@ public abstract class org/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParam
 	public abstract fun jsonEncode ()Ljava/lang/String;
 }
 
-public abstract class org/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder : org/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBaseSpec {
-	public static final field Companion Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder$Companion;
-	public fun getPluginFqn ()Ljava/lang/String;
-	public fun jsonEncode ()Ljava/lang/String;
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder$Companion {
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilderKt {
-	public static final fun PluginConfigBooleanValue (Lorg/gradle/api/provider/Provider;)Lorg/gradle/api/provider/Provider;
-	public static final fun PluginConfigNumberValue (Lorg/gradle/api/provider/Provider;)Lorg/gradle/api/provider/Provider;
-	public static final fun PluginConfigStringValue (Lorg/gradle/api/provider/Provider;)Lorg/gradle/api/provider/Provider;
-	public static final fun PluginConfigValue (Ljava/lang/Number;)Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$NumberValue;
-	public static final fun PluginConfigValue (Ljava/lang/String;)Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$StringValue;
-	public static final fun PluginConfigValue (Z)Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$BooleanValue;
-	public static final fun add (Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$Values;Ljava/lang/Number;)V
-	public static final fun add (Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$Values;Ljava/lang/String;)V
-	public static final fun add (Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$Values;Z)V
-	public static final fun addBoolean (Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$Values;Lorg/gradle/api/provider/Provider;)V
-	public static final fun addNumber (Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$Values;Lorg/gradle/api/provider/Provider;)V
-	public static final fun addString (Lorg/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$Values;Lorg/gradle/api/provider/Provider;)V
-	public static final fun booleanProperty (Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder;Ljava/lang/String;Lorg/gradle/api/provider/Provider;)V
-	public static final fun files (Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static final fun numberProperty (Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder;Ljava/lang/String;Lorg/gradle/api/provider/Provider;)V
-	public static final fun pluginParameters (Lorg/gradle/api/ExtensiblePolymorphicDomainObjectContainer;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static final fun properties (Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static final fun property (Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder;Ljava/lang/String;Ljava/lang/Number;)V
-	public static final fun property (Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder;Ljava/lang/String;Ljava/lang/String;)V
-	public static final fun property (Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder;Ljava/lang/String;Z)V
-	public static final fun stringProperty (Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBuilder;Ljava/lang/String;Lorg/gradle/api/provider/Provider;)V
-}
-
 public abstract class org/jetbrains/dokka/gradle/engine/plugins/DokkaVersioningPluginParameters : org/jetbrains/dokka/gradle/engine/plugins/DokkaPluginParametersBaseSpec {
 	public static final field Companion Lorg/jetbrains/dokka/gradle/engine/plugins/DokkaVersioningPluginParameters$Companion;
 	public static final field DOKKA_VERSIONING_PLUGIN_FQN Ljava/lang/String;
@@ -432,49 +399,6 @@ public abstract class org/jetbrains/dokka/gradle/engine/plugins/DokkaVersioningP
 }
 
 public final class org/jetbrains/dokka/gradle/engine/plugins/DokkaVersioningPluginParameters$Companion {
-}
-
-public abstract class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$BooleanValue : org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-	public fun <init> (Z)V
-	public final fun getBoolean ()Z
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$DirectoryValue : org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-	public fun <init> (Lorg/gradle/api/file/DirectoryProperty;)V
-	public final fun getDirectory ()Lorg/gradle/api/file/DirectoryProperty;
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$FileValue : org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-	public fun <init> (Lorg/gradle/api/file/RegularFileProperty;)V
-	public final fun getFile ()Lorg/gradle/api/file/RegularFileProperty;
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$FilesValue : org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-	public fun <init> (Lorg/gradle/api/file/ConfigurableFileCollection;)V
-	public final fun getFiles ()Lorg/gradle/api/file/ConfigurableFileCollection;
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$NumberValue : org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-	public fun <init> (Ljava/lang/Number;)V
-	public final fun getNumber ()Ljava/lang/Number;
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$Properties : org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-	public fun <init> (Lorg/gradle/api/provider/MapProperty;)V
-	public final fun getValues ()Lorg/gradle/api/provider/MapProperty;
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$StringValue : org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun getString ()Ljava/lang/String;
-}
-
-public final class org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue$Values : org/jetbrains/dokka/gradle/engine/plugins/PluginConfigValue {
-	public fun <init> (Lorg/gradle/api/provider/ListProperty;)V
-	public final fun getValues ()Lorg/gradle/api/provider/ListProperty;
 }
 
 public abstract class org/jetbrains/dokka/gradle/formats/DokkaFormatPlugin : org/gradle/api/Plugin {
