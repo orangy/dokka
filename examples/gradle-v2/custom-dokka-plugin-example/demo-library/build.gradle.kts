@@ -1,27 +1,24 @@
-import kotlinx.serialization.json.add
-import kotlinx.serialization.json.buildJsonArray
-import kotlinx.serialization.json.buildJsonObject
 import org.jetbrains.dokka.gradle.engine.plugins.DokkaPluginParametersBaseSpec
 import org.jetbrains.dokka.gradle.internal.DokkaInternalApi
 
 plugins {
-  kotlin("jvm") version "2.0.21"
-  id("org.jetbrains.dokka") version "2.0.20-SNAPSHOT"
+    kotlin("jvm") version "2.0.21"
+    id("org.jetbrains.dokka") version "2.0.20-SNAPSHOT"
 }
 
 dependencies {
-  dokkaPlugin(project(":dokka-plugin-hide-internal-api"))
+    dokkaPlugin(project(":dokka-plugin-hide-internal-api"))
 }
 
 dokka {
-  moduleName.set("Demo Library")
+    moduleName.set("Demo Library")
 
-  pluginsConfiguration {
-    registerBinding(HideInternalApiParameters::class, HideInternalApiParameters::class)
-    register<HideInternalApiParameters>("HideInternalApiPlugin") {
-      annotatedWith.add("demo.HideFromDokka")
+    pluginsConfiguration {
+        registerBinding(HideInternalApiParameters::class, HideInternalApiParameters::class)
+        register<HideInternalApiParameters>("HideInternalApiPlugin") {
+            annotatedWith.add("demo.HideFromDokka")
+        }
     }
-  }
 }
 
 /**
@@ -35,23 +32,22 @@ dokka {
  */
 @OptIn(DokkaInternalApi::class)
 abstract class HideInternalApiParameters @Inject constructor(
-  name: String
+    name: String
 ) : DokkaPluginParametersBaseSpec(name, "demo.dokka.plugin.HideInternalApiPlugin") {
 
-  @get:Input
-  @get:Optional
-  abstract val annotatedWith: ListProperty<String>
+    @get:Input
+    @get:Optional
+    abstract val annotatedWith: ListProperty<String>
 
-  override fun jsonEncode(): String {
-    // Convert annotatedWith to a JSON list.
-    val annotatedWithJson = buildJsonArray {
-      annotatedWith.orNull.orEmpty().forEach {
-        add(it)
-      }
+    override fun jsonEncode(): String {
+        // Convert annotatedWith to a JSON list.
+        val annotatedWithJson = annotatedWith.orNull.orEmpty()
+            .joinToString(separator = ", ", prefix = "[", postfix = "]") { "\"$it\"" }
+
+        return """
+            {
+              "annotatedWith": $annotatedWithJson
+            }
+            """.trimIndent()
     }
-
-    return buildJsonObject {
-      put("annotatedWith", annotatedWithJson)
-    }.toString()
-  }
 }
