@@ -20,15 +20,14 @@ class Greeter(
 /**
  * The entry point for [Greeter].
  */
-@EntryPoint
+@HideFromDokka
 fun main(args: Array<String>) {
     Greeter(args[0]).greet()
 }
 
 /**
- * Marks the entry point of the program.
- *
- * The `HideInternalApi` Dokka Plugin is configured to exclude code
+ * The custom `HideInternalApi` Dokka plugin is configured to exclude code
  * with this annotation from the generated docs.
  */
-annotation class EntryPoint
+@MustBeDocumented
+annotation class HideFromDokka
