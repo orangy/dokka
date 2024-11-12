@@ -1,5 +1,5 @@
 import org.jetbrains.dokka.gradle.engine.plugins.DokkaPluginParametersBaseSpec
-import org.jetbrains.dokka.gradle.internal.DokkaInternalApi
+import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
 
 plugins {
     kotlin("jvm") version "2.0.21"
@@ -14,8 +14,13 @@ dokka {
     moduleName.set("Demo Library")
 
     pluginsConfiguration {
+
+        // Register the configuration class with Dokka Gradle Plugin
         registerBinding(HideInternalApiParameters::class, HideInternalApiParameters::class)
+
+        // Configure the custom plugin:
         register<HideInternalApiParameters>("HideInternalApiPlugin") {
+            // Tell the plugin to hide code annotated with `@HideFromDokka`.
             annotatedWith.add("demo.HideFromDokka")
         }
     }
@@ -30,10 +35,14 @@ dokka {
  * move the class into a shared location, like `buildSrc` (or another included-build for build conventions).
  * See [Sharing Build Logic between Subprojects](https://docs.gradle.org/8.10/userguide/sharing_build_logic_between_subprojects.html).
  */
-@OptIn(DokkaInternalApi::class)
+@OptIn(InternalDokkaGradlePluginApi::class)
 abstract class HideInternalApiParameters @Inject constructor(
     name: String
-) : DokkaPluginParametersBaseSpec(name, "demo.dokka.plugin.HideInternalApiPlugin") {
+) : DokkaPluginParametersBaseSpec(
+    name,
+    // The plugin ID of the custom HideInternalApiPlugin
+    "demo.dokka.plugin.HideInternalApiPlugin",
+) {
 
     @get:Input
     @get:Optional

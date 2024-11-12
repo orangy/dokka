@@ -44,7 +44,7 @@ class HideInternalApiTransformer(context: DokkaContext) : SuppressedByConditionD
   /**
    * Decode [HideInternalApiPlugin] from the [DokkaContext].
    */
-  private val configuration: HideInternalApiPlugin by lazy {
+  private val configuration: HideInternalApiConfig by lazy {
     val pluginConfig = context.configuration.pluginsConfiguration
       .firstOrNull { it.fqPluginName == HideInternalApiPlugin.FQN }
 

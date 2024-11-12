@@ -5,6 +5,7 @@
 
 import dokkabuild.tasks.GitCheckoutTask
 import dokkabuild.utils.systemProperty
+import dokkabuild.utils.uppercaseFirstChar
 import org.gradle.api.tasks.PathSensitivity.NAME_ONLY
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
 
@@ -198,7 +199,7 @@ testing {
     }
     val testExampleProjects by suites.registering(JvmTestSuite::class) {
         targets.configureEach {
-            testTask.configure {
+            testTask {
 
                 val exampleGradleProjectsDir = projectDir.resolve("../../examples/gradle-v2")
                 systemProperty
@@ -213,6 +214,30 @@ testing {
                 // Disable parallel on CI. TeamCity OOMs when the tests are run in parallel.
                 systemProperty.inputProperty("junit.jupiter.execution.parallel.enabled", dokkaBuild.isCI.map { !it })
                 systemProperty("junit.jupiter.execution.parallel.mode.default", "CONCURRENT")
+            }
+        }
+
+        listOf(
+            "basic-gradle-example",
+            "composite-build-example",
+            "custom-dokka-plugin-example",
+            "custom-styling-example",
+            "java-example",
+            "javadoc-example",
+            "kotlin-as-java-example",
+            "kotlin-multiplatform-example",
+            "library-publishing-example",
+            "multimodule-example",
+            "versioning-multimodule-example",
+        ).forEach { exampleProjectName ->
+            val prettyName = exampleProjectName.split("-").joinToString("") { it.uppercaseFirstChar() }
+            targets.register("test$prettyName") {
+                testTask {
+                    description = "Only test $exampleProjectName"
+                    group = "verification - example projects"
+                    systemProperty
+                        .inputProperty("exampleProjectFilter", exampleProjectName)
+                }
             }
         }
     }
