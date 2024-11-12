@@ -3,106 +3,162 @@
  */
 package org.jetbrains.dokka.gradle.utils
 
-import io.kotest.matchers.collections.shouldBeSameSizeAs
-import io.kotest.matchers.file.shouldBeADirectory
-import io.kotest.matchers.file.shouldHaveSameContentAs
-import io.kotest.matchers.shouldBe
-import java.io.File
-import java.nio.file.Files
+import com.github.difflib.DiffUtils
+import com.github.difflib.UnifiedDiffUtils
+import io.kotest.assertions.fail
+import java.io.IOException
+import java.io.OutputStream
 import java.nio.file.Path
-
-fun Path.shouldHaveSameStructureAs(path: Path, skipEmptyDirs: Boolean) {
-    if (skipEmptyDirs) {
-        toFile().shouldHaveSameStructureAs2(path.toFile(), ::isNotEmptyDir, ::isNotEmptyDir)
-    } else {
-        toFile().shouldHaveSameStructureAs2(path.toFile())
-    }
-}
-
-fun Path.shouldHaveSameStructureAndContentAs(path: Path, skipEmptyDirs: Boolean) {
-    if (skipEmptyDirs) {
-        toFile().shouldHaveSameStructureAndContentAs2(path.toFile(), ::isNotEmptyDir, ::isNotEmptyDir)
-    } else {
-        toFile().shouldHaveSameStructureAndContentAs2(path.toFile())
-    }
-}
-
-private fun isNotEmptyDir(file: File): Boolean =
-    file.isFile || Files.newDirectoryStream(file.toPath()).use { it.count() } > 0
+import java.security.DigestOutputStream
+import java.security.MessageDigest
+import java.util.*
+import kotlin.io.path.*
 
 
-private fun File.shouldHaveSameStructureAs2(
-    file: File,
-    filterLhs: (File) -> Boolean = { false },
-    filterRhs: (File) -> Boolean = { false },
-) {
-    shouldHaveSameStructureAndContentAs2(
-        file,
-        filterLhs = filterLhs,
-        filterRhs = filterRhs
-    ) { expect, actual ->
-        val expectPath = expect.invariantSeparatorsPath.removePrefix(expectParentPath)
-        val actualPath = actual.invariantSeparatorsPath.removePrefix(actualParentPath)
-        expectPath shouldBe actualPath
-    }
-}
-
-fun File.shouldHaveSameStructureAndContentAs2(
-    file: File,
-    filterLhs: (File) -> Boolean = { false },
-    filterRhs: (File) -> Boolean = { false },
-) {
-    shouldHaveSameStructureAndContentAs2(
-        file,
-        filterLhs = filterLhs,
-        filterRhs = filterRhs
-    ) { expect, actual ->
-        val expectPath = expect.invariantSeparatorsPath.removePrefix(expectParentPath)
-        val actualPath = actual.invariantSeparatorsPath.removePrefix(actualParentPath)
-        expectPath shouldBe actualPath
-
-        expect.shouldHaveSameContentAs(actual)
+/**
+ * Compare the contents of this directory with that of [path].
+ *
+ * Only files will be compared, directories are ignored.
+ */
+infix fun Path.shouldBeADirectoryWithSameContentAs(path: Path) {
+    val differences = describeFileDifferences(this, path)
+    if (differences.isNotEmpty()) {
+        fail(differences)
     }
 }
 
 
-private fun File.shouldHaveSameStructureAndContentAs2(
-    file: File,
-    filterLhs: (File) -> Boolean = { false },
-    filterRhs: (File) -> Boolean = { false },
-    fileAssert: FileAsserter,
-) {
-    val expectFiles = this.walkTopDown().filter(filterLhs).toList()
-    val actualFiles = file.walkTopDown().filter(filterRhs).toList()
+/**
+ * Build a string that describes the differences between [expectedDir] and [actualDir].
+ *
+ * Both the location and content of files is compared.
+ * Only files are compared, directories are excluded.
+ *
+ * If the string is empty then no differences were detected.
+ */
+private fun describeFileDifferences(
+    expectedDir: Path,
+    actualDir: Path,
+): String = buildString {
+    if (!expectedDir.isDirectory()) {
+        appendLine("expectedDir '$expectedDir' is not a directory (exists:${expectedDir.exists()}, file:${expectedDir.isRegularFile()})")
+        return@buildString
+    }
+    if (!actualDir.isDirectory()) {
+        appendLine("actualDir '$actualDir' is not a directory (exists:${actualDir.exists()}, file:${actualDir.isRegularFile()})")
+        return@buildString
+    }
 
-    expectFiles shouldBeSameSizeAs actualFiles
+    // Collect all files from directories recursively
+    fun Path.allFiles(): Set<Path> =
+        walk().filter { it.isRegularFile() }.map { it.relativeTo(this@allFiles) }.toSet()
 
-    val assertContext = FileAsserter.Context(
-        expectParentPath = this.invariantSeparatorsPath,
-        actualParentPath = file.invariantSeparatorsPath,
-    )
+    val expectedFiles = expectedDir.allFiles()
+    val actualFiles = actualDir.allFiles()
 
-    expectFiles.zip(actualFiles) { expect, actual ->
-        when {
-            expect.isDirectory -> actual.shouldBeADirectory()
-            expect.isFile -> {
-                with(fileAssert) {
-                    assertContext.assert(expect, actual)
-                }
+    // Check for files present in one directory but not the other
+    val onlyInExpected = expectedFiles - actualFiles
+    val onlyInActual = actualFiles - expectedFiles
+
+    if (onlyInExpected.isNotEmpty()) {
+        appendLine("actualDir is missing ${onlyInExpected.size} files:")
+        appendLine(onlyInExpected.sorted().joinToFormattedList())
+    }
+    if (onlyInActual.isNotEmpty()) {
+        appendLine("actualDir has ${onlyInActual.size} unexpected files:")
+        appendLine(onlyInActual.sorted().joinToFormattedList())
+    }
+
+    // Compare contents of files that are present in both directories
+    val commonFiles = actualFiles intersect expectedFiles
+
+    commonFiles
+        .sorted()
+        .forEach { relativePath ->
+            val expectedFile = expectedDir.resolve(relativePath)
+            val actualFile = actualDir.resolve(relativePath)
+
+            val expectedLines = expectedFile.readLinesOrComputeChecksum()
+            val actualLines = actualFile.readLinesOrComputeChecksum()
+
+            val patch = DiffUtils.diff(expectedLines, actualLines)
+
+            if (patch.deltas.isNotEmpty()) {
+                appendLine("${relativePath.invariantSeparatorsPathString} has ${patch.deltas.size} differences in content:")
+
+                val diff = UnifiedDiffUtils.generateUnifiedDiff(
+                    /* originalFileName = */ expectedFile.relativeTo(expectedDir).invariantSeparatorsPathString,
+                    /* revisedFileName = */ actualFile.relativeTo(actualDir).invariantSeparatorsPathString,
+                    /* originalLines = */ expectedLines,
+                    /* patch = */ patch,
+                    /* contextSize = */ 3,
+                )
+
+                appendLine(diff.joinToString("\n").prependIndent())
             }
-
-            else -> error("There is an unexpected error analyzing file trees. Failed to determine filetype of $expect")
         }
-    }
 }
 
 
-private fun interface FileAsserter {
+/**
+ * Pretty print files as a list.
+ */
+private fun Collection<Path>.joinToFormattedList(limit: Int = 10): String =
+    joinToString("\n", limit = limit) { "  - ${it.invariantSeparatorsPathString}" }
 
-    data class Context(
-        val expectParentPath: String,
-        val actualParentPath: String,
-    )
 
-    fun Context.assert(expect: File, actual: File)
+/**
+ * Read lines from a file, or returns the [checksum] of the file if reading the file causes an [IOException].
+ * (Which could happen if the file contains binary data.)
+ *
+ * @see kotlin.io.path.readLines
+ */
+private fun Path.readLinesOrComputeChecksum(): List<String> {
+    return try {
+        readLines()
+    } catch (e: IOException) {
+        listOf(
+            "Failed to read file content",
+            "${e::class.qualifiedName} ${e.message}",
+            "file size: ${fileSizeOrNull()}",
+            "checksum: ${checksum()}"
+        )
+    }
+}
+
+private fun Path.fileSizeOrNull(): Long? =
+    try {
+        fileSize()
+    } catch (ex: IOException) {
+        null
+    }
+
+/**
+ * Create a checksum of a single file, or if this throws an exception then return an error message.
+ *
+ * The file must be an existing, regular file.
+ */
+private fun Path.checksum(): String? {
+    try {
+        val messageDigester = MessageDigest.getInstance("SHA-256")
+        inputStream().buffered().use { input ->
+            DigestOutputStream(NullOutputStream(), messageDigester).use { digestStream ->
+                input.copyTo(digestStream)
+            }
+        }
+        return Base64.getEncoder().encodeToString(messageDigester.digest())
+    } catch (ex: Exception) {
+        return "Error computing checksum: ${ex::class.qualifiedName} ${ex.message}"
+    }
+}
+
+/**
+ * An [OutputStream] that discards all bytes.
+ *
+ * (Because [OutputStream.nullOutputStream] requires Java 9+.)
+ */
+class NullOutputStream : OutputStream() {
+    override fun write(i: Int) {
+        // do nothing
+    }
 }

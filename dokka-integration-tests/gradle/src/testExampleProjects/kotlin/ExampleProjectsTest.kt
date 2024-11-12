@@ -210,8 +210,7 @@ class ExampleProjectsTest {
                     }
 
                     withClue("expect directories are the same") {
-                        dokkaOutputDir.shouldHaveSameStructureAs(expectedDataDir, skipEmptyDirs = true)
-                        dokkaOutputDir.shouldHaveSameStructureAndContentAs(expectedDataDir, skipEmptyDirs = true)
+                        dokkaOutputDir shouldBeADirectoryWithSameContentAs expectedDataDir
                     }
                 }
             }

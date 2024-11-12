@@ -107,6 +107,7 @@ constructor(
 
         dokkaExtension.dokkaGeneratorIsolation.convention(
             dokkaExtension.ProcessIsolation {
+                maxHeapSize.convention("2g")
                 debug.convention(false)
                 jvmArgs.convention(
                     listOf(
