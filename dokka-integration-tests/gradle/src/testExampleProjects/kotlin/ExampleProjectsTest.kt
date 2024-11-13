@@ -29,6 +29,17 @@ import java.util.stream.Stream
 import kotlin.io.path.*
 import kotlin.streams.asStream
 
+/**
+ * Test all Dokka Gradle v2 examples.
+ *
+ * Each `@Test` is parameterised, and will run for each example.
+ *
+ * #### Testing a specific project.
+ *
+ * To run a `@Test` for a single project the `build.gradle.kts` defines a test task for each example project.
+ * So, to only test the `basic-gradle-example`, run `gradle :dokka-integration-tests:gradle:testBasicGradleExample`.
+ * All other projects will be skipped.
+ */
 class ExampleProjectsTest {
 
     class TestCaseProvider : ArgumentsProvider {
