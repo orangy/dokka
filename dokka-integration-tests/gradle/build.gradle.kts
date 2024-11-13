@@ -8,6 +8,8 @@ import dokkabuild.utils.systemProperty
 import dokkabuild.utils.uppercaseFirstChar
 import org.gradle.api.tasks.PathSensitivity.NAME_ONLY
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import kotlin.io.path.listDirectoryEntries
+import kotlin.io.path.name
 
 plugins {
     id("dokkabuild.kotlin-jvm")
@@ -198,10 +200,11 @@ testing {
         }
     }
     val testExampleProjects by suites.registering(JvmTestSuite::class) {
+        val exampleGradleProjectsDir = projectDir.resolve("../../examples/gradle-v2")
+
         targets.configureEach {
             testTask {
 
-                val exampleGradleProjectsDir = projectDir.resolve("../../examples/gradle-v2")
                 systemProperty
                     .inputDirectory("exampleGradleProjectsDir", exampleGradleProjectsDir)
                     .withPathSensitivity(RELATIVE)
@@ -217,28 +220,25 @@ testing {
             }
         }
 
-        listOf(
-            "basic-gradle-example",
-            "composite-build-example",
-            "custom-dokka-plugin-example",
-            "custom-styling-example",
-            "java-example",
-            "javadoc-example",
-            "kotlin-as-java-example",
-            "kotlin-multiplatform-example",
-            "library-publishing-example",
-            "multimodule-example",
-            "versioning-multimodule-example",
-        ).forEach { exampleProjectName ->
-            val prettyName = exampleProjectName.split("-").joinToString("") { it.uppercaseFirstChar() }
-            targets.register("test$prettyName") {
-                testTask {
-                    description = "Only test $exampleProjectName"
-                    group = "verification - example projects"
-                    systemProperty
-                        .inputProperty("exampleProjectFilter", exampleProjectName)
+        // Register specific Gradle test runs for each example so the examples can be tested individually.
+        exampleGradleProjectsDir.toPath()
+            .listDirectoryEntries()
+            .map { it.name }
+            .filter {
+                it.endsWith("-example")
+                // note: avoid checks like `isDirectory()` to prevent Gradle registering the files as CC inputs.
+            }
+            .forEach { exampleProjectName ->
+                val prettyName = exampleProjectName.split("-").joinToString("") { it.uppercaseFirstChar() }
+
+                targets.register("test$prettyName") {
+                    testTask {
+                        description = "Only test $exampleProjectName"
+                        group = "verification - example projects"
+                        group.toString()
+                        systemProperty.inputProperty("exampleProjectFilter", exampleProjectName)
+                    }
                 }
             }
-        }
     }
 }
