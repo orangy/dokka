@@ -229,9 +229,12 @@ testing {
                 // note: avoid checks like `isDirectory()` to prevent Gradle registering the files as CC inputs.
             }
             .forEach { exampleProjectName ->
-                val prettyName = exampleProjectName.split("-").joinToString("") { it.uppercaseFirstChar() }
+                val prettyName = exampleProjectName
+                    .removeSuffix("-example")
+                    .split("-")
+                    .joinToString("") { it.uppercaseFirstChar() }
 
-                targets.register("test$prettyName") {
+                targets.register("testExample$prettyName") {
                     testTask {
                         description = "Only test $exampleProjectName"
                         group = "verification - example projects"
