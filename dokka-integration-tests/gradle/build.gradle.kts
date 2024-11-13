@@ -235,7 +235,6 @@ testing {
                     testTask {
                         description = "Only test $exampleProjectName"
                         group = "verification - example projects"
-                        group.toString()
                         systemProperty.inputProperty("exampleProjectFilter", exampleProjectName)
                     }
                 }
