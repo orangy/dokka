@@ -4,12 +4,10 @@
 @file:Suppress("UnstableApiUsage")
 
 import dokkabuild.tasks.GitCheckoutTask
+import dokkabuild.utils.DokkaGradleExampleDirectoriesSource
 import dokkabuild.utils.systemProperty
 import dokkabuild.utils.uppercaseFirstChar
-import org.gradle.api.tasks.PathSensitivity.NAME_ONLY
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
-import kotlin.io.path.listDirectoryEntries
-import kotlin.io.path.name
+import org.gradle.api.tasks.PathSensitivity.*
 
 plugins {
     id("dokkabuild.kotlin-jvm")
@@ -204,7 +202,6 @@ testing {
 
         targets.configureEach {
             testTask {
-
                 systemProperty
                     .inputDirectory("exampleGradleProjectsDir", exampleGradleProjectsDir)
                     .withPathSensitivity(RELATIVE)
@@ -220,27 +217,27 @@ testing {
             }
         }
 
-        // Register specific Gradle test runs for each example so the examples can be tested individually.
-        exampleGradleProjectsDir.toPath()
-            .listDirectoryEntries()
-            .map { it.name }
-            .filter {
-                it.endsWith("-example")
-                // note: avoid checks like `isDirectory()` to prevent Gradle registering the files as CC inputs.
-            }
-            .forEach { exampleProjectName ->
-                val prettyName = exampleProjectName
-                    .removeSuffix("-example")
-                    .split("-")
-                    .joinToString("") { it.uppercaseFirstChar() }
+        val exampleProjectDirs = providers.of(DokkaGradleExampleDirectoriesSource::class) {
+            parameters.exampleGradleProjectsDir = exampleGradleProjectsDir
+        }.get()
 
-                targets.register("testExample$prettyName") {
-                    testTask {
-                        description = "Only test $exampleProjectName"
-                        group = "verification - example projects"
-                        systemProperty.inputProperty("exampleProjectFilter", exampleProjectName)
-                    }
+        exampleProjectDirs.forEach { exampleProjectDir ->
+            val exampleProjectName = exampleProjectDir.name
+            val prettyName = exampleProjectName
+                .split("-")
+                .joinToString("") { it.uppercaseFirstChar() }
+
+            targets.register("test$prettyName") {
+                testTask {
+                    description = "Only test $exampleProjectName"
+                    group = "verification - example projects"
+                    systemProperty.inputProperty("exampleProjectFilter", exampleProjectName)
+
+                    systemProperty
+                        .inputDirectory("exampleGradleProjectDir $exampleProjectName", exampleProjectDir)
+                        .withPathSensitivity(NONE)
                 }
             }
+        }
     }
 }
