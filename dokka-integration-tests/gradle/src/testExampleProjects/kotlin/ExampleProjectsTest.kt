@@ -14,6 +14,7 @@ import org.gradle.testkit.runner.TaskOutcome.FROM_CACHE
 import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 import org.jetbrains.dokka.gradle.utils.*
 import org.jetbrains.dokka.it.gradle.loadConfigurationCacheReportData
+import org.jetbrains.dokka.it.optionalSystemProperty
 import org.jetbrains.dokka.it.systemProperty
 import org.junit.jupiter.api.Assumptions.assumeTrue
 import org.junit.jupiter.api.Named.named
@@ -97,8 +98,12 @@ class ExampleProjectsTest {
     ) {
         val exampleProjectName = ExampleProject.of(project.projectDir)
 
+        /**
+         * Tests are enabled if there is no [exampleProjectFilter] set, or if [exampleProjectFilter] matches
+         * the name of [GradleProjectTest.projectDir].
+         */
         val isEnabled: Boolean =
-            project.projectDir.name == System.getProperty("exampleProjectFilter")
+            exampleProjectFilter == null || project.projectDir.name == exampleProjectFilter
 
         /** `true` if the project produces Dokka HTML. */
         val outputsHtml: Boolean =
@@ -133,6 +138,15 @@ class ExampleProjectsTest {
             ExampleProject.CompositeBuild -> ":build"
             ExampleProject.CustomDokkaPlugin -> ":demo-library:dokkaGenerate"
             else -> ":dokkaGenerate"
+        }
+
+        companion object {
+            /**
+             * If set, only run a specific example project with the matching [exampleProjectName].
+             *
+             * This property is set in the Gradle build config.
+             */
+            private val exampleProjectFilter by optionalSystemProperty()
         }
     }
 
