@@ -35,7 +35,7 @@ class HideInternalApiPlugin : DokkaPlugin() {
  */
 @Serializable
 data class HideInternalApiConfig(
-    val annotatedWith: List<String>
+    val annotatedWith: String,
 )
 
 class HideInternalApiTransformer(context: DokkaContext) : SuppressedByConditionDocumentableFilterTransformer(context) {
@@ -71,6 +71,6 @@ class HideInternalApiTransformer(context: DokkaContext) : SuppressedByConditionD
 
     private fun isInternalAnnotation(annotation: Annotations.Annotation): Boolean {
         val annotationFqn = "${annotation.dri.packageName}.${annotation.dri.classNames}"
-        return configuration.annotatedWith.any { it == annotationFqn }
+        return configuration.annotatedWith == annotationFqn
     }
 }

@@ -21,7 +21,7 @@ dokka {
         // Configure the custom plugin:
         register<HideInternalApiParameters>("HideInternalApiPlugin") {
             // Tell the plugin to hide code annotated with `@HideFromDokka`.
-            annotatedWith.add("demo.HideFromDokka")
+            annotatedWith = "demo.HideFromDokka"
         }
     }
 }
@@ -45,17 +45,12 @@ abstract class HideInternalApiParameters @Inject constructor(
 ) {
 
     @get:Input
-    @get:Optional
-    abstract val annotatedWith: ListProperty<String>
+    abstract val annotatedWith: Property<String>
 
     override fun jsonEncode(): String {
-        // Convert annotatedWith to a JSON list.
-        val annotatedWithJson = annotatedWith.orNull.orEmpty()
-            .joinToString(separator = ", ", prefix = "[", postfix = "]") { "\"$it\"" }
-
         return """
             {
-              "annotatedWith": $annotatedWithJson
+              "annotatedWith": "${annotatedWith.get()}"
             }
             """.trimIndent()
     }
