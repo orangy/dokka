@@ -15,11 +15,12 @@ import org.gradle.kotlin.dsl.newInstance
 import org.gradle.kotlin.dsl.submit
 import org.gradle.workers.WorkerExecutor
 import org.jetbrains.dokka.DokkaConfiguration
+import org.jetbrains.dokka.DokkaConfigurationImpl
 import org.jetbrains.dokka.gradle.DokkaBasePlugin.Companion.jsonMapper
 import org.jetbrains.dokka.gradle.engine.parameters.DokkaGeneratorParametersSpec
 import org.jetbrains.dokka.gradle.engine.parameters.builders.DokkaParametersBuilder
-import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
 import org.jetbrains.dokka.gradle.internal.DokkaPluginParametersContainer
+import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
 import org.jetbrains.dokka.gradle.workers.ClassLoaderIsolation
 import org.jetbrains.dokka.gradle.workers.DokkaGeneratorWorker
 import org.jetbrains.dokka.gradle.workers.ProcessIsolation
@@ -103,6 +104,17 @@ constructor(
     @get:Internal
     abstract val dokkaConfigurationJsonFile: RegularFileProperty
 
+    /**
+     * Completely override the default Dokka configuration with JSON encoded
+     * Dokka Configuration.
+     *
+     * This should only be used for local debugging.
+     */
+    @get:Input
+    @get:Optional
+    @InternalDokkaGradlePluginApi
+    abstract val overrideJsonConfig: Property<String>
+
     @InternalDokkaGradlePluginApi
     enum class GeneratorMode {
         Module,
@@ -114,7 +126,13 @@ constructor(
         generationType: GeneratorMode,
         outputDirectory: File,
     ) {
-        val dokkaConfiguration = createDokkaConfiguration(generationType, outputDirectory)
+        val dokkaConfiguration =
+            if (overrideJsonConfig.isPresent) {
+                logger.warn("w: [$path] Overriding DokkaConfiguration with overrideJsonConfig")
+                DokkaConfigurationImpl(overrideJsonConfig.get())
+            } else {
+                createDokkaConfiguration(generationType, outputDirectory)
+            }
 
         logger.info("dokkaConfiguration: $dokkaConfiguration")
         verifyDokkaConfiguration(dokkaConfiguration)
