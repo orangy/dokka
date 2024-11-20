@@ -28,7 +28,7 @@ class OverrideJsonConfigTest : FunSpec({
                     "--rerun",
                 )
                 .build {
-                    output shouldContain "w: [:dokkaGenerateModuleHtml] Overriding DokkaConfiguration with manualJsonConfig"
+                    output shouldContain "w: [:dokkaGenerateModuleHtml] Overriding DokkaConfiguration with overrideJsonConfig"
 
                     val actualDokkaConfigJson =
                         project.file("build/tmp/dokkaGenerateModuleHtml/dokka-configuration.json")

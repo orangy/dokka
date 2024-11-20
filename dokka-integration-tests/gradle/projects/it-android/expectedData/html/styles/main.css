@@ -1,0 +1,191 @@
+/*!
+ * Copyright 2014-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ */#pages-search{cursor:pointer;border:none;border-radius:50%;background:rgba(0,0,0,0);fill:#fff;fill:var(--dark-mode-and-search-icon-color)}#pages-search:hover{background:var(--white-10)}.search,.search [data-test=ring-select],.search [data-test=ring-tooltip],.search [data-test=ring-select_focus],.search #pages-search{display:inline-block;margin:0;padding:0;font-size:0;line-height:0}.search-hotkey-popup{padding:4px;background-color:var(--background-color) !important}.popup-wrapper{min-width:calc(100% - 322px) !important;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2) !important;background-color:#27282c !important}.popup-wrapper [class^=filterWrapper]{border-bottom:1px solid rgba(255,255,255,.2)}.popup-wrapper input{color:rgba(255,255,255,.8) !important;font-weight:normal !important}.popup-wrapper span[data-test-custom=ring-select-popup-filter-icon]{color:#fff}.popup-wrapper button[data-test=ring-input-clear]{color:#fff !important}@media screen and (width <= 759px){.popup-wrapper{min-width:100% !important}}.template-wrapper{display:grid;height:32px;grid-template-columns:auto auto}.template-wrapper strong{color:rgba(255,255,255,.8)}.template-wrapper span{color:rgba(255,255,255,.8);line-height:32px}.template-wrapper span.template-description{color:rgba(255,255,255,.6);justify-self:end}@media screen and (width <= 759px){.template-wrapper{display:flex;flex-direction:column;height:auto}.template-wrapper span{line-height:unset}}.template-name{justify-self:start}[class^=fade]{display:none}[class*=hover]{background-color:rgba(255,255,255,.1) !important}
+/* stylelint-disable color-no-hex */
+
+.light,
+:root {
+  --ring-unit: 8px;
+
+  /* Element */
+  --ring-line-components: 223, 229, 235;
+  --ring-line-color: rgb(var(--ring-line-components)); /* #dfe5eb */
+  --ring-borders-components: 197, 209, 219;
+  --ring-borders-color: rgb(var(--ring-borders-components)); /* #c5d1db */
+  --ring-icon-components: 184, 209, 229;
+  --ring-icon-color: rgb(var(--ring-icon-components)); /* #b8d1e5 */
+  --ring-icon-secondary-components: 153, 153, 153;
+  --ring-icon-secondary-color: rgb(var(--ring-icon-secondary-components)); /* #999 */
+  --ring-border-disabled-components: 232, 232, 232;
+  --ring-border-disabled-color: rgb(var(--ring-border-disabled-components)); /* #e8e8e8 */
+  --ring-border-selected-disabled-components: 212, 212, 212;
+  --ring-border-selected-disabled-color: rgb(var(--ring-border-selected-disabled-components)); /* #d4d4d4 */
+  --ring-border-unselected-disabled-components: 232, 232, 232;
+  --ring-border-unselected-disabled-color: rgb(var(--ring-border-unselected-disabled-components)); /* #e8e8e8 */ /* TODO remove in 6.0 */
+  --ring-icon-disabled-components: 212, 212, 212;
+  --ring-icon-disabled-color: rgb(var(--ring-icon-disabled-components)); /* #d4d4d4 */
+  --ring-border-hover-components: 128, 198, 255;
+  --ring-border-hover-color: rgb(var(--ring-border-hover-components)); /* #80c6ff */
+  --ring-icon-hover-components: var(--ring-link-hover-color);
+  --ring-icon-hover-color: var(--ring-link-hover-color);
+  --ring-main-components: 0, 128, 229;
+  --ring-main-color: rgb(var(--ring-main-components)); /* #0080e5 */
+  --ring-action-link-components: var(--ring-main-components);
+  --ring-action-link-color: rgb(var(--ring-main-components)); /* #0080e5 */
+  --ring-main-hover-components: 0, 112, 204;
+  --ring-main-hover-color: rgb(var(--ring-main-hover-components)); /* #0070cc */
+  --ring-icon-error-components: 219, 88, 96;
+  --ring-icon-error-color: rgb(var(--ring-icon-error-components)); /* #db5860 */
+  --ring-icon-warning-components: 237, 162, 0;
+  --ring-icon-warning-color: rgb(var(--ring-icon-warning-components)); /* #eda200 */
+  --ring-icon-success-components: 89, 168, 105;
+  --ring-icon-success-color: rgb(var(--ring-icon-success-components)); /* #59a869 */
+  --ring-pale-control-components: 207, 219, 229;
+  --ring-pale-control-color: rgb(var(--ring-pale-control-components)); /* #cfdbe5 */
+  --ring-popup-border-components: 0, 28, 54;
+  --ring-popup-border-color: var(--ring-line-color);
+  --ring-popup-shadow-components: rgba(var(--ring-popup-border-components), 0.1);
+  --ring-popup-shadow-color: rgba(var(--ring-popup-border-components), 0.1);
+  --ring-popup-secondary-shadow-color: rgba(var(--ring-popup-border-components), 0.04);
+  --ring-message-shadow-color: rgba(var(--ring-popup-border-components), 0.3);
+  --ring-pinned-shadow-components: 115, 117, 119;
+  --ring-pinned-shadow-color: rgb(var(--ring-pinned-shadow-components)); /* #737577 */
+  --ring-button-danger-hover-components: var(--ring-icon-error-color);
+  --ring-button-danger-hover-color: var(--ring-icon-error-color);
+  --ring-button-primary-border-components: 0, 98, 178;
+  --ring-button-primary-border-color: rgb(var(--ring-button-primary-border-components)); /* #0062b2 */
+  --ring-popup-shadow: 0 2px 8px var(--ring-popup-shadow-color), 0 1px 2px var(--ring-popup-secondary-shadow-color);
+  --ring-dialog-shadow: 0 4px 24px var(--ring-popup-shadow-color), 0 2px 6px var(--ring-popup-secondary-shadow-color);
+
+  /* Text */
+  --ring-search-components: 102, 158, 204;
+  --ring-search-color: rgb(var(--ring-search-components)); /* #669ecc */
+  --ring-hint-components: 64, 99, 128;
+  --ring-hint-color: rgb(var(--ring-hint-components)); /* #406380 */
+  --ring-link-components: 15, 91, 153;
+  --ring-link-color: rgb(var(--ring-link-components)); /* #0f5b99 */
+  --ring-link-hover-components: 255, 0, 140;
+  --ring-link-hover-color: rgb(var(--ring-link-hover-components)); /* #ff008c */
+  --ring-error-components: 169, 15, 26;
+  --ring-error-color: rgb(var(--ring-error-components)); /* #a90f1a */
+  --ring-warning-components: 178, 92, 0;
+  --ring-warning-color: rgb(var(--ring-warning-components)); /* #b25c00 */
+  --ring-success-components: 12, 117, 35;
+  --ring-success-color: rgb(var(--ring-success-components)); /* #0c7523 */
+  --ring-text-components: 31, 35, 38;
+  --ring-text-color: rgb(var(--ring-text-components)); /* #1f2326 */
+  --ring-active-text-color: var(--ring-text-color);
+  --ring-white-text-components: 255, 255, 255;
+  --ring-white-text-color: rgb(var(--ring-white-text-components)); /* #fff */
+  --ring-heading-color: var(--ring-text-color);
+  --ring-secondary-components: 115, 117, 119;
+  --ring-secondary-color: rgb(var(--ring-secondary-components)); /* #737577 */
+  --ring-disabled-components: 153, 153, 153;
+  --ring-disabled-color: rgb(var(--ring-disabled-components)); /* #999 */
+
+  /* Background */
+  --ring-content-background-components: 255, 255, 255;
+  --ring-content-background-color: rgb(var(--ring-content-background-components)); /* #fff */
+  --ring-popup-background-components: 255, 255, 255;
+  --ring-popup-background-color: rgb(var(--ring-popup-background-components)); /* #fff */
+  --ring-sidebar-background-components: 247, 249, 250;
+  --ring-sidebar-background-color: rgb(var(--ring-sidebar-background-components)); /* #f7f9fa */
+  --ring-selected-background-components: 212, 237, 255;
+  --ring-selected-background-color: rgb(var(--ring-selected-background-components)); /* #d4edff */
+  --ring-hover-background-components: 235, 246, 255;
+  --ring-hover-background-color: rgb(var(--ring-hover-background-components)); /* #ebf6ff */
+  --ring-navigation-background-components: 255, 255, 255;
+  --ring-navigation-background-color: rgb(var(--ring-navigation-background-components)); /* #fff */
+  --ring-tag-background-components: 230, 236, 242;
+  --ring-tag-background-color: rgb(var(--ring-tag-background-components)); /* #e6ecf2 */
+  --ring-tag-hover-background-components: 211, 218, 224;
+  --ring-tag-hover-background-color: rgb(var(--ring-tag-hover-background-components)); /* #d3dae0 */
+  --ring-removed-background-components: 255, 213, 203;
+  --ring-removed-background-color: rgb(var(--ring-removed-background-components)); /* #ffd5cb */
+  --ring-warning-background-components: 250, 236, 205;
+  --ring-warning-background-color: rgb(var(--ring-warning-background-components)); /* #faeccd */
+  --ring-added-background-components: 216, 240, 216;
+  --ring-added-background-color: rgb(var(--ring-added-background-components)); /* #d8f0d8 */
+  --ring-disabled-background-components: 245, 245, 245;
+  --ring-disabled-background-color: rgb(var(--ring-disabled-background-components)); /* #f5f5f5 */
+  --ring-disabled-selected-background-components: 232, 232, 232;
+  --ring-disabled-selected-background-color: rgb(var(--ring-disabled-selected-background-components)); /* #e8e8e8 */
+  --ring-button-danger-active-components: 255, 231, 232;
+  --ring-button-danger-active-color: rgb(var(--ring-button-danger-active-components)); /* #ffe7e8 */
+  --ring-button-loader-background-components: 51, 163, 255;
+  --ring-button-loader-background: rgb(var(--ring-button-loader-background-components)); /* #33a3ff */
+  --ring-button-primary-background-components: 26, 152, 255;
+  --ring-button-primary-background-color: rgb(var(--ring-button-primary-background-components)); /* #1a98ff */
+  --ring-table-loader-background-color: rgba(var(--ring-content-background-components), 0.5); /* #ffffff80 */
+
+  /* Code */
+  --ring-code-background-color: var(--ring-content-background-color);
+  --ring-code-components: 0, 0, 0;
+  --ring-code-color: rgb(var(--ring-code-components)); /* #000 */
+  --ring-code-comment-components: 112, 112, 112;
+  --ring-code-comment-color: rgb(var(--ring-code-comment-components)); /* #707070 */
+  --ring-code-meta-components: 112, 112, 112;
+  --ring-code-meta-color: rgb(var(--ring-code-meta-components)); /* #707070 */
+  --ring-code-keyword-components: 0, 0, 128;
+  --ring-code-keyword-color: rgb(var(--ring-code-keyword-components)); /* #000080 */
+  --ring-code-tag-background-components: 239, 239, 239;
+  --ring-code-tag-background-color: rgb(var(--ring-code-tag-background-components)); /* #efefef */
+  --ring-code-tag-color: var(--ring-code-keyword-color);
+  --ring-code-tag-font-weight: bold;
+  --ring-code-field-components: 102, 14, 122;
+  --ring-code-field-color: rgb(var(--ring-code-field-components)); /* #660e7a */
+  --ring-code-attribute-components: 0, 0, 255;
+  --ring-code-attribute-color: rgb(var(--ring-code-attribute-components)); /* #00f */
+  --ring-code-number-color: var(--ring-code-attribute-color);
+  --ring-code-string-components: 0, 122, 0;
+  --ring-code-string-color: rgb(var(--ring-code-string-components)); /* #007a00 */
+  --ring-code-addition-components: 170, 222, 170;
+  --ring-code-addition-color: rgb(var(--ring-code-addition-components)); /* #aadeaa */
+  --ring-code-deletion-components: 200, 200, 200;
+  --ring-code-deletion-color: rgb(var(--ring-code-deletion-components)); /* #c8c8c8 */
+
+  /* Metrics */
+  --ring-border-radius: 4px;
+  --ring-border-radius-small: 2px;
+  --ring-font-size-larger: 15px;
+  --ring-font-size: 14px;
+  --ring-font-size-smaller: 12px;
+  --ring-line-height-taller: 21px;
+  --ring-line-height: 20px;
+  --ring-line-height-lower: 18px;
+  --ring-line-height-lowest: 16px;
+  --ring-ease: 0.3s ease-out;
+  --ring-fast-ease: 0.15s ease-out;
+  --ring-font-family: system-ui, Arial, sans-serif;
+  --ring-font-family-monospace:
+    Menlo,
+    "Bitstream Vera Sans Mono",
+    "Ubuntu Mono",
+    Consolas,
+    "Courier New",
+    Courier,
+    monospace;
+
+  /* Common z-index-values */
+
+  /* Invisible element is an absolutely positioned element which should be below */
+  /* all other elements on the page */
+  --ring-invisible-element-z-index: -1;
+
+  /* z-index for position: fixed elements */
+  --ring-fixed-z-index: 1;
+
+  /* Elements that should overlay all other elements on the page */
+  --ring-overlay-z-index: 5;
+
+  /* Alerts should de displayed above overlays */
+  --ring-alert-z-index: 6;
+}
+
+/*!
+ * Copyright 2014-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ *//*!
+ * Copyright 2014-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ */html,.app-root{height:100%}.search-root{margin:0;padding:0;background:var(--ring-content-background-color);font-family:var(--ring-font-family);font-size:var(--ring-font-size);line-height:var(--ring-line-height)}.search-content{z-index:8}
+
+/*# sourceMappingURL=main.css.map*/

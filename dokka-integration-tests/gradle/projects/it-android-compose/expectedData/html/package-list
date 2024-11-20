@@ -1,0 +1,7 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:core
+org.dokka.it.android.kmp.core
+module:material3
+org.dokka.it.android.kmp.material3

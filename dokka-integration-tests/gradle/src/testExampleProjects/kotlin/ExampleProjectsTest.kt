@@ -5,7 +5,6 @@ package org.jetbrains.dokka.it.gradle.examples
 
 import io.kotest.assertions.asClue
 import io.kotest.assertions.withClue
-import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.paths.shouldBeADirectory
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
@@ -384,10 +383,10 @@ class ExampleProjectsTest {
             output shouldContain "BUILD SUCCESSFUL"
             output shouldContain "Configuration cache entry stored"
 
-            val ccReport = testCase.project.loadConfigurationCacheReportData().shouldNotBeNull()
-            ccReport.asClue {
-                it.totalProblemCount shouldBe 0
-            }
+            loadConfigurationCacheReportData(projectDir = testCase.project.projectDir)
+                .asClue { ccReport ->
+                    ccReport.totalProblemCount shouldBe 0
+                }
         }
 
         // second build should reuse the configuration cache

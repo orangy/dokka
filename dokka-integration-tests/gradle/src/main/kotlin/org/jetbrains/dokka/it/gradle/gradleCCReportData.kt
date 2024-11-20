@@ -5,8 +5,8 @@ package org.jetbrains.dokka.it.gradle
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import org.jetbrains.dokka.gradle.utils.GradleProjectTest
 import java.nio.file.Path
+import kotlin.io.path.invariantSeparatorsPathString
 import kotlin.io.path.isRegularFile
 import kotlin.io.path.readText
 import kotlin.io.path.walk
@@ -19,23 +19,35 @@ import kotlin.io.path.walk
  * Only the first CC report will be parsed, so make sure to clean the CC report directory
  * before running any Gradle tasks to ensure only one report is found.
  */
-fun GradleProjectTest.loadConfigurationCacheReportData(): ConfigurationCacheReportData? {
-    val ccReportFile = projectDir.resolve("build/reports/configuration-cache")
+fun loadConfigurationCacheReportData(projectDir: Path): ConfigurationCacheReportData {
+
+    val ccReportFiles = projectDir.resolve("build/reports/configuration-cache")
         .walk()
         .filter { it.isRegularFile() }
-        .singleOrNull()
-        ?: return null
+        .toList()
 
-    return parseCCReportData(ccReportFile)
+    require(ccReportFiles.isNotEmpty()) { "Expected 1 CC report file, but found none" }
+
+    require(ccReportFiles.count() == 1) {
+        """
+        Expected 1 CC report file, but found ${ccReportFiles.count()}.
+        Make sure to delete the 'build/reports/configuration-cache/' dir before the Gradle build.
+        All files:
+        ${ccReportFiles.joinToString("\n") { " - ${it.invariantSeparatorsPathString}" }} 
+        """.trimIndent()
+    }
+
+    return parseCCReportData(ccReportFiles.single())
 }
 
 @Serializable
 data class ConfigurationCacheReportData(
     val diagnostics: List<DiagnosticsItem>,
     val totalProblemCount: Int,
-    val buildName: String,
+    val buildName: String? = null,
     val requestedTasks: String,
     val cacheAction: String,
+    val cacheActionDescription: List<ActionDescription> = emptyList(),
     val documentationLink: String,
 ) {
 
@@ -57,6 +69,11 @@ data class ConfigurationCacheReportData(
     data class Input(
         val text: String? = null,
         val name: String? = null,
+    )
+
+    @Serializable
+    data class ActionDescription(
+        val text: String? = null,
     )
 }
 

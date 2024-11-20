@@ -44,7 +44,7 @@ class CoroutinesGradleIntegrationTest : AbstractGradleIntegrationTest(), TestOut
             projectDir.toPath(),
             templateProjectDir.parent.resolve("coroutines.diff"),
         )
-        projectDir.updateProjectLocalMavenDir()
+        projectDir.toPath().updateProjectLocalMavenDir()
     }
 
     @OnlyDescriptors

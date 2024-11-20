@@ -33,9 +33,17 @@ fun BuildTask.shouldHaveOutcome(
     require(expectedOutcomes.isNotEmpty()) {
         "Invalid assertion. Must have at least 1 expected TaskOutcome, but got none."
     }
-    assertContains(
-        expectedOutcomes.toList(),
-        outcome,
-        "Expected that task $path outcome was any of $expectedOutcomes, but was actually $outcome."
-    )
+
+    val message = buildString {
+        append("Expected that task $path outcome was")
+
+        if (expectedOutcomes.size == 1) {
+            append(" ${expectedOutcomes.single()}, ")
+        } else {
+            append(" any of ${expectedOutcomes.toList()}, ")
+        }
+        append("but was actually $outcome")
+    }
+
+    assertContains(expectedOutcomes.toList(), outcome, message)
 }

@@ -17,10 +17,7 @@ import java.io.File
 import java.net.URI
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.io.path.copyTo
-import kotlin.io.path.copyToRecursively
-import kotlin.io.path.exists
-import kotlin.io.path.invariantSeparatorsPathString
+import kotlin.io.path.*
 import kotlin.test.BeforeTest
 import kotlin.time.Duration.Companion.seconds
 
@@ -37,7 +34,7 @@ abstract class AbstractGradleIntegrationTest : AbstractIntegrationTest() {
     ) {
         templateProjectDir.copyToRecursively(destination.toPath(), followLinks = false, overwrite = true)
         templateSettingsGradleKts.copyTo(destination.resolve("template.settings.gradle.kts").toPath(), overwrite = true)
-        destination.updateProjectLocalMavenDir()
+        destination.toPath().updateProjectLocalMavenDir()
     }
 
     fun createGradleRunner(
@@ -84,19 +81,7 @@ abstract class AbstractGradleIntegrationTest : AbstractIntegrationTest() {
             .withJetBrainsCachedGradleVersion(buildVersions.gradleVersion)
             .withTestKitDir(File("build", "gradle-test-kit").absoluteFile)
             .withDebug(TestEnvironment.isEnabledDebug)
-            .apply {
-                withEnvironment(
-                    buildMap {
-                        // `withEnvironment()` will wipe all existing environment variables,
-                        // which breaks things like ANDROID_HOME and PATH, so re-add them.
-                        putAll(System.getenv())
-
-                        if (hostGradleDependenciesCache.exists()) {
-                            put("GRADLE_RO_DEP_CACHE", hostGradleDependenciesCache.invariantSeparatorsPathString)
-                        }
-                    }
-                )
-            }
+            .withReadOnlyDependencyCache()
             .withArguments(
                 buildList {
 
@@ -190,7 +175,7 @@ abstract class AbstractGradleIntegrationTest : AbstractIntegrationTest() {
          * Note: Currently all Gradle versions store caches in `$GRADLE_USER_HOME/caches/`,
          * but this might change. Check the docs.
          */
-        private val hostGradleDependenciesCache: Path by lazy {
+        internal val hostGradleDependenciesCache: Path by lazy {
             hostGradleUserHome.resolve("caches")
         }
 
@@ -239,14 +224,14 @@ abstract class AbstractGradleIntegrationTest : AbstractIntegrationTest() {
             """.trimMargin()
         }
 
-        fun File.updateProjectLocalMavenDir() {
+        fun Path.updateProjectLocalMavenDir() {
 
             val dokkaMavenRepoMarker = "/* %{DOKKA_IT_MAVEN_REPO}% */"
 
             // Exclusive repository containing local Dokka artifacts.
             // Must be compatible with both Groovy and Kotlin DSL.
 
-            walk().filter { it.isFile }.forEach { file ->
+            walk().filter { it.isRegularFile() }.forEach { file ->
                 val fileText = file.readText()
 
                 if (dokkaMavenRepoMarker in fileText) {
@@ -260,9 +245,29 @@ abstract class AbstractGradleIntegrationTest : AbstractIntegrationTest() {
 }
 
 private fun GradleRunner.withJetBrainsCachedGradleVersion(version: GradleVersion): GradleRunner =
+    withJetBrainsCachedGradleVersion(version.version)
+
+internal fun GradleRunner.withJetBrainsCachedGradleVersion(version: String): GradleRunner =
     withGradleDistribution(
-        URI("https://cache-redirector.jetbrains.com/services.gradle.org/distributions/gradle-${version.version}-bin.zip")
+        URI("https://cache-redirector.jetbrains.com/services.gradle.org/distributions/gradle-${version}-bin.zip")
     )
+
+internal fun GradleRunner.withReadOnlyDependencyCache(
+    hostGradleDependenciesCache: Path = AbstractGradleIntegrationTest.hostGradleDependenciesCache,
+): GradleRunner =
+    apply {
+        withEnvironment(
+            buildMap {
+                // `withEnvironment()` will wipe all existing environment variables,
+                // which breaks things like ANDROID_HOME and PATH, so re-add them.
+                putAll(System.getenv())
+
+                if (hostGradleDependenciesCache.exists()) {
+                    put("GRADLE_RO_DEP_CACHE", hostGradleDependenciesCache.invariantSeparatorsPathString)
+                }
+            }
+        )
+    }
 
 private fun Throwable.withAllCauses(): Sequence<Throwable> {
     val root = this

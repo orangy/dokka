@@ -1,0 +1,14 @@
+[versions]
+android-gradle-plugin = "/* %{AGP_VERSION} */"
+kotlin = "/* %{KGP_VERSION} */"
+
+compose = "/* %{COMPOSE_VERSION} */"
+
+[libraries]
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test" }
+
+[plugins]
+
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }

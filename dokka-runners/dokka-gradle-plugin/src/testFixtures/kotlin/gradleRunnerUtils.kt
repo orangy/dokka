@@ -29,9 +29,14 @@ inline fun GradleRunner.build(
 }
 
 
+
+@OptIn(ExperimentalContracts::class)
 inline fun GradleRunner.buildAndFail(
     handleResult: BuildResult.() -> Unit
-): Unit = buildAndFail().let(handleResult)
+) {
+    contract { callsInPlace(handleResult, InvocationKind.EXACTLY_ONCE) }
+    buildAndFail().let(handleResult)
+}
 
 
 /**

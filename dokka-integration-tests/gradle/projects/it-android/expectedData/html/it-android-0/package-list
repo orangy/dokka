@@ -1,0 +1,11 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:it.android////PointingToDeclaration/it-android-0/it.android/index.html
+$dokka.location:it.android/AndroidSpecificClass///PointingToDeclaration/it-android-0/it.android/-android-specific-class/index.html
+$dokka.location:it.android/AndroidSpecificClass/AndroidSpecificClass/#/PointingToDeclaration/it-android-0/it.android/-android-specific-class/-android-specific-class.html
+$dokka.location:it.android/AndroidSpecificClass/createView/#android.content.Context/PointingToDeclaration/it-android-0/it.android/-android-specific-class/create-view.html
+$dokka.location:it.android/AndroidSpecificClass/sparseIntArray/#/PointingToDeclaration/it-android-0/it.android/-android-specific-class/sparse-int-array.html
+$dokka.location:it.android/IntegrationTestActivity///PointingToDeclaration/it-android-0/it.android/-integration-test-activity/index.html
+$dokka.location:it.android/IntegrationTestActivity/IntegrationTestActivity/#/PointingToDeclaration/it-android-0/it.android/-integration-test-activity/-integration-test-activity.html
+$dokka.location:it.android/IntegrationTestActivity/onCreate/#android.os.Bundle?/PointingToDeclaration/it-android-0/it.android/-integration-test-activity/on-create.html
+it.android

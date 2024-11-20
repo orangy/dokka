@@ -183,7 +183,8 @@ abstract class DokkaFormatPlugin(
                 dependency,
                 Action<ExternalModuleDependency> {
                     attributes { dokkaPluginsClasspath() }
-                })
+                }
+            )
 
         /** Add a dependency to the Dokka plugins classpath */
         fun DependencyHandler.dokkaPlugin(dependency: String) {
@@ -194,10 +195,13 @@ abstract class DokkaFormatPlugin(
 
         /** Add a dependency to the Dokka Generator classpath */
         fun DependencyHandler.dokkaGenerator(dependency: Provider<Dependency>) {
-            addProvider(dependencyContainerNames.generatorClasspath, dependency,
+            addProvider(
+                dependencyContainerNames.generatorClasspath,
+                dependency,
                 Action<ExternalModuleDependency> {
                     attributes { dokkaGeneratorClasspath() }
-                })
+                }
+            )
         }
 
         /** Add a dependency to the Dokka Generator classpath */
@@ -207,7 +211,6 @@ abstract class DokkaFormatPlugin(
             }
         }
     }
-
 
     private fun DokkaFormatPluginContext.addDefaultDokkaDependencies() {
         project.dependencies {
