@@ -171,7 +171,12 @@ constructor(
         sourceSetScopeConvention: Property<String>,
     ) {
         configureEach dss@{
+
+            // Manually added sourceSets should not be suppressed by default.
+            // dokkaSourceSets that are automatically added by DokkaKotlinAdapter will have a sensible value for 'suppress'.
+            suppress.convention(false)
             analysisPlatform.convention(KotlinPlatform.DEFAULT)
+
             displayName.convention(
                 analysisPlatform.map { platform ->
                     // Match existing Dokka naming conventions. (This should probably be simplified!)
@@ -197,10 +202,6 @@ constructor(
             skipDeprecated.convention(false)
             skipEmptyPackages.convention(true)
             sourceSetScope.convention(sourceSetScopeConvention)
-
-            // Manually added sourceSets should not be suppressed by default.
-            // dokkaSourceSets that are automatically added by DokkaKotlinAdapter will have a sensible value for 'suppress'.
-            suppress.convention(false)
 
             suppressGeneratedFiles.convention(true)
 

@@ -10,6 +10,7 @@ import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
 import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import org.jetbrains.dokka.gradle.engine.parameters.DokkaSourceSetSpec.Companion.dokkaSourceSetSpecContainer
 import org.jetbrains.dokka.gradle.internal.DokkaPluginParametersContainer
 import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
 import org.jetbrains.dokka.gradle.internal.adding
@@ -82,11 +83,12 @@ constructor(
      * Source sets used to generate a Dokka Module.
      *
      * The values are not used directly in this task, but they are required to be registered as a
-     * task input for up-to-date checks
+     * task input for up-to-date checks.
      */
     @get:Nested
     val dokkaSourceSets: NamedDomainObjectContainer<DokkaSourceSetSpec> =
-        extensions.adding("dokkaSourceSets", objects.domainObjectContainer())
+//        extensions.adding("dokkaSourceSets", objects.dokkaSourceSetSpecContainer())
+    extensions.adding("dokkaSourceSets", objects.domainObjectContainer())
 
     /** Dokka Modules directories, containing the output, module descriptor, and module includes. */
     @get:InputFiles

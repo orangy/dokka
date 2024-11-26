@@ -20,10 +20,10 @@ import org.gradle.kotlin.dsl.*
 import org.jetbrains.dokka.gradle.DokkaBasePlugin
 import org.jetbrains.dokka.gradle.DokkaExtension
 import org.jetbrains.dokka.gradle.adapters.KotlinAdapter.Companion.currentKotlinToolingVersion
-import org.jetbrains.dokka.gradle.engine.parameters.SourceSetIdSpec
-import org.jetbrains.dokka.gradle.engine.parameters.SourceSetIdSpec.Companion.dokkaSourceSetIdSpec
 import org.jetbrains.dokka.gradle.engine.parameters.DokkaSourceSetSpec
 import org.jetbrains.dokka.gradle.engine.parameters.KotlinPlatform
+import org.jetbrains.dokka.gradle.engine.parameters.SourceSetIdSpec
+import org.jetbrains.dokka.gradle.engine.parameters.SourceSetIdSpec.Companion.dokkaSourceSetIdSpec
 import org.jetbrains.dokka.gradle.internal.*
 import org.jetbrains.kotlin.commonizer.KonanDistribution
 import org.jetbrains.kotlin.commonizer.platformLibsDir
@@ -139,23 +139,29 @@ abstract class KotlinAdapter @Inject constructor(
         }
     }
 
-    /** Register a single [DokkaSourceSetSpec] for [details] */
+    /** Register a single [DokkaSourceSetSpec] for [details]. */
     private fun NamedDomainObjectContainer<DokkaSourceSetSpec>.register(
         details: KotlinSourceSetDetails
     ) {
         val kssPlatform = details.compilations.map { values: List<KotlinCompilationDetails> ->
-            values.map { it.kotlinPlatform }
-                .distinct()
-                .singleOrNull() ?: KotlinPlatform.Common
+            val all = values.map { it.kotlinPlatform }.distinct()
+            val r = all.singleOrNull()
+
+            println("[$dkaName] computed platform for ${details.name}: $r (from ${all})")
+
+            r ?: KotlinPlatform.Common
         }
 
         val kssClasspath = determineClasspath(details)
 
         register(details.name) dss@{
             suppress.set(!details.isPublishedSourceSet())
+            analysisPlatform.set(kssPlatform)
+//            suppress.convention(!details.isPublishedSourceSet())
+//            analysisPlatform.convention(kssPlatform)
+
             sourceRoots.from(details.sourceDirectories)
             classpath.from(kssClasspath)
-            analysisPlatform.set(kssPlatform)
             dependentSourceSets.addAllLater(details.dependentSourceSetIds)
         }
     }

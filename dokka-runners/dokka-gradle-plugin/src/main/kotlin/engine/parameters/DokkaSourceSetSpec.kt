@@ -3,10 +3,7 @@
  */
 package org.jetbrains.dokka.gradle.engine.parameters
 
-import org.gradle.api.Action
-import org.gradle.api.DomainObjectSet
-import org.gradle.api.Named
-import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.*
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.plugins.ExtensionAware
@@ -445,4 +442,16 @@ constructor(
     @Suppress("unused")
     abstract val noJdkLink: Property<Boolean>
     //endregion
+
+    companion object {
+        internal fun ObjectFactory.dokkaSourceSetSpecContainer(): NamedDomainObjectContainer<DokkaSourceSetSpec> =
+            domainObjectContainer { name ->
+                newInstance<DokkaSourceSetSpec>(name).apply {
+                    // Manually added sourceSets should not be suppressed by default.
+                    // dokkaSourceSets that are automatically added by DokkaKotlinAdapter will have a sensible value for 'suppress'.
+                    //suppress.convention(false)
+                    //analysisPlatform.convention(KotlinPlatform.DEFAULT)
+                }
+            }
+    }
 }

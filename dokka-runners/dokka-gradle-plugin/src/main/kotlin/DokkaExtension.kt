@@ -14,6 +14,7 @@ import org.gradle.api.tasks.Nested
 import org.gradle.kotlin.dsl.newInstance
 import org.jetbrains.dokka.gradle.dependencies.BaseDependencyManager
 import org.jetbrains.dokka.gradle.engine.parameters.DokkaSourceSetSpec
+import org.jetbrains.dokka.gradle.engine.parameters.DokkaSourceSetSpec.Companion.dokkaSourceSetSpecContainer
 import org.jetbrains.dokka.gradle.formats.DokkaPublication
 import org.jetbrains.dokka.gradle.internal.*
 import org.jetbrains.dokka.gradle.workers.ClassLoaderIsolation
@@ -191,6 +192,7 @@ constructor(
      * ```
      */
     val dokkaSourceSets: NamedDomainObjectContainer<DokkaSourceSetSpec> =
+        //extensions.adding("dokkaSourceSets", objects.dokkaSourceSetSpecContainer())
         extensions.adding("dokkaSourceSets", objects.domainObjectContainer())
 
     /**
