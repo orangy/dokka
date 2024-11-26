@@ -13,6 +13,7 @@ import org.gradle.testkit.runner.TaskOutcome.FROM_CACHE
 import org.gradle.testkit.runner.TaskOutcome.UP_TO_DATE
 import org.jetbrains.dokka.gradle.utils.*
 import org.jetbrains.dokka.it.gradle.loadConfigurationCacheReportData
+import org.jetbrains.dokka.it.optionalSystemProperty
 import org.jetbrains.dokka.it.systemProperty
 import org.junit.jupiter.api.Assumptions.assumeTrue
 import org.junit.jupiter.api.Named.named
@@ -28,6 +29,17 @@ import java.util.stream.Stream
 import kotlin.io.path.*
 import kotlin.streams.asStream
 
+/**
+ * Test all Dokka Gradle v2 examples.
+ *
+ * Each `@Test` is parameterised, and will run for each example.
+ *
+ * #### Testing a specific project.
+ *
+ * To run a `@Test` for a single project the `build.gradle.kts` defines a test task for each example project.
+ * So, to only test the `basic-gradle-example`, run `gradle :dokka-integration-tests:gradle:testBasicGradleExample`.
+ * All other projects will be skipped.
+ */
 class ExampleProjectsTest {
 
     class TestCaseProvider : ArgumentsProvider {
@@ -85,6 +97,13 @@ class ExampleProjectsTest {
     ) {
         val exampleProjectName = ExampleProject.of(project.projectDir)
 
+        /**
+         * Tests are enabled if there is no [exampleProjectFilter] set, or if [exampleProjectFilter] matches
+         * the name of [GradleProjectTest.projectDir].
+         */
+        val isEnabled: Boolean =
+            exampleProjectFilter == null || project.projectDir.name == exampleProjectFilter
+
         /** `true` if the project produces Dokka HTML. */
         val outputsHtml: Boolean =
             when (exampleProjectName) {
@@ -106,6 +125,7 @@ class ExampleProjectsTest {
                 ExampleProject.VersioningMultimodule -> "docs/build/dokka/"
                 ExampleProject.Multimodule -> "docs/build/dokka/"
                 ExampleProject.CompositeBuild -> "docs/build/dokka/"
+                ExampleProject.CustomDokkaPlugin -> "demo-library/build/dokka/"
                 else -> "build/dokka/"
             }
 
@@ -115,7 +135,17 @@ class ExampleProjectsTest {
             ExampleProject.VersioningMultimodule -> ":docs:dokkaGenerate"
             ExampleProject.Multimodule -> ":docs:dokkaGenerate"
             ExampleProject.CompositeBuild -> ":build"
+            ExampleProject.CustomDokkaPlugin -> ":demo-library:dokkaGenerate"
             else -> ":dokkaGenerate"
+        }
+
+        companion object {
+            /**
+             * If set, only run a specific example project with the matching [exampleProjectName].
+             *
+             * This property is set in the Gradle build config.
+             */
+            private val exampleProjectFilter by optionalSystemProperty()
         }
     }
 
@@ -125,6 +155,7 @@ class ExampleProjectsTest {
     enum class ExampleProject {
         BasicGradle,
         CompositeBuild,
+        CustomDokkaPlugin,
         CustomStyling,
         Java,
         Javadoc,
@@ -141,6 +172,7 @@ class ExampleProjectsTest {
                     "basic-gradle-example" -> BasicGradle
                     "javadoc-example" -> Javadoc
                     "composite-build-example" -> CompositeBuild
+                    "custom-dokka-plugin-example" -> CustomDokkaPlugin
                     "custom-styling-example" -> CustomStyling
                     "java-example" -> Java
                     "kotlin-as-java-example" -> KotlinAsJava
@@ -158,6 +190,7 @@ class ExampleProjectsTest {
     @ParameterizedTest
     @ArgumentsSource(TestCaseProvider::class)
     fun `test HTML output`(testCase: TestCase) {
+        assumeTrue(testCase.isEnabled)
         assumeTrue(testCase.outputsHtml)
 
         testDokkaOutput(
@@ -169,6 +202,7 @@ class ExampleProjectsTest {
     @ParameterizedTest
     @ArgumentsSource(TestCaseProvider::class)
     fun `test Javadoc output`(testCase: TestCase) {
+        assumeTrue(testCase.isEnabled)
         assumeTrue(testCase.outputsJavadoc)
 
         testDokkaOutput(
@@ -222,6 +256,7 @@ class ExampleProjectsTest {
         testCase: TestCase,
         @TempDir tempDir: Path,
     ) {
+        assumeTrue(testCase.isEnabled)
 
         val buildCacheDir = tempDir.resolve("build-cache").apply {
             deleteRecursively()
@@ -234,7 +269,7 @@ class ExampleProjectsTest {
             |        directory = File("${buildCacheDir.invariantSeparatorsPathString}")
             |    }
             |}
-        """.trimMargin()
+            """.trimMargin()
 
         // Initial build, to populate the build cache.
         testCase.project.runner
@@ -282,6 +317,14 @@ class ExampleProjectsTest {
                         )
                     }
 
+                    ExampleProject.CustomDokkaPlugin -> {
+                        shouldHaveTasksWithOutcome(
+                            ":demo-library:dokkaGenerateModuleHtml" to FROM_CACHE,
+                            ":demo-library:dokkaGeneratePublicationHtml" to FROM_CACHE,
+                            ":demo-library:dokkaGenerate" to UP_TO_DATE,
+                        )
+                    }
+
                     ExampleProject.Multimodule -> {
                         shouldHaveTasksWithOutcome(
                             ":childProjectA:dokkaGenerateModuleHtml" to FROM_CACHE,
@@ -314,6 +357,8 @@ class ExampleProjectsTest {
     @ParameterizedTest
     @ArgumentsSource(TestCaseProvider::class)
     fun `test configuration cache`(testCase: TestCase) {
+        assumeTrue(testCase.isEnabled)
+
         // delete old configuration cache results and reports, to make sure we can fetch the newest report
         testCase.project.findFiles {
             val isCCDir = it.invariantSeparatorsPath.endsWith(".gradle/configuration-cache")

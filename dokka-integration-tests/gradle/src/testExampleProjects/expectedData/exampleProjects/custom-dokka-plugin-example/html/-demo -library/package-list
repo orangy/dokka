@@ -1,0 +1,9 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:demo////PointingToDeclaration/-demo -library/demo/index.html
+$dokka.location:demo/Greeter///PointingToDeclaration/-demo -library/demo/-greeter/index.html
+$dokka.location:demo/Greeter/Greeter/#kotlin.String/PointingToDeclaration/-demo -library/demo/-greeter/-greeter.html
+$dokka.location:demo/Greeter/greet/#/PointingToDeclaration/-demo -library/demo/-greeter/greet.html
+$dokka.location:demo/Greeter/name/#/PointingToDeclaration/-demo -library/demo/-greeter/name.html
+$dokka.location:demo/HideFromDokka///PointingToDeclaration/-demo -library/demo/-hide-from-dokka/index.html
+demo

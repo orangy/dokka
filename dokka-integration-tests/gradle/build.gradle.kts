@@ -4,9 +4,10 @@
 @file:Suppress("UnstableApiUsage")
 
 import dokkabuild.tasks.GitCheckoutTask
+import dokkabuild.utils.DokkaGradleExampleDirectoriesSource
 import dokkabuild.utils.systemProperty
-import org.gradle.api.tasks.PathSensitivity.NAME_ONLY
-import org.gradle.api.tasks.PathSensitivity.RELATIVE
+import dokkabuild.utils.uppercaseFirstChar
+import org.gradle.api.tasks.PathSensitivity.*
 
 plugins {
     id("dokkabuild.kotlin-jvm")
@@ -226,10 +227,10 @@ testing {
         }
     }
     val testExampleProjects by suites.registering(JvmTestSuite::class) {
-        targets.configureEach {
-            testTask.configure {
+        val exampleGradleProjectsDir = projectDir.resolve("../../examples/gradle-v2")
 
-                val exampleGradleProjectsDir = projectDir.resolve("../../examples/gradle-v2")
+        targets.configureEach {
+            testTask {
                 systemProperty
                     .inputDirectory("exampleGradleProjectsDir", exampleGradleProjectsDir)
                     .withPathSensitivity(RELATIVE)
@@ -242,6 +243,29 @@ testing {
                 // Disable parallel on CI. TeamCity OOMs when the tests are run in parallel.
                 systemProperty.inputProperty("junit.jupiter.execution.parallel.enabled", dokkaBuild.isCI.map { !it })
                 systemProperty("junit.jupiter.execution.parallel.mode.default", "CONCURRENT")
+            }
+        }
+
+        val exampleProjectDirs = providers.of(DokkaGradleExampleDirectoriesSource::class) {
+            parameters.exampleGradleProjectsDir = exampleGradleProjectsDir
+        }.get()
+
+        exampleProjectDirs.forEach { exampleProjectDir ->
+            val exampleProjectName = exampleProjectDir.name
+            val prettyName = exampleProjectName
+                .split("-")
+                .joinToString("") { it.uppercaseFirstChar() }
+
+            targets.register("test$prettyName") {
+                testTask {
+                    description = "Only test $exampleProjectName"
+                    group = "verification - example projects"
+                    systemProperty.inputProperty("exampleProjectFilter", exampleProjectName)
+
+                    systemProperty
+                        .inputDirectory("exampleGradleProjectDir $exampleProjectName", exampleProjectDir)
+                        .withPathSensitivity(NONE)
+                }
             }
         }
     }
