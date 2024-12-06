@@ -1,0 +1,113 @@
+/*!
+ * Copyright 2014-2024  JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ */
+@import '../_tokens/index';
+
+.footer {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  min-height: var(--footer-height);
+  margin-top: auto;
+
+  padding: 0 var(--size-m3);
+
+  letter-spacing: 0.15px;
+
+  color: var(--color-text-light);
+  background-color: var(--color-background-footer);
+
+  font: var(--font-text-s);
+
+  .theme-dark & {
+    color: var(--color-text-light-dt);
+    background-color: var(--color-background-footer-dt);
+  }
+
+  @media (width < $breakpoint-desktop-min) {
+    padding: 0 var(--size-s3);
+  }
+
+  &--button {
+    z-index: 0;
+
+    display: inline-flex;
+    align-items: center;
+
+    flex-shrink: 0;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    margin-top: 12px;
+    padding: 0;
+
+    cursor: pointer;
+
+    border: none;
+    border-radius: var(--size-s1);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 24px 24px;
+
+    font-size: 0;
+    line-height: 0;
+
+    filter: invert(1);
+
+    .theme-dark & {
+      filter: none;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--color-w10);
+      }
+    }
+
+    &:active {
+      background-color: var(--color-w16);
+    }
+
+    &:focus-visible {
+      outline: var(--focus-outline);
+    }
+
+    &_go-to-top {
+      background-image: url('../_assets/go-to-top-icon.svg');
+    }
+  }
+
+  &--link {
+    color: inherit;
+
+    border-bottom: 1px solid var(--color-text-light);
+
+    .theme-dark & {
+      border-bottom-color: var(--color-text-light-dt);
+    }
+
+    &:focus-visible {
+      outline: var(--focus-outline);
+    }
+
+    &:hover {
+      border-bottom-color: var(--color-text);
+
+      .theme-dark & {
+        border-bottom-color: var(--color-text-dt);
+      }
+    }
+  }
+
+  &--content {
+    margin: 12px 0;
+
+    text-align: right;
+  }
+}

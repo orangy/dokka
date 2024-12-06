@@ -6,7 +6,7 @@ import './styles.scss';
 function initButton() {
   const buttons = document.querySelectorAll('div.button');
   buttons.forEach((button: Element) => {
-    button.addEventListener('keydown', (event) => {
+    button.addEventListener('keyup', (event) => {
       const key = (event as KeyboardEvent).key;
       if (key === 'Enter' || key === ' ') {
         button.dispatchEvent(new MouseEvent('click'));

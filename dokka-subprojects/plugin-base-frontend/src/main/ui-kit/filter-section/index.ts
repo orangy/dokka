@@ -134,7 +134,7 @@ function initFilterSection(): void {
       option.addEventListener('click', (event) => {
         toggleFilterForOption(event.target as Element);
       });
-      option.addEventListener('keydown', (event) => {
+      option.addEventListener('keyup', (event) => {
         const key = (event as KeyboardEvent).key;
         if (key === 'Enter' || key === ' ') {
           toggleFilterForOption(event.target as Element);

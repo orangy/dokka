@@ -5,6 +5,7 @@ import * as button from './button/index';
 import * as checkbox from './checkbox/index';
 import * as dropdown from './dropdown/index';
 import * as filterSection from './filter-section/index';
+import * as footer from './footer/index';
 import * as icon from './icon/index';
 import * as libraryName from './library-name/index';
 import * as libraryVersion from './library-version/index';
@@ -23,6 +24,7 @@ export {
   checkbox,
   dropdown,
   filterSection,
+  footer,
   icon,
   libraryName,
   libraryVersion,

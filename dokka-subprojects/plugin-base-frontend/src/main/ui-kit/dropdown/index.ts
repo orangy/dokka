@@ -73,7 +73,7 @@ function handleOutsideClick(event: MouseEvent): void {
 
 function addKeyboardNavigation(dropdown: HTMLElement): void {
   new FocusTrap(dropdown);
-  dropdown.addEventListener('keydown', function (event) {
+  dropdown.addEventListener('keyup', function (event) {
     if (event.key === 'Escape') {
       onToggleDropdown(dropdown);
       (dropdown.querySelector(DROPDOWN_TOGGLE) as HTMLElement)?.focus();

@@ -50,12 +50,12 @@
 
   @media (hover: hover) {
     &:hover {
-      background-color: var(--color-b08);
+      background-color: var(--color-w10);
     }
   }
 
   &:active {
-    background-color: var(--color-w10);
+    background-color: var(--color-w16);
   }
 
   &:focus-visible {
@@ -84,4 +84,8 @@
   margin-left: auto;
 
   background-image: url('../_assets/burger.svg');
+}
+
+.navigation-controls--btn_go-to-top {
+  background-image: url('../_assets/go-to-top-icon.svg');
 }

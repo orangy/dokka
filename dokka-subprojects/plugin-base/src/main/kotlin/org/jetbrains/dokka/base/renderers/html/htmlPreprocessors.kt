@@ -123,6 +123,7 @@ public object AssetsInstaller : PageTransformer {
         "ui-kit/assets/field-variable.svg",
         "ui-kit/assets/filter.svg",
         "ui-kit/assets/function.svg",
+        "ui-kit/assets/go-to-top-icon.svg",
         "ui-kit/assets/homepage.svg",
         "ui-kit/assets/interface-kotlin.svg",
         "ui-kit/assets/interface.svg",
@@ -135,8 +136,6 @@ public object AssetsInstaller : PageTransformer {
         "images/anchor-copy-button.svg",
         "images/copy-icon.svg",
         "images/copy-successful-icon.svg",
-        "images/footer-go-to-link.svg",
-        "images/go-to-top-icon.svg",
         "images/logo-icon.svg",
     )
 
