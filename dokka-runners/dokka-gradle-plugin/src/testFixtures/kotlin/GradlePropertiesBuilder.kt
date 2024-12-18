@@ -73,6 +73,8 @@ data class GradlePropertiesBuilder(
         var k2Analysis: Boolean? = null,
         var k2AnalysisNoWarn: Boolean? = null,
         var enableLogHtmlPublicationLink: Boolean? = false,
+        /** @see org.jetbrains.dokka.gradle.internal.PluginFeaturesService.dumpDokkaConfigurationDebugFile */
+        var dumpDokkaConfigurationDebugFile: Boolean? = true,
     )
 
     /** Gradle Daemon JVM args. */
@@ -107,6 +109,7 @@ data class GradlePropertiesBuilder(
             putNotNull("org.jetbrains.dokka.experimental.tryK2", k2Analysis)
             putNotNull("org.jetbrains.dokka.experimental.tryK2.noWarn", k2AnalysisNoWarn)
             putNotNull("org.jetbrains.dokka.gradle.enableLogHtmlPublicationLink", enableLogHtmlPublicationLink)
+            putNotNull("org.jetbrains.dokka.internal.dumpDokkaConfigurationDebugFile", dumpDokkaConfigurationDebugFile)
         }
 
         with(kotlin) {

@@ -97,8 +97,17 @@ constructor(
     abstract val workerLogFile: RegularFileProperty
 
     /**
-     * The [DokkaConfiguration] by Dokka Generator can be saved to a file for debugging purposes.
-     * To disable this behaviour set this property to `null`.
+     * Enable saving the [DokkaConfiguration] used to config Dokka Generator to a file, for debugging purposes.
+     *
+     * @see dokkaConfigurationJsonFile
+     */
+    @InternalDokkaGradlePluginApi
+    @get:Optional
+    @get:Input
+    abstract val dumpDokkaConfigurationDebugFile: Property<Boolean>
+
+    /**
+     * @see dumpDokkaConfigurationDebugFile
      */
     @InternalDokkaGradlePluginApi
     @get:Optional
@@ -205,6 +214,9 @@ constructor(
     private fun dumpDokkaConfigurationJson(
         dokkaConfiguration: DokkaConfiguration,
     ) {
+        if (dumpDokkaConfigurationDebugFile.orNull != true) {
+            return
+        }
         val destFile = dokkaConfigurationJsonFile.asFile.orNull ?: return
         destFile.parentFile.mkdirs()
         destFile.createNewFile()
