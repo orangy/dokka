@@ -6,6 +6,7 @@ rootProject.name = "build-logic"
 
 pluginManagement {
     repositories {
+        maven("https://cache-redirector.jetbrains.com/maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
         maven("https://cache-redirector.jetbrains.com/repo.maven.apache.org/maven2") {
             name = "MavenCentral-JBCache"
         }
@@ -19,6 +20,7 @@ pluginManagement {
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {
+        maven("https://cache-redirector.jetbrains.com/maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
         maven("https://cache-redirector.jetbrains.com/repo.maven.apache.org/maven2") {
             name = "MavenCentral-JBCache"
         }

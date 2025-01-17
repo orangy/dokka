@@ -9,6 +9,7 @@ pluginManagement {
     includeBuild("build-settings-logic")
 
     repositories {
+        maven("https://cache-redirector.jetbrains.com/maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
         maven("https://cache-redirector.jetbrains.com/repo.maven.apache.org/maven2") {
             name = "MavenCentral-JBCache"
         }
@@ -21,6 +22,7 @@ pluginManagement {
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {
+        maven("https://cache-redirector.jetbrains.com/maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
         maven("https://cache-redirector.jetbrains.com/maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-ide") {
             name = "KotlinIde-JBCache"
         }
