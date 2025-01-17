@@ -41,7 +41,7 @@ class NavigationIconTest : BaseAbstractTest() {
                     .filterKeys { it.startsWith("ui-kit/assets") }
                     .keys.sorted()
 
-                assertEquals(25, navIconAssets.size)
+                assertEquals(26, navIconAssets.size)
                 assertEquals("ui-kit/assets/abstract-class-kotlin.svg", navIconAssets[0])
                 assertEquals("ui-kit/assets/abstract-class.svg", navIconAssets[1])
                 assertEquals("ui-kit/assets/annotation-kotlin.svg", navIconAssets[2])
@@ -60,13 +60,14 @@ class NavigationIconTest : BaseAbstractTest() {
                 assertEquals("ui-kit/assets/field-variable.svg", navIconAssets[15])
                 assertEquals("ui-kit/assets/filter.svg", navIconAssets[16])
                 assertEquals("ui-kit/assets/function.svg", navIconAssets[17])
-                assertEquals("ui-kit/assets/homepage.svg", navIconAssets[18])
-                assertEquals("ui-kit/assets/interface-kotlin.svg", navIconAssets[19])
-                assertEquals("ui-kit/assets/interface.svg", navIconAssets[20])
-                assertEquals("ui-kit/assets/object.svg", navIconAssets[21])
-                assertEquals("ui-kit/assets/placeholder.svg", navIconAssets[22])
-                assertEquals("ui-kit/assets/theme-toggle.svg", navIconAssets[23])
-                assertEquals("ui-kit/assets/typealias-kotlin.svg", navIconAssets[24])
+                assertEquals("ui-kit/assets/go-to-top-icon.svg", navIconAssets[18])
+                assertEquals("ui-kit/assets/homepage.svg", navIconAssets[19])
+                assertEquals("ui-kit/assets/interface-kotlin.svg", navIconAssets[20])
+                assertEquals("ui-kit/assets/interface.svg", navIconAssets[21])
+                assertEquals("ui-kit/assets/object.svg", navIconAssets[22])
+                assertEquals("ui-kit/assets/placeholder.svg", navIconAssets[23])
+                assertEquals("ui-kit/assets/theme-toggle.svg", navIconAssets[24])
+                assertEquals("ui-kit/assets/typealias-kotlin.svg", navIconAssets[25])
             }
         }
     }

@@ -4,7 +4,7 @@
         <@template_cmd name="pathToRoot">
             <a class="library-name--link" href="${pathToRoot}index.html">
                 <@template_cmd name="projectName">
-                    ${projectName}
+                    ${projectName} project name with a very long text
                 </@template_cmd>
             </a>
         </@template_cmd>
