@@ -153,7 +153,7 @@ testing.suites {
             implementation(libs.kotlinxSerialization.json)
 
             //region classic-plugin dependencies - delete these when src/classicMain is removed
-            implementation(libs.kotlin.test)
+            implementation(project.dependencies.kotlin("test").toString())
             implementation(libs.gradlePlugin.kotlin)
             implementation(libs.gradlePlugin.kotlin.klibCommonizerApi)
             implementation(libs.gradlePlugin.android)
