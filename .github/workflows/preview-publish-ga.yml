@@ -24,7 +24,7 @@ jobs:
         with:
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - name: Document coroutines
-        run: ./gradlew :dokka-integration-tests:gradle:testExternalProjectKotlinxCoroutines --stacktrace "-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=500m"
+        run: ./gradlew :dokka-integration-tests:gradle:testExternalProjectKotlinxCoroutines --stacktrace
         env:
           DOKKA_TEST_OUTPUT_PATH: ${{ github.workspace }}/dokka/coroutines
       - name: Copy files to GitHub Actions Artifacts
@@ -50,7 +50,7 @@ jobs:
         with:
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - name: Document serialization
-        run: ./gradlew :dokka-integration-tests:gradle:testExternalProjectKotlinxSerialization --stacktrace "-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=500m"
+        run: ./gradlew :dokka-integration-tests:gradle:testExternalProjectKotlinxSerialization --stacktrace
         env:
           DOKKA_TEST_OUTPUT_PATH: ${{ github.workspace }}/dokka/serialization
       - name: Copy files to GitHub Actions Artifacts
