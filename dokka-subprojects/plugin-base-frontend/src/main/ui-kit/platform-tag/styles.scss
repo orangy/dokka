@@ -74,8 +74,7 @@ button.platform-tag {
 
 @media (hover: hover) {
   .filter-section .platform-tag[data-active]:hover {
-    color: #fff;
-    background-color: rgba(186, 186, 187, 0.7);
+    background-image: linear-gradient(var(--color-b08), var(--color-b08), var(--color-b08));
   }
 }
 
