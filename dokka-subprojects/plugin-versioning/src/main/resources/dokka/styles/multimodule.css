@@ -6,6 +6,10 @@
   white-space: nowrap;
 }
 
+.versions-dropdown-button {
+  position: relative;
+}
+
 @media (width < 900px) {
   .versions-dropdown {
     height: 52px;

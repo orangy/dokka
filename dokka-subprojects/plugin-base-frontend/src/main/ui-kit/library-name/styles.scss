@@ -4,6 +4,8 @@
 @import '../_tokens/index';
 
 .library-name--link {
+  position: relative;
+
   display: flex;
   align-items: center;
 

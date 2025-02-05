@@ -22,9 +22,13 @@
 }
 
 button.platform-tag {
+  position: relative;
+
   cursor: pointer;
 
   &:focus-visible {
+    z-index: 1;
+
     outline: var(--focus-outline);
   }
 }
