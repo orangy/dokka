@@ -91,6 +91,7 @@ public class HtmlVersionsNavigationCreator(
                                         attributes["style"] = "display: block; padding: 5px; color: #fff"
                                         attributes["data-remove-style"] = "true"
                                         attributes["role"] = "option"
+                                        attributes["title"] = version
                                         text(version)
                                     }
                                 } else {
@@ -115,6 +116,7 @@ public class HtmlVersionsNavigationCreator(
                                         attributes["style"] = "display: block; padding: 5px; color: #fff"
                                         attributes["data-remove-style"] = "true"
                                         attributes["role"] = "option"
+                                        attributes["title"] = version
                                         text(version)
                                     }
                                 }

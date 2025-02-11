@@ -101,12 +101,15 @@
 
     display: block;
 
+    overflow: hidden;
+
     padding: var(--size-s2) var(--size-s3);
 
     list-style-type: none;
 
     cursor: pointer;
     letter-spacing: -0.03em;
+    text-overflow: ellipsis;
 
     color: var(--color-text-nav-dt);
 
