@@ -104,7 +104,7 @@
 
     &:hover,
     .theme-dark &:hover {
-      background-color: lighten(rgb(48, 127, 255), 10%); // color-key-blue
+      background-color: var(--color-key-blue-hover);
     }
 
     &::after {

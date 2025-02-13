@@ -15,6 +15,12 @@
     height: 52px;
     margin-left: -8px;
   }
+
+  .versions-dropdown-button {
+    border-radius: 0;
+
+    outline-offset: -4px;
+  }
 }
 
 @media (width >= 900px) {

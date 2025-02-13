@@ -57,6 +57,12 @@
       &::after {
         display: none;
       }
+
+      @media (width < $breakpoint-desktop-min) {
+        border-radius: 0;
+
+        outline-offset: -4px;
+      }
     }
   }
 }
