@@ -42,7 +42,7 @@ Update the Dokka version to 2.0.0 in the `plugins {}` block of your project’s 
 
 ```kotlin
 plugins {
-    kotlin("jvm") version "1.9.25"
+    kotlin("jvm") version "2.1.10"
     id("org.jetbrains.dokka") version "2.0.0"
 }
 ```
@@ -134,7 +134,7 @@ dokka {
         includes.from("README.md")
         sourceLink {
             localDirectory.set(file("src/main/kotlin"))
-            remoteUrl("https://example.com/src")
+            remoteUrl.set(URI("https://example.com/src"))
             remoteLineSuffix.set("#L")
         }
     }
@@ -213,7 +213,7 @@ New configuration:
         includes.from("README.md")
         sourceLink {
             localDirectory.set(file("src/main/kotlin"))
-            remoteUrl("https://github.com/your-repo")
+            remoteUrl.set(URI("https://github.com/your-repo"))
             remoteLineSuffix.set("#L")
         }
     }
@@ -259,18 +259,13 @@ to define each link and aligning with Gradle DSL conventions.
 Previous configuration:
 
 ```kotlin
-dokka {
-    this: DokkaExtension
-    dokkaSourceSets.configureEach {
-        this: DokkaSourceSetSpec
-        externalDocumentationLinks {
-            this: NamedDomainObjectContainerScope<DokkaExternalDocumentationLink> ->
-            url = URL("https://example.com/docs/")
-            packageListUrl = File("/path/to/package-list").toURI().toURL()
-        }
-        externalDocumentationLink {
-            url = URL("https://example.com/docs/")
-            packageListUrl = File("/path/to/package-list").toURI().toURL()
+tasks.dokkaHtml {
+    dokkaSourceSets {
+        configureEach {
+            externalDocumentationLink {
+                url = URL("https://example.com/docs/")
+                packageListUrl = File("/path/to/package-list").toURI().toURL()
+            }
         }
     }
 }
@@ -404,7 +399,7 @@ class in your `build.gradle.kts` file. The following example shows how to define
 // build.gradle.kts
 
 plugins {
-    id("org.jetbrains.dokka") version "2.0.0-Beta"
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 val dokkaScripts = layout.projectDirectory.dir("dokka-scripts")
@@ -421,7 +416,7 @@ dokka {
 @OptIn(DokkaInternalApi::class)
 abstract class DokkaScriptsPluginParameters @Inject constructor(
     name: String
-) : DokkaPluginParametersBaseSpec(name, "ca.solostudios.dokkascript.plugin.DokkaScriptsPlugin") {
+) : DokkaPluginParametersBaseSpec(name, "example.dokkascript.plugin.DokkaScriptsPlugin") {
 
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
