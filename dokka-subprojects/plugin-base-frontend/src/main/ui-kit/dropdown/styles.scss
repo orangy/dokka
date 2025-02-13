@@ -99,17 +99,16 @@
   &--option {
     position: relative;
 
-    display: block;
+    display: flex;
 
-    overflow: hidden;
+    align-items: center;
 
-    padding: var(--size-s2) var(--size-s3);
+    padding: var(--size-s2) 12px;
 
     list-style-type: none;
 
     cursor: pointer;
     letter-spacing: -0.03em;
-    text-overflow: ellipsis;
 
     color: var(--color-text-nav-dt);
 
@@ -117,6 +116,7 @@
     background-color: var(--color-background-nav-dt);
 
     font: var(--font-text-m);
+    gap: 8px;
 
     &:hover {
       background-color: lighten(rgb(50, 50, 55), 10%); // color-background-nav-dt
@@ -157,6 +157,26 @@
         text-transform: uppercase;
       }
     }
+  }
+
+  &--option-icon {
+    display: inline-block;
+
+    flex-shrink: 0;
+
+    width: var(--size-m1);
+    height: var(--size-m1);
+
+    &_selected {
+      background-image: url('../_assets/check.svg');
+    }
+  }
+
+  &--option-text {
+    display: inline-block;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
   }
 
   &--overlay {
