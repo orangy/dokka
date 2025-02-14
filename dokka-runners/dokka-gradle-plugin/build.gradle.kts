@@ -9,9 +9,6 @@ import dokkabuild.utils.skipTestFixturesPublications
 
 plugins {
     id("dokkabuild.gradle-plugin")
-
-    kotlin("plugin.serialization") version embeddedKotlinVersion
-
     `jvm-test-suite`
     `java-test-fixtures`
     id("dokkabuild.dev-maven-publish")

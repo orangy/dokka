@@ -3,7 +3,10 @@
  */
 package org.jetbrains.dokka.gradle.engine.parameters
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
 import org.gradle.kotlin.dsl.java
 import org.jetbrains.dokka.DokkaConfiguration
 import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
@@ -23,7 +26,6 @@ import org.jetbrains.dokka.gradle.internal.InternalDokkaGradlePluginApi
  * @see org.jetbrains.dokka.gradle.engine.parameters.DokkaModuleDescriptionKxs
  * @see org.jetbrains.dokka.DokkaModuleDescriptionImpl
  */
-@Serializable
 @InternalDokkaGradlePluginApi
 data class DokkaModuleDescriptionKxs(
     /** @see DokkaConfiguration.DokkaModuleDescription.name */
@@ -31,7 +33,30 @@ data class DokkaModuleDescriptionKxs(
     /** @see org.jetbrains.dokka.gradle.DokkaExtension.modulePath */
     val modulePath: String,
     /** name of the sibling directory that contains the module output */
-    val moduleOutputDirName: String = "module",
+    val moduleOutputDirName: String = defaultModuleOutputDirName,
     /** name of the sibling directory that contains the module includes */
-    val moduleIncludesDirName: String = "includes",
-)
+    val moduleIncludesDirName: String = defaultModuleIncludesDirName,
+) {
+    internal companion object {
+        private val defaultModuleOutputDirName = "module"
+        private val defaultModuleIncludesDirName = "includes"
+
+        fun toJsonObject(module: DokkaModuleDescriptionKxs): JsonObject = buildJsonObject {
+            put("name", module.name)
+            put("modulePath", module.modulePath)
+            put("moduleOutputDirName", module.moduleOutputDirName)
+            put("moduleIncludesDirName", module.moduleIncludesDirName)
+        }
+
+        fun fromJsonObject(obj: JsonObject): DokkaModuleDescriptionKxs = DokkaModuleDescriptionKxs(
+            name = obj.getString("name"),
+            modulePath = obj.getString("modulePath"),
+            moduleOutputDirName = obj.getString("moduleOutputDirName", defaultModuleOutputDirName),
+            moduleIncludesDirName = obj.getString("moduleIncludesDirName", defaultModuleIncludesDirName),
+        )
+
+        private fun JsonObject.getString(key: String, defaultValue: String? = null): String {
+            return get(key)?.jsonPrimitive?.content ?: defaultValue ?: error("Missing required property '$key'")
+        }
+    }
+}
