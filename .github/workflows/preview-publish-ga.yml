@@ -18,10 +18,11 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - name: Document coroutines
         run: ./gradlew :dokka-integration-tests:gradle:testExternalProjectKotlinxCoroutines --stacktrace "-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=500m"
@@ -44,10 +45,11 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - name: Document serialization
         run: ./gradlew :dokka-integration-tests:gradle:testExternalProjectKotlinxSerialization --stacktrace "-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=500m"
@@ -70,10 +72,11 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - name: Document biojava-core
         run: ./gradlew :dokka-integration-tests:maven:testExternalProjectBioJava --stacktrace
