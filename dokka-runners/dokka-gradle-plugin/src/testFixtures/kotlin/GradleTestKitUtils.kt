@@ -159,7 +159,7 @@ fun gradleKtsProjectTest(
 
     return gradleProjectTest(
         testProjectName = rootProjectNameValue,
-        baseDir = baseDir,
+        baseDir = baseDir.resolve(projectLocation),
     ) {
 
         settingsGradleKts = """

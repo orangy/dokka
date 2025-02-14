@@ -50,6 +50,9 @@ constructor(
         /** If `true`, suppress [k2AnalysisEnabled] messages. */
         val k2AnalysisNoWarn: Property<Boolean>
 
+        /** @see PluginFeaturesService.dumpDokkaConfigurationDebugFile */
+        val dumpDokkaConfigurationDebugFile: Property<Boolean>
+
         /** [Project.getDisplayName] - only used for log messages. */
         val projectDisplayName: Property<String>
 
@@ -231,6 +234,19 @@ constructor(
         }
     }
 
+    /**
+     * Enable saving the [org.jetbrains.dokka.DokkaConfiguration] used to run
+     * [org.jetbrains.dokka.DokkaGenerator] to a file.
+     *
+     * The configuration file is only useful for debugging.
+     * (For example, checking the generated configuration on CI, which might use Linux/Windows/macOS).
+     *
+     * @see org.jetbrains.dokka.gradle.tasks.DokkaGenerateTask.dokkaConfigurationJsonFile
+     */
+    internal val dumpDokkaConfigurationDebugFile: Boolean by lazy {
+        parameters.dumpDokkaConfigurationDebugFile.getOrElse(false)
+    }
+
     /** Values for [pluginMode]. */
     private enum class PluginMode {
         V1Enabled,
@@ -267,7 +283,7 @@ constructor(
      * ORG_GRADLE_PROJECT_org.jetbrains.dokka.gradle.enabledLogHtmlPublicationLink=false
      * ```
      */
-      val enableLogHtmlPublicationLink: Provider<Boolean> =
+    val enableLogHtmlPublicationLink: Provider<Boolean> =
         providers.gradleProperty("org.jetbrains.dokka.gradle.enableLogHtmlPublicationLink")
             .toBoolean()
             .orElse(true)
@@ -295,6 +311,10 @@ constructor(
 
         private const val K2_ANALYSIS_NO_WARN_FLAG_PRETTY =
             "$K2_ANALYSIS_ENABLED_FLAG.noWarn"
+
+        /** @see PluginFeaturesService.dumpDokkaConfigurationDebugFile */
+        private const val DUMP_DOKKA_CONFIG_DEBUG_FILE =
+            "org.jetbrains.dokka.internal.dumpDokkaConfigurationDebugFile"
 
         @Suppress("ObjectPrivatePropertyName")
         private val `To learn about migrating read the migration guide` = /* language=text */ """
@@ -380,6 +400,8 @@ constructor(
                         .orElse(getFlag(K2_ANALYSIS_NO_WARN_FLAG))
                         .toBoolean()
                 )
+
+                dumpDokkaConfigurationDebugFile.set(getFlag(DUMP_DOKKA_CONFIG_DEBUG_FILE).toBoolean())
 
                 configureParamsDuringAccessorsGeneration(project)
             }
