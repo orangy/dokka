@@ -6,6 +6,8 @@
 .platform-tag {
   --platform-tag-color: #bababb;
 
+  position: relative;
+
   padding: 10px 12px;
 
   cursor: pointer;
@@ -20,9 +22,13 @@
 }
 
 button.platform-tag {
+  position: relative;
+
   cursor: pointer;
 
   &:focus-visible {
+    z-index: 1;
+
     outline: var(--focus-outline);
   }
 }
@@ -72,8 +78,7 @@ button.platform-tag {
 
 @media (hover: hover) {
   .filter-section .platform-tag[data-active]:hover {
-    color: #fff;
-    background-color: rgba(186, 186, 187, 0.7);
+    background-image: linear-gradient(var(--color-b08), var(--color-b08), var(--color-b08));
   }
 }
 
@@ -83,10 +88,24 @@ button.platform-tag {
 }
 
 .filter-section .platform-tag:not([data-active]) {
-  text-decoration: line-through;
+  text-decoration: none;
 
   color: var(--color-w50);
   background-color: var(--color-w10);
+
+  &::after {
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    right: 12px;
+    left: 12px;
+
+    height: 1px;
+
+    content: '';
+
+    background-color: currentColor;
+  }
 }
 
 .platform-tags .platform-tag::before {

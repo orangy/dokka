@@ -30,6 +30,9 @@ $secondary-font-color: rgba(255, 255, 255, 0.7);
   #pages-search {
     width: 52px;
     height: 52px;
+
+    border-radius: 0;
+    outline-offset: -4px;
   }
 }
 

@@ -111,6 +111,7 @@ public object AssetsInstaller : PageTransformer {
         "ui-kit/assets/annotation.svg",
         "ui-kit/assets/arrow-down.svg",
         "ui-kit/assets/burger.svg",
+        "ui-kit/assets/check.svg",
         "ui-kit/assets/checkbox-off.svg",
         "ui-kit/assets/checkbox-on.svg",
         "ui-kit/assets/class-kotlin.svg",
