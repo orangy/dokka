@@ -31,7 +31,7 @@
     <div class="root">
         <@header.display/>
         <div id="container">
-            <div class="sidebar" id="leftColumn">
+            <div id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config='{"defaultSize":240}'>
                 <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
                     <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
                         data-role="dropdown-listbox">
@@ -50,7 +50,8 @@
                     <div class="dropdown--overlay"></div>
                 </div>
             </div>
-            <div id="main">
+            <div id="resizer" class="resizer" data-item-type="BAR"></div>
+            <div id="main" data-item-type="SECTION">
                 <@content/>
                 <@footer.display/>
             </div>
