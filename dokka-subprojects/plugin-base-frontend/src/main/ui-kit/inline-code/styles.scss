@@ -1,0 +1,17 @@
+/*!
+ * Copyright 2014-2025  JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ */
+@import '../_tokens/index';
+
+
+code:not(.block) {
+  font: var(--font-code);
+  background: var(--color-background-code);
+  display: inline-block;
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.theme-dark code:not(.block) {
+  color: var(--color-text);
+}
