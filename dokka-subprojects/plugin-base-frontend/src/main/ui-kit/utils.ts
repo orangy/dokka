@@ -29,6 +29,7 @@ export function isMobile(): boolean {
   return window.innerWidth < TABLET_MIN_WIDTH;
 }
 
+/** Returns the current screen type: 'mobile', 'tablet' or 'desktop' */
 export function getScreenType(): ScreenType {
   return isMobile() ? 'mobile' : isTablet() ? 'tablet' : 'desktop';
 }
