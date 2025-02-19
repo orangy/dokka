@@ -336,31 +336,21 @@ code.paragraph {
     padding: 0;
 }
 
-.symbol:not(.token), code {
-    background-color: var(--code-background);
-    align-items: center;
-    box-sizing: border-box;
-    white-space: pre-wrap;
-    font-family: var(--default-monospace-font-family);
-    font-size: var(--default-font-size);
-}
-
 .symbol:not(.token), code.block {
     display: block;
     padding: 12px 32px 12px 12px;
     border-radius: 8px;
-    line-height: 24px;
     position: relative;
+    background-color: var(--code-background);
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    font-family: var(--default-monospace-font-family);
+    line-height: 24px;
 }
 
-code {
+code.block {
     overflow-x: auto;
     max-width: 100%;
-}
-
-code:not(.block) {
-    display: inline-block;
-    vertical-align: bottom;
 }
 
 .copy-icon {
@@ -477,12 +467,7 @@ h1.cover {
 }
 
 .UnderCoverText {
-    font-size: 16px;
-    line-height: 28px;
-}
-
-.UnderCoverText code {
-    font-size: inherit;
+    /** deprecated **/
 }
 
 .UnderCoverText table {
