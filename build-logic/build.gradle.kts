@@ -3,13 +3,19 @@
  */
 
 import org.gradle.kotlin.dsl.support.expectedKotlinDslPluginsVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import kotlin.jvm.optionals.getOrElse
 
 plugins {
     `kotlin-dsl`
 }
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain {
+        languageVersion = libs.versions.gradleDaemonJvm.map(String::toInt).map(JavaLanguageVersion::of)
+    }
 }
 
 dependencies {

@@ -30,10 +30,11 @@ jobs:
               - 'examples/gradle/${{ matrix.projects }}/**'
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - name: Build html
         run: ./gradlew dokkaHtml --no-daemon --stacktrace
@@ -65,11 +66,11 @@ jobs:
               - 'examples/gradle/${{ matrix.projects }}/**'
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
-          cache: 'maven'
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - name: Build html
         run: ./gradlew dokkaHtmlMultiModule --no-daemon --stacktrace
