@@ -18,6 +18,7 @@ import * as tabs from './tabs/index';
 import * as tocTree from './toc-tree/index';
 import * as link from './link/index';
 import * as breadcrumbs from './breadcrumbs/index';
+import * as inlineCode from './inline-code/index';
 import { removeBackwardCompatibilityStyles } from './utils';
 import './helpers.scss';
 import './global.scss';
@@ -40,6 +41,7 @@ export {
   tocTree,
   link,
   breadcrumbs,
+  inlineCode,
 };
 
 document.addEventListener('DOMContentLoaded', () => {
