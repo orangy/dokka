@@ -254,21 +254,6 @@ public abstract class org/jetbrains/dokka/gradle/engine/parameters/DokkaGenerato
 	public abstract fun getSuppressObviousFunctions ()Lorg/gradle/api/provider/Property;
 }
 
-public final class org/jetbrains/dokka/gradle/engine/parameters/DokkaModuleDescriptionKxs$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lorg/jetbrains/dokka/gradle/engine/parameters/DokkaModuleDescriptionKxs$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/jetbrains/dokka/gradle/engine/parameters/DokkaModuleDescriptionKxs;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/jetbrains/dokka/gradle/engine/parameters/DokkaModuleDescriptionKxs;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class org/jetbrains/dokka/gradle/engine/parameters/DokkaModuleDescriptionKxs$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public abstract class org/jetbrains/dokka/gradle/engine/parameters/DokkaPackageOptionsSpec : java/io/Serializable, org/jetbrains/dokka/gradle/engine/parameters/HasConfigurableVisibilityModifiers {
 	public abstract fun getDocumentedVisibilities ()Lorg/gradle/api/provider/SetProperty;
 	public abstract fun getMatchingRegex ()Lorg/gradle/api/provider/Property;
