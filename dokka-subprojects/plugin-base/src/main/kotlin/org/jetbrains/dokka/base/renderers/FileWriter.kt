@@ -80,7 +80,9 @@ public class FileWriter(
             if (Files.isDirectory(file)) {
                 val dirPath = file.toAbsolutePath().toString()
                 withContext(Dispatchers.IO) {
-                    Paths.get(root.path, rebase(dirPath)).toFile().mkdirsOrFail()
+                    // Append a slash to fix an issue with removePrefix in the rebase function
+                    // This causes useless directories to be created in some cases
+                    Paths.get(root.path, rebase("$dirPath/")).toFile().mkdirsOrFail()
                 }
             } else {
                 val filePath = file.toAbsolutePath().toString()

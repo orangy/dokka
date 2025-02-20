@@ -28,7 +28,7 @@
     <@resources/>
 </head>
 <body>
-    <div class="root">
+    <div class="root match-braces">
         <@header.display/>
         <div id="container">
             <div class="sidebar" id="leftColumn">
