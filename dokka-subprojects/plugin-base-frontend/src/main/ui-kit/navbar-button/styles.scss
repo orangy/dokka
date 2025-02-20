@@ -65,6 +65,10 @@
   @media (width < $breakpoint-desktop-min) {
     width: 52px;
     height: 52px;
+
+    border-radius: 0;
+
+    outline-offset: -4px;
   }
 }
 

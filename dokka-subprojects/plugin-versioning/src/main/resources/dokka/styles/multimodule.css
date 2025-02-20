@@ -6,16 +6,27 @@
   white-space: nowrap;
 }
 
+.versions-dropdown-button {
+  position: relative;
+}
+
 @media (width < 900px) {
   .versions-dropdown {
     height: 52px;
     margin-left: -8px;
   }
+
+  .versions-dropdown-button {
+    border-radius: 0;
+
+    outline-offset: -4px;
+  }
 }
 
 @media (width >= 900px) {
   .versions-dropdown .dropdown--list {
-    min-width: 60px;
+    min-width: 120px;
+    max-width: 200px;
     top: 44px;
   }
 }

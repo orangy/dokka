@@ -2,7 +2,7 @@
 <#macro display>
     <nav class="navigation theme-dark" id="navigation-wrapper">
         <@template_cmd name="pathToRoot">
-            <a class="library-name--link" href="${pathToRoot}index.html">
+            <a class="library-name--link" href="${pathToRoot}index.html" tabindex="1">
                 <@template_cmd name="projectName">
                     ${projectName}
                 </@template_cmd>
