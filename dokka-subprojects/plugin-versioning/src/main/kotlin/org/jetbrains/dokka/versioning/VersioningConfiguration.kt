@@ -23,7 +23,9 @@ public data class VersioningConfiguration(
         if (olderVersionsDir != null)
             assert(olderVersionsDir!!.isDirectory) { "Supplied previous version $olderVersionsDir is not a directory!" }
 
-        return olderVersionsDir?.listFiles()?.toList().orEmpty() + olderVersions.orEmpty()
+        return olderVersionsDir?.listFiles()
+            ?.filter { it.isDirectory && !it.isHidden }
+            ?.toList().orEmpty() + olderVersions.orEmpty()
     }
 
     public companion object {
