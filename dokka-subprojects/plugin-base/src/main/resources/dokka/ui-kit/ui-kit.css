@@ -2625,6 +2625,7 @@ a {
   --breakpoint-mobile-max:439px;
   --breakpoint-mobile-min:360px;
   --color-key-blue:#307fff;
+  --color-key-blue-hover:#458cff;
   --color-key-blue-50:rgba(48,127,255,.5);
   --color-background-nav:#27282c;
   --color-background-nav-dt:#323237;
@@ -2706,6 +2707,7 @@ a {
   --breakpoint-mobile-max:439px;
   --breakpoint-mobile-min:360px;
   --color-key-blue:#307fff;
+  --color-key-blue-hover:#458cff;
   --color-key-blue-50:rgba(48,127,255,.5);
   --color-background-nav:#27282c;
   --color-background-nav-dt:#323237;
@@ -2790,6 +2792,7 @@ code:not(.block) {
   --breakpoint-mobile-max:439px;
   --breakpoint-mobile-min:360px;
   --color-key-blue:#307fff;
+  --color-key-blue-hover:#458cff;
   --color-key-blue-50:rgba(48,127,255,.5);
   --color-background-nav:#27282c;
   --color-background-nav-dt:#323237;
