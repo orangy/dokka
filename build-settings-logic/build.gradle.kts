@@ -9,7 +9,9 @@ plugins {
 description = "Conventions for use in settings.gradle.kts scripts"
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain {
+        languageVersion = libs.versions.gradleDaemonJvm.map(String::toInt).map(JavaLanguageVersion::of)
+    }
 }
 
 dependencies {

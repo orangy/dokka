@@ -20,10 +20,11 @@ jobs:
           path: dokka
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - name: Get current Dokka version
         run: echo "DOKKA_VERSION=`./gradlew :properties | grep '^version:.*' | cut -d ' ' -f 2`" >> $GITHUB_ENV

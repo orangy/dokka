@@ -33,10 +33,11 @@ jobs:
               - '${{ matrix.projects }}/**'
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - run: ./gradlew build --no-daemon --stacktrace
         working-directory: ${{ matrix.projects }}
@@ -63,10 +64,11 @@ jobs:
               - '${{ matrix.projects }}/**'
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - run: ./gradlew dokkaHtml --no-daemon --stacktrace
         working-directory: ${{ matrix.projects }}
@@ -87,10 +89,11 @@ jobs:
               - 'examples/gradle/dokka-library-publishing-example/**'
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - run: ./gradlew ${{ matrix.tasks }} --no-daemon --stacktrace
         working-directory: examples/gradle/dokka-library-publishing-example
@@ -113,10 +116,11 @@ jobs:
               - '${{ matrix.dir }}/**'
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
+          distribution: "temurin"
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
+          cache-cleanup: always
           develocity-access-key: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
       - run: ./gradlew ${{ matrix.task }} --no-daemon --stacktrace
         working-directory: ${{ matrix.dir }}
@@ -135,9 +139,8 @@ jobs:
           working-directory: examples/maven
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: 17
-          cache: 'maven'
+          distribution: "temurin"
+          java-version: 21
       - run: mvn compile dokka:dokka
         working-directory: examples/maven
         if: steps.filter.outputs.examples_changed == 'true'

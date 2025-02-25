@@ -29,6 +29,9 @@ hs_err_pid*
 .gradle
 build/
 
+# FIXME Remove when Gradle Daemon JVM can be auto-provisioned. See build-logic/src/main/kotlin/dokkabuild/utils/GradleDaemonJvm.kt
+gradle/gradle-daemon-jvm.properties
+
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 
