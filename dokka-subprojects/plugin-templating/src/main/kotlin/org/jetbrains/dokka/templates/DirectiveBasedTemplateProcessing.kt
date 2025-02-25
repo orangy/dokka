@@ -41,7 +41,8 @@ public class DirectiveBasedHtmlTemplateProcessingStrategy(private val context: D
                 handleCommandAsComment(command, bodyTrimed, input, output)
             }
 
-            Files.write(output.toPath(), listOf(document.outerHtml()))
+            // drop last additional \n character that's added
+            Files.write(output.toPath(), listOf(document.outerHtml().dropLast(1)))
             true
         } else false
 
