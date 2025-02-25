@@ -140,14 +140,12 @@ buildscript {
     }
 }
 
-tasks.dokkaHtml {
-    pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
-        version = "1.5"
-        versionsOrdering = listOf("1.5", "1.4", "1.3", "1.2", "1.1", "alpha-2", "alpha-1")
-        olderVersionsDir = file("documentation/version")
-        olderVersions = listOf(file("documentation/alpha/alpha-2"), file("documentation/alpha/alpha-1"))
-        renderVersionsNavigationOnAllPages = true
-    }
+dokka.pluginsConfiguration.versioning {
+    version = "1.5"
+    versionsOrdering = listOf("1.5", "1.4", "1.3", "1.2", "1.1", "alpha-2", "alpha-1")
+    olderVersionsDir = file("documentation/version")
+    olderVersions = listOf(file("documentation/alpha/alpha-2"), file("documentation/alpha/alpha-1"))
+    renderVersionsNavigationOnAllPages = true
 }
 ```
 
@@ -163,7 +161,7 @@ Alternatively, you can configure it via JSON:
       "renderVersionsNavigationOnAllPages": true
     }
     """
-    pluginsMapConfiguration.set(
+    dokka.pluginsMapConfiguration.set(
         mapOf(
             "org.jetbrains.dokka.versioning.VersioningPlugin" to versioningConfiguration
         )
@@ -176,7 +174,6 @@ Alternatively, you can configure it via JSON:
 <summary>Groovy</summary>
 
 ```groovy
-dokkaHtml {
     String versioningConfiguration = """
     {
       "version": "1.5",
@@ -186,10 +183,9 @@ dokkaHtml {
       "renderVersionsNavigationOnAllPages": true
     }
     """
-    pluginsMapConfiguration.set(
+    dokka.pluginsMapConfiguration.set(
             ["org.jetbrains.dokka.versioning.VersioningPlugin": versioningConfiguration]
     )
-}
 ```
 
 </details>
@@ -302,7 +298,7 @@ dependencies {
     dokkaPlugin("org.jetbrains.dokka:versioning-plugin:2.0.0")
 }
 
-tasks.dokkaHtml {
+tasks.dokkaGeneratePublicationHtml {
     // This can be any persistent folder where
     // you store documentation by version
     val docVersionsDir = projectDir.resolve("documentation/version")
@@ -315,7 +311,7 @@ tasks.dokkaHtml {
     val currentDocsDir = docVersionsDir.resolve(currentVersion)
     outputDirectory.set(currentDocsDir)
 
-    pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
+    dokka.pluginsConfiguration.versioning {
         olderVersionsDir = docVersionsDir
         version = currentVersion
     }
