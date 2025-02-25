@@ -3,6 +3,7 @@
  */
 package org.jetbrains.dokka.gradle.tasks
 
+import kotlinx.serialization.json.JsonObject
 import org.gradle.api.file.ArchiveOperations
 import org.gradle.api.file.FileSystemOperations
 import org.gradle.api.model.ObjectFactory
@@ -87,8 +88,8 @@ constructor(
 
         val encodedModuleDesc =
             DokkaBasePlugin.jsonMapper.encodeToString(
-                DokkaModuleDescriptionKxs.serializer(),
-                moduleDesc
+                JsonObject.serializer(),
+                DokkaModuleDescriptionKxs.toJsonObject(moduleDesc)
             )
 
         logger.info("encodedModuleDesc: $encodedModuleDesc".lines().joinToString(" "))

@@ -3,6 +3,7 @@
  */
 package org.jetbrains.dokka.gradle.engine.parameters.builders
 
+import kotlinx.serialization.json.JsonObject
 import org.gradle.api.Project
 import org.gradle.api.file.ArchiveOperations
 import org.gradle.api.file.FileCollection
@@ -96,9 +97,11 @@ internal class DokkaParametersBuilder(
                 }
 
                 val moduleDescriptor: DokkaModuleDescriptionKxs =
-                    DokkaBasePlugin.jsonMapper.decodeFromString(
-                        DokkaModuleDescriptionKxs.serializer(),
-                        moduleDescriptorJson.readText(),
+                    DokkaModuleDescriptionKxs.fromJsonObject(
+                        DokkaBasePlugin.jsonMapper.decodeFromString(
+                            JsonObject.serializer(),
+                            moduleDescriptorJson.readText(),
+                        )
                     )
 
                 val moduleOutputDirectory = moduleDir.resolve(moduleDescriptor.moduleOutputDirName)
