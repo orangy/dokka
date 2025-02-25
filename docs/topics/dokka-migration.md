@@ -127,7 +127,16 @@ tasks.dokkaHtml {
  
 New configuration:
 
+Using `build.gradle.kts` files differs from using `.kt` files (such as custom plugins) 
+due to the use of type-safe accessors in Kotlin DSL. 
+
+<tabs group="dokka-configuration">
+<tab title="Gradle configuration file" group-key="gradle">
+
 ```kotlin
+
+// build.gradle.kts
+
 dokka {
     moduleName.set("Project Name")
     dokkaSourceSets.main {
@@ -145,6 +154,38 @@ dokka {
     }
 }
 ```
+
+</tab>
+<tab title="Kotlin file" group-key="kotlin">
+
+```kotlin
+
+// CustomPlugin.kt
+
+class CustomPlugin : Plugin<Project> {
+    override fun apply(project: Project) {
+        project.extensions.configure<DokkaExtension> {
+            dokkaSourceSets.named("main") {
+                includes.from("README.md")
+                sourceLink {
+                    localDirectory.set(project.file("src/main/kotlin"))
+                    remoteUrl.set(URI("https://example.com/src"))
+                    remoteLineSuffix.set("#L")
+                }
+            }
+
+            pluginsConfiguration.named<org.jetbrains.dokka.gradle.engine.plugins.DokkaHtmlPluginParameters>("pluginsConfiguration") {
+                customStyleSheets.from("styles.css")
+                customAssets.from("logo.png")
+                footerMessage.set("(c) Your Company")
+            }
+        }
+    }
+}
+```
+
+</tab>
+</tabs>
 
 #### Visibility settings
 
@@ -206,8 +247,17 @@ Previous configuration:
 
 New configuration:
 
+Using `build.gradle.kts` files differs from using `.kt` files (such as custom plugins)
+due to the use of type-safe accessors in Kotlin DSL.
+
+<tabs group="dokka-configuration">
+<tab title="Gradle configuration file" group-key="gradle">
+
 ```kotlin
-    dokka {
+
+// build.gradle.kts
+
+dokka {
     moduleName.set("Project Name")
     dokkaSourceSets.main {
         includes.from("README.md")
@@ -219,6 +269,32 @@ New configuration:
     }
 }
 ```
+
+</tab>
+<tab title="Kotlin file" group-key="kotlin">
+
+```kotlin
+
+// CustomPlugin.kt
+
+class CustomPlugin : Plugin<Project> {
+    override fun apply(project: Project) {
+        project.extensions.configure<DokkaExtension> {
+            dokkaSourceSets.named("main") {
+                includes.from("README.md")
+                sourceLink {
+                    localDirectory.set(project.file("src/main/kotlin"))
+                    remoteUrl.set(URI("https://example.com/src"))
+                    remoteLineSuffix.set("#L")
+                }
+            }
+        }
+    }
+}
+```
+
+</tab>
+</tabs>
 
 Given that the source link configuration has [changed](https://docs.gradle.org/current/userguide/upgrading_version_8.html#deprecated_invalid_url_decoding), the remote URL is now specified using the `URI` class instead of the `URL` class.
 
@@ -324,8 +400,10 @@ dokka {
 
 #### Output directory for additional files
 
-The ability to set an output directory and include additional files, such as `README.md`, is still supported in
-DGP v2. However, you have to now configure it under `dokkaPublications.html` in the `dokka {}` block of the root project.
+In DGP v2, the configuration for single-module and multi-module projects is now unified under the `dokka {}` block. 
+Instead of configuring `dokkaHtml` and `dokkaHtmlMultiModule` tasks separately, you now specify settings inside the `dokkaPublications.html {}` block.
+
+For multi-module projects, you can set the output directory and include additional files (such as `README.md`) in the `dokka {}` block of the root project.
 
 Previous configuration:
 
@@ -338,7 +416,16 @@ tasks.dokkaHtmlMultiModule {
 
 New configuration:
 
+Using `build.gradle.kts` files differs from using `.kt` files (such as custom plugins)
+due to the use of type-safe accessors in Kotlin DSL.
+
+<tabs group="dokka-configuration">
+<tab title="Gradle configuration file" group-key="gradle">
+
 ```kotlin
+
+// build.gradle.kts
+
 dokka {
     dokkaPublications.html {
         outputDirectory.set(rootDir.resolve("docs/api/0.x"))
@@ -346,6 +433,28 @@ dokka {
     }
 }
 ```
+
+</tab>
+<tab title="Kotlin file" group-key="kotlin">
+
+```kotlin
+
+// CustomPlugin.kt
+
+class CustomPlugin : Plugin<Project> {
+    override fun apply(project: Project) {
+        project.extensions.configure<DokkaExtension> {
+            dokkaPublications.named("html") {
+                outputDirectory.set(project.rootDir.resolve("docs/api/0.x"))
+                includes.from(project.layout.projectDirectory.file("README.md"))
+            }
+        }
+    }
+}
+```
+
+</tab>
+</tabs>
 
 ### Configure Dokka plugins
 
@@ -373,7 +482,9 @@ tasks.dokkaHtmlMultiModule {
 
 New configuration:
 
-DGP v2 replaces the JSON-based configuration with a type-safe DSL that is compatible with incremental builds.
+DGP v2 replaces the JSON-based configuration with a type-safe DSL that is compatible with incremental builds. See the 
+configuration of [Dokka's versioning plugin example](https://github.com/Kotlin/dokka/tree/master/examples/gradle-v2/versioning-multimodule-example). 
+
 Use the `pluginsConfiguration{}` block to configure Dokka plugins in a type-safe way:
 
 ```kotlin
@@ -387,58 +498,8 @@ dokka {
 }
 ```
 
-### Configure custom Dokka plugins
-
-Dokka 2.0.0 allows you to extend its functionality by configuring custom plugins, 
+Dokka 2.0.0 allows you to extend its functionality by [configuring custom plugins](https://github.com/Kotlin/dokka/blob/ae3840edb4e4afd7b3e3768a5fddfe8ec0e08f31/examples/gradle-v2/custom-dokka-plugin-example/demo-library/build.gradle.kts),
 which enable additional processing or modifications to the documentation generation process.
-
-To configure a custom Dokka plugin, implement a custom `DokkaPluginParametersBaseSpec` 
-class in your `build.gradle.kts` file. The following example shows how to define and register a custom plugin parameter class:
-
-```kotlin
-// build.gradle.kts
-
-plugins {
-    id("org.jetbrains.dokka") version "2.0.0"
-}
-
-val dokkaScripts = layout.projectDirectory.dir("dokka-scripts")
-
-dokka {
-    pluginsConfiguration {
-        registerBinding(DokkaScriptsPluginParameters::class, DokkaScriptsPluginParameters::class)
-        register<DokkaScriptsPluginParameters>("DokkaScripts") {
-            scripts.from(dokkaScripts.asFileTree)
-        }
-    }
-}
-
-@OptIn(DokkaInternalApi::class)
-abstract class DokkaScriptsPluginParameters @Inject constructor(
-    name: String
-) : DokkaPluginParametersBaseSpec(name, "example.dokkascript.plugin.DokkaScriptsPlugin") {
-
-    @get:InputFiles
-    @get:PathSensitive(PathSensitivity.RELATIVE)
-    @get:NormalizeLineEndings
-    abstract val scripts: ConfigurableFileCollection
-
-    override fun jsonEncode(): String {
-        val encodedScriptFiles = scripts.files.joinToString { "\"${it.canonicalFile.invariantSeparatorsPath}\"" }
-        return """
-      {
-        "scripts": [ $encodedScriptFiles ]
-      }
-    """.trimIndent()
-    }
-}
-```
-
-If you need to reuse the plugin across multiple projects, consider moving the class to a shared location like `buildSrc` or a convention plugin.
-
-> Currently, the `DokkaPluginParametersBaseSpec` implementation requires an opt-in for the internal Dokka Gradle API, but this restriction may be removed in the future.
->
-{style="note"}
 
 ### Share Dokka configuration across modules
 

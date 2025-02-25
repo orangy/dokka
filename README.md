@@ -218,6 +218,9 @@ Learn more about Dokka plugins and their configuration in [Dokka plugins](https:
 If you want to learn how to develop Dokka plugins, see
 [Developer guides](https://kotlin.github.io/dokka/2.0.0/developer_guide/introduction/).
 
+Dokka allows you to extend its functionality by [configuring custom plugins](https://github.com/Kotlin/dokka/blob/ae3840edb4e4afd7b3e3768a5fddfe8ec0e08f31/examples/gradle-v2/custom-dokka-plugin-example/demo-library/build.gradle.kts),
+which enable additional processing or modifications to the documentation generation process.
+
 ## Community
 
 Dokka has a dedicated `#dokka` channel in [Kotlin Community Slack](https://surveys.jetbrains.com/s3/kotlin-slack-sign-up)
