@@ -8,6 +8,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.inspectors.shouldForAll
 import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.equals.shouldNotBeEqual
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
@@ -24,6 +25,54 @@ import java.io.File
 import java.net.URI
 
 class DokkaSourceSetBuilderTest : FunSpec({
+
+    context("when building a DokkaSourceSetSpec") {
+        val project = createProject()
+        test("resolve classpath, includes, samples, sourceRoots, and suppressedFiles recursively") {
+            fun File.ensureDirExists() = also { it.mkdirs() }
+            fun File.subdirWithFile() = resolve("subdir").also { it.mkdirs() }.resolve("test-file")
+            fun File.createFile() = also { it.createNewFile() }
+
+            val tempDir = tempdir()
+
+            val classpathDir = tempDir.resolve("classpath").ensureDirExists()
+            val classpathFile = classpathDir.resolve("test-file").createFile()
+            val classpathSubFile = classpathDir.subdirWithFile().createFile()
+
+            val includesDir = tempDir.resolve("includes").ensureDirExists()
+            val includesFile = includesDir.resolve("test-file").createFile()
+            val includesSubFile = includesDir.subdirWithFile().createFile()
+
+            val samplesDir = tempDir.resolve("samples").ensureDirExists()
+            val samplesFile = samplesDir.resolve("test-file").createFile()
+            val samplesSubFile = samplesDir.subdirWithFile().createFile()
+
+            val rootsDir = tempDir.resolve("roots").ensureDirExists()
+            rootsDir.resolve("test-file").createFile()
+            rootsDir.subdirWithFile().createFile()
+
+            val suppressedDir = tempDir.resolve("suppressed").ensureDirExists()
+            val suppressedFile = suppressedDir.resolve("test-file").createFile()
+            val suppressedSubFile = suppressedDir.subdirWithFile().createFile()
+
+
+            val sourceSetSpec = project.createDokkaSourceSetSpec("testRemoteLineSuffixOptional") {
+                classpath.from(classpathDir)
+                includes.from(includesDir)
+                samples.from(samplesDir)
+                sourceRoots.from(rootsDir)
+                suppressedFiles.from(suppressedDir)
+            }
+
+            val sourceSet = DokkaSourceSetBuilder.buildAll(setOf(sourceSetSpec)).single()
+
+            sourceSet.classpath shouldContainExactlyInAnyOrder listOf(classpathFile, classpathSubFile)
+            sourceSet.includes shouldContainExactlyInAnyOrder listOf(includesFile, includesSubFile)
+            sourceSet.samples shouldContainExactlyInAnyOrder listOf(samplesFile, samplesSubFile)
+            sourceSet.sourceRoots shouldContainExactlyInAnyOrder listOf(rootsDir)
+            sourceSet.suppressedFiles shouldContainExactlyInAnyOrder listOf(suppressedFile, suppressedSubFile)
+        }
+    }
 
     context("when building a ExternalDocumentationLinkSpec") {
         val project = createProject()
