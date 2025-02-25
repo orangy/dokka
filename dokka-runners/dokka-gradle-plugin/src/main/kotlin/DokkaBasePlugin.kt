@@ -28,6 +28,7 @@ import org.jetbrains.dokka.gradle.engine.parameters.DokkaSourceSetSpec
 import org.jetbrains.dokka.gradle.engine.parameters.KotlinPlatform
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.dokka.gradle.internal.*
+import org.jetbrains.dokka.gradle.internal.PluginFeaturesService.Companion.pluginFeaturesService
 import org.jetbrains.dokka.gradle.tasks.*
 import java.io.File
 import javax.inject.Inject
@@ -266,6 +267,7 @@ constructor(
         target.tasks.withType<DokkaGenerateTask>().configureEach {
             cacheDirectory.convention(dokkaExtension.dokkaCacheDirectory)
             workerLogFile.convention(temporaryDir.resolve("dokka-worker.log"))
+            dumpDokkaConfigurationDebugFile.convention(target.pluginFeaturesService.dumpDokkaConfigurationDebugFile)
             dokkaConfigurationJsonFile.convention(temporaryDir.resolve("dokka-configuration.json"))
             workerIsolation.convention(dokkaExtension.dokkaGeneratorIsolation)
             publicationEnabled.convention(true)
