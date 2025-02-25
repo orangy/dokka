@@ -70,10 +70,20 @@ public class ScriptsInstaller(private val dokkaContext: DokkaContext) : PageTran
         "scripts/symbol-parameters-wrapper_deferred.js",
     )
 
+    /**
+     * This directory is copied to the output, but is not included in the page
+     * header.
+     */
+    private val copiedScriptDirectories = listOf(
+        "scripts/components/"
+    )
+
     override fun invoke(input: RootPageNode): RootPageNode =
         input.let { root ->
-            if (dokkaContext.configuration.delayTemplateSubstitution) root
-            else root.modified(children = input.children + scriptsPages.toRenderSpecificResourcePage())
+            if (dokkaContext.configuration.delayTemplateSubstitution)
+                root
+            else
+                root.modified(children = input.children + (scriptsPages + copiedScriptDirectories).toRenderSpecificResourcePage())
         }.transformContentPagesTree {
             it.modified(
                 embeddedResources = it.embeddedResources + scriptsPages

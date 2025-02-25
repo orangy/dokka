@@ -355,14 +355,17 @@ code.block {
 
 .copy-icon {
     cursor: pointer;
+    transition: opacity 100ms linear;
 }
 
 .sample-container span.copy-icon {
-    display: none;
+    display: unset;
+    opacity: 0;
 }
 
-.js .sample-container:hover span.copy-icon {
+.js .sample-container:hover span.copy-icon, .js .sample-container:focus span.copy-icon {
     display: inline-block;
+    opacity: 100%
 }
 
 .sample-container span.copy-icon::before {
@@ -378,7 +381,7 @@ code.block {
     background-color: var(--copy-icon-color);
 }
 
-.sample-container span.copy-icon:hover::before {
+.sample-container span.copy-icon:hover::before, .sample-container span.copy-icon:focus::before {
     background-color: var(--copy-icon-hover-color);
 }
 
