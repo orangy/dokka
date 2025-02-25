@@ -1,55 +1,25 @@
+/*
+ * Copyright 2014-2024 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ */
+
 .versions-dropdown {
-  float: right;
+  white-space: nowrap;
 }
 
-.versions-dropdown-button {
-  border: none;
-  cursor: pointer;
-  padding: 5px;
+@media (width < 900px) {
+  .versions-dropdown {
+    height: 52px;
+    margin-left: -8px;
+  }
 }
 
-.versions-dropdown-button::after {
-    content: '';
-    -webkit-mask: url("../images/arrow_down.svg") no-repeat 50% 50%;
-    mask: url("../images/arrow_down.svg") no-repeat 50% 50%;
-        mask-size: auto;
-    -webkit-mask-size: cover;
-    mask-size: cover;
-    background-color: #fff;
-    display: inline-block;
-    position: relative;
-    top: 2px;
-    transform: rotate(90deg);
-    width: 24px;
-    height: 16px;
+@media (width >= 900px) {
+  .versions-dropdown .dropdown--list {
+    min-width: 60px;
+    top: 44px;
+  }
 }
 
-.versions-dropdown-data {
-  display: none;
-  position: absolute;
-  background-color: #27282c;
-  border-style: solid;
-  border-width: 1px;
-  border-color: hsla(0,0%,100%,.6);
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  overflow-y: auto;
-  max-height: 200px;
-  min-width: 50px;
-
-}
-
-.versions-dropdown-data a {
-  padding: 5px;
-  padding-right: 18px;
-  text-decoration: none;
-  display: block;
-}
-
-.versions-dropdown-data a:hover {
-  background-color: hsla(0,0%,100%,.1)
-}
-
-.versions-dropdown:hover .versions-dropdown-data {
+.no-js .versions-dropdown:hover .dropdown--list {
   display: block;
 }
