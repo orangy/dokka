@@ -46,7 +46,7 @@
     position: absolute;
 
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     flex-shrink: 0;
     justify-content: flex-end;
 
@@ -61,6 +61,9 @@
     background-color: inherit;
 
     &::after {
+      position: relative;
+      top: 8px;
+
       width: 24px;
       height: 24px;
 
@@ -164,13 +167,13 @@
     display: grid;
     grid-template-columns: 16px auto; /* first is the icon, then name */
     grid-gap: 6px;
-
-    align-items: center;
   }
 
   &--icon {
     width: 16px;
     height: 16px;
+
+    line-height: 32px;
   }
 
   &--icon.class::before {
@@ -245,7 +248,7 @@
     background-color: var(--color-key-blue);
 
     &:hover {
-      background-color: #578af7;
+      background-color: var(--color-key-blue-hover);
     }
 
     &::after {

@@ -8,10 +8,8 @@ import kotlinx.html.a
 import kotlinx.html.button
 import kotlinx.html.div
 import kotlinx.html.i
-import kotlinx.html.li
 import kotlinx.html.span
 import kotlinx.html.stream.appendHTML
-import kotlinx.html.ul
 import org.jetbrains.dokka.plugability.DokkaContext
 import org.jetbrains.dokka.plugability.configuration
 import org.jetbrains.dokka.plugability.plugin
@@ -85,36 +83,45 @@ public class HtmlVersionsNavigationCreator(
                             }
                         }
                         orderedVersions.forEach { (version, path) ->
-                            div {
-                                if (version == activeVersion?.key) {
-                                    a(classes = "dropdown--option dropdown--option-link", href = output.name) {
-                                        attributes["style"] = "display: block; padding: 5px; color: #fff"
-                                        attributes["data-remove-style"] = "true"
-                                        attributes["role"] = "option"
+                            if (version == activeVersion?.key) {
+                                a(
+                                    classes = "dropdown--option dropdown--option_active dropdown--option-link",
+                                    href = output.name
+                                ) {
+                                    attributes["style"] = "display: block; padding: 5px; color: #fff"
+                                    attributes["data-remove-style"] = "true"
+                                    attributes["role"] = "option"
+                                    attributes["title"] = version
+                                    span(classes = "dropdown--option-icon dropdown--option-icon_selected") {}
+                                    span(classes = "dropdown--option-text") {
                                         text(version)
                                     }
-                                } else {
-                                    val isExistsFile =
-                                        if (version == versioningStorage.currentVersion.name)
-                                            path?.resolve(relativePosition)?.exists() == true
-                                        else
-                                            versioningStorage.previousVersions[version]?.src?.resolve(relativePosition)
-                                                ?.exists() == true
+                                }
+                            } else {
+                                val isExistsFile =
+                                    if (version == versioningStorage.currentVersion.name)
+                                        path?.resolve(relativePosition)?.exists() == true
+                                    else
+                                        versioningStorage.previousVersions[version]?.src?.resolve(relativePosition)
+                                            ?.exists() == true
 
-                                    val absolutePath =
-                                        if (isExistsFile)
-                                            path?.resolve(relativePosition)
-                                        else
-                                            versioningStorage.currentVersion.dir.resolve("not-found-version.html")
+                                val absolutePath =
+                                    if (isExistsFile)
+                                        path?.resolve(relativePosition)
+                                    else
+                                        versioningStorage.currentVersion.dir.resolve("not-found-version.html")
 
-                                    a(
-                                        classes = "dropdown--option dropdown--option-link",
-                                        href = absolutePath?.toRelativeString(position) +
-                                                if (!isExistsFile) "?v=" + version.urlEncoded() else ""
-                                    ) {
-                                        attributes["style"] = "display: block; padding: 5px; color: #fff"
-                                        attributes["data-remove-style"] = "true"
-                                        attributes["role"] = "option"
+                                a(
+                                    classes = "dropdown--option dropdown--option-link",
+                                    href = absolutePath?.toRelativeString(position) +
+                                            if (!isExistsFile) "?v=" + version.urlEncoded() else ""
+                                ) {
+                                    attributes["style"] = "display: block; padding: 5px; color: #fff"
+                                    attributes["data-remove-style"] = "true"
+                                    attributes["role"] = "option"
+                                    attributes["title"] = version
+                                    span(classes = "dropdown--option-icon") {}
+                                    span(classes = "dropdown--option-text") {
                                         text(version)
                                     }
                                 }

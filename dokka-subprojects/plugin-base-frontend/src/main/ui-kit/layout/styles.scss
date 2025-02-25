@@ -22,6 +22,8 @@
   overflow: auto;
   flex: 1 1 0; /* full width, but no affects for sidebar */
   flex-direction: column;
+
+  margin-left: -5px;
 }
 
 .main-content {
@@ -39,4 +41,14 @@
     padding-right: var(--size-s3);
     padding-left: var(--size-s3);
   }
+}
+
+.resizer {
+  position: relative;
+  z-index: 1;
+  left: -3px;
+
+  flex: 0 0 5px !important;
+
+  cursor: ew-resize;
 }

@@ -48,12 +48,20 @@
     }
 
     &--dropdown-toggle {
+      position: relative;
+
       background-image: url('../_assets/filter.svg');
       background-repeat: no-repeat;
       background-position: 50% 50%;
 
       &::after {
         display: none;
+      }
+
+      @media (width < $breakpoint-desktop-min) {
+        border-radius: 0;
+
+        outline-offset: -4px;
       }
     }
   }

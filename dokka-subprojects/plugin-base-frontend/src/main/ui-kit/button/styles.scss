@@ -73,6 +73,7 @@
 
   &_dropdown {
     padding: var(--size-s2);
+    padding-left: 12px;
 
     font: var(--font-text-s);
 
@@ -103,7 +104,7 @@
 
     &:hover,
     .theme-dark &:hover {
-      background-color: lighten(rgb(48, 127, 255), 10%); // color-key-blue
+      background-color: var(--color-key-blue-hover);
     }
 
     &::after {
