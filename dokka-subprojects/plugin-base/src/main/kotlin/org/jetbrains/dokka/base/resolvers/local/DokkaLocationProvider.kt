@@ -60,6 +60,7 @@ public open class DokkaLocationProvider(
                 if (first) page else throw AssertionError("Multiple pages associated with key: ${key.dri}/${key.sourceSet}")
             }
 
+    @Deprecated("This is not used anymore and will be removed, since resolving references to anchors is removed to fix #3054")
     protected val anchorsIndex: Map<DRIWithSourceSets, PageWithKind> =
         pageGraphRoot.withDescendants().filterIsInstance<ContentPage>()
             .flatMap { page ->
@@ -107,21 +108,12 @@ public open class DokkaLocationProvider(
             }
 
         return getLocalPageLink(dri, allSourceSets, context)
-            ?: getLocalAnchor(dri, allSourceSets, context)
     }
 
     private fun getLocalPageLink(dri: DRI, allSourceSets: Iterable<Set<DisplaySourceSet>>, context: PageNode?)  =
         allSourceSets.mapNotNull { displaySourceSet ->
             pagesIndex[DRIWithSourceSets(dri, displaySourceSet)]
         }.firstOrNull()?.let { page -> resolve(page, context) }
-
-    private fun getLocalAnchor(dri: DRI, allSourceSets: Iterable<Set<DisplaySourceSet>>, context: PageNode?)  =
-        allSourceSets.mapNotNull { displaySourceSet ->
-            anchorsIndex[DRIWithSourceSets(dri, displaySourceSet)]?.let { (page, kind) ->
-                val dci = DCI(setOf(dri), kind)
-                resolve(page, context) + "#" + anchorForDCI(dci, displaySourceSet)
-            }
-        }.firstOrNull()
 
     override fun pathToRoot(from: PageNode): String =
         pathTo(pageGraphRoot, from).removeSuffix(PAGE_WITH_CHILDREN_SUFFIX)
